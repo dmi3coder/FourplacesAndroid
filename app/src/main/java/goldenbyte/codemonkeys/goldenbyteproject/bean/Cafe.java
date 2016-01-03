@@ -5,14 +5,22 @@ import io.realm.RealmObject;
 /**
  * Created by dmi3coder on 28.12.2015 20:11.
  */
-public class Cafe extends RealmObject {
+public class Cafe {
     private String name;    //Name of cafe, in backend - name
     private String type;    //Type of cafe, in backend - type
+    private String description;
     private String workTime;    //Time when the cafe is working, in backend - worktime
     private String position;    //World position of cafe, in backend - adress
     private String imageUrl;    //URL location of image, in backend - imgpath
     private int menuId; //id of menu items, in backend - menu_id
 
+    public Cafe(String type,String name, String description,String adress, String worktime){
+        this.name = name;
+        this.type = type;
+        this.description = description;
+        this.position = adress;
+        this.workTime = worktime;
+    }
 
     public String getName() {
         return name;
