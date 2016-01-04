@@ -16,19 +16,11 @@
         android:layout_height="match_parent"
         android:background="@android:color/white">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar" />
-
-        <com.github.ksoichiro.android.observablescrollview.ObservableListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize" />
+            android:layout_height="match_parent"/>
+
     </FrameLayout>
 
 </LinearLayout>

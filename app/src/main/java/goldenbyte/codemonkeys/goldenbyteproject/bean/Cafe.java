@@ -1,7 +1,5 @@
 package goldenbyte.codemonkeys.goldenbyteproject.bean;
 
-import io.realm.RealmObject;
-
 /**
  * Created by dmi3coder on 28.12.2015 20:11.
  */
@@ -12,15 +10,7 @@ public class Cafe {
     private String workTime;    //Time when the cafe is working, in backend - worktime
     private String position;    //World position of cafe, in backend - adress
     private String imageUrl;    //URL location of image, in backend - imgpath
-    private int menuId; //id of menu items, in backend - menu_id
-
-    public Cafe(String type,String name, String description,String adress, String worktime){
-        this.name = name;
-        this.type = type;
-        this.description = description;
-        this.position = adress;
-        this.workTime = worktime;
-    }
+    private int id; //id of menu items, in backend - menu_id
 
     public String getName() {
         return name;
@@ -37,8 +27,8 @@ public class Cafe {
     public String getImageUrl() {
         return imageUrl;
     }
-    public int getMenuId() {
-        return menuId;
+    public int getId() {
+        return id;
     }
 
     public void setName(String name) {
@@ -56,7 +46,15 @@ public class Cafe {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-    public void setMenuId(int menuId) {
-        this.menuId = menuId;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
