@@ -1,7 +1,9 @@
 package goldenbyte.codemonkeys.goldenbyteproject.adapters;
 
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.ArrayList;
 import java.util.List;
 
+import goldenbyte.codemonkeys.goldenbyteproject.MainActivity;
 import goldenbyte.codemonkeys.goldenbyteproject.R;
 import goldenbyte.codemonkeys.goldenbyteproject.bean.Cafe;
 
@@ -27,6 +30,7 @@ import goldenbyte.codemonkeys.goldenbyteproject.bean.Cafe;
 public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder> {
     private ArrayList<Cafe> cafeList;
     ImageLoader imageLoader;
+    MediaPlayer mediaPlayer;
 
     public static class CafeViewHolder extends RecyclerView.ViewHolder{
         protected TextView name;
@@ -89,12 +93,12 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         currentCafeHolder.likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked() {
-
+                mediaPlayer.start();
             }
 
             @Override
             public void unLiked() {
-
+                mediaPlayer.start();
             }
         });// TODO: 04.01.2016 make like/unlike event
 
@@ -104,6 +108,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
 
     @Override
     public CafeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.d("dmi3debug", "onCreateViewHolder: ");
         View itemView = LayoutInflater.
                 from(parent.getContext()).
                 inflate(R.layout.cafe_item, parent, false);

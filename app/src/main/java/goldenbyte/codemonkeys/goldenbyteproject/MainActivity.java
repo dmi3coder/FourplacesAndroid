@@ -8,6 +8,8 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.malinskiy.superrecyclerview.SuperRecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,7 @@ import xyz.sahildave.widget.SearchViewLayout;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "dmi3debug";
     private CafeLoader.CafeType choosedCafeType;
-    RecyclerView recyclerView;
+    SuperRecyclerView recyclerView;
     CafeLoader cafeLoader;
 
     @Override
@@ -31,15 +33,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         choosedCafeType = CafeLoader.CafeType.ALL;
-        recyclerView = (RecyclerView)findViewById(R.id.list);
+        recyclerView = (SuperRecyclerView)findViewById(R.id.list);
         SearchViewLayout searchViewLayout = (SearchViewLayout) findViewById(R.id.search_view);
         searchViewLayout.setExpandedContentFragment(this, new SearchFragment());
-        cafeLoader = new CafeLoader(choosedCafeType);
-        recyclerView.setHasFixedSize(true);
-        ArrayList<Cafe> testCafe = new ArrayList<>();
-        testCafe.add(new Cafe());
-        recyclerView.setAdapter(new CafeAdapter(testCafe));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        ArrayList<Cafe> testCafe = new ArrayList<>();
+//        testCafe.add(new Cafe());
+        new CafeLoader(choosedCafeType).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
+            @Override
+            public void onEvent(ArrayList<Cafe> cafes) {
+                recyclerView.setAdapter(new CafeAdapter(cafes));
+                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+            }
+        });
 
     }
 

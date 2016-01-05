@@ -4,10 +4,13 @@
     android:layout_height="match_parent"
     tools:context="goldenbyte.codemonkeys.goldenbyteproject.fragment.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.malinskiy.superrecyclerview.SuperRecyclerView
+        android:id="@+id/list"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        app:layout_empty="@layout/view_empty"
+        app:recyclerClipToPadding="false"
+        app:scrollbarStyle="insideInset" />
 
 </FrameLayout>

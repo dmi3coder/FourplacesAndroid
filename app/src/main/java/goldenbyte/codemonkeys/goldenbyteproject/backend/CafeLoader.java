@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.EventObject;
 
 import de.greenrobot.event.EventBus;
 import goldenbyte.codemonkeys.goldenbyteproject.bean.Cafe;
@@ -30,6 +31,11 @@ import goldenbyte.codemonkeys.goldenbyteproject.events.LoadEvent;
  */
 public class CafeLoader {
     private static final String TAG = "dmi3debug";
+
+    public interface OnCafesLoadListener{
+        void onEvent(ArrayList<Cafe> cafes);
+    }
+    private OnCafesLoadListener onCafesLoadListener;
     public enum CafeType{ALL,CAFE,NIGHT_CLUB,FUN,RESTAURANT,FASTFOOD,SUSHI,ETC;
         String[] backendRuTypes = {"","Кофейня", "Ночной клуб", "Развлечения", "Ресторан", "Фаст фуд", "Суши бар", "Что то другое"};
 
@@ -56,6 +62,9 @@ public class CafeLoader {
 
     public CafeLoader(CafeType choosedCafeType) {
         new HttpAsyncTask().execute(API_URL+choosedCafeType.toString());
+    }
+    public void setOnCafesLoadListener(OnCafesLoadListener listener){
+        onCafesLoadListener = listener;
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
@@ -90,7 +99,7 @@ public class CafeLoader {
             cafe.setWorkTime(restCafeData.getString("work_time"));
             restCafesData.add(cafe);
         }
-        EventBus.getDefault().post(new LoadEvent(restCafesData));
+        getRestCafesData();
 
     }
 
@@ -131,11 +140,11 @@ public class CafeLoader {
 
     }
 
-    public ArrayList<Cafe> getRestCafesData(){
-        return restCafesData;
+    public void getRestCafesData(){
+        if (onCafesLoadListener != null)
+            onCafesLoadListener.onEvent(restCafesData);
+
     }
-
-
     public int size() {
         // TODO: 30.12.2015 make return real value of size
         return 25;

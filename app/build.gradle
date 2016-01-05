@@ -29,6 +29,7 @@ android {
         compile 'com.android.support:support-v4:23.1.1'
         compile 'xyz.sahildave:searchviewlayout:0.2'
         compile 'de.greenrobot:eventbus:2.4.0'
+        compile 'com.malinskiy:superrecyclerview:1.1.1'
         compile 'com.android.support:recyclerview-v7:+'
 
 }
