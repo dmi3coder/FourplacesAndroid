@@ -3,15 +3,12 @@ package goldenbyte.codemonkeys.goldenbyteproject;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.greenrobot.event.EventBus;
 import goldenbyte.codemonkeys.goldenbyteproject.adapters.CafeAdapter;
@@ -26,18 +23,28 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "dmi3debug";
     private CafeLoader.CafeType choosedCafeType;
     SuperRecyclerView recyclerView;
-    CafeLoader cafeLoader;
+    CafeLoader fragmentCafeLoader;
+    CafeLoader.CafeType fragmentCurrentCafeType = CafeLoader.CafeType.ALL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         choosedCafeType = CafeLoader.CafeType.ALL;
+        defineRecyclerViewAndLoad();
+        defineSearchViewLayout();
+        defineSearchButtons();
+
+
+    }
+
+    private void defineSearchButtons() {
+
+    }
+
+
+    private void defineRecyclerViewAndLoad() {
         recyclerView = (SuperRecyclerView)findViewById(R.id.list);
-        SearchViewLayout searchViewLayout = (SearchViewLayout) findViewById(R.id.search_view);
-        searchViewLayout.setExpandedContentFragment(this, new SearchFragment());
-//        ArrayList<Cafe> testCafe = new ArrayList<>();
-//        testCafe.add(new Cafe());
         new CafeLoader(choosedCafeType).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
             @Override
             public void onEvent(ArrayList<Cafe> cafes) {
@@ -45,19 +52,22 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
             }
         });
+    }
 
+    private void defineSearchViewLayout() {
+        final SearchFragment searchFragment = new SearchFragment(choosedCafeType);
+        final SearchViewLayout searchViewLayout = (SearchViewLayout) findViewById(R.id.search_view);
+        searchViewLayout.setExpandedContentFragment(this, searchFragment);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus.getDefault().unregister(this);
     }
 
     public void onEvent(LoadEvent loadEvent){

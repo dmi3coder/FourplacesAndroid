@@ -52,10 +52,6 @@ public class CafeLoader {
             }
             throw new NullPointerException("Cafe type not found");
             }
-
-        public String getApi(){
-          return null;
-        }
     }
     ArrayList<Cafe> restCafesData;
     public static final String API_URL = "http://goldenbyteproject.esy.es";

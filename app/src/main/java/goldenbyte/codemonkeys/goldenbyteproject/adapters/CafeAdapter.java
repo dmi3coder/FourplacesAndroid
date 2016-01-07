@@ -2,12 +2,14 @@ package goldenbyte.codemonkeys.goldenbyteproject.adapters;
 
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -30,7 +32,6 @@ import goldenbyte.codemonkeys.goldenbyteproject.bean.Cafe;
 public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder> {
     private ArrayList<Cafe> cafeList;
     ImageLoader imageLoader;
-    MediaPlayer mediaPlayer;
 
     public static class CafeViewHolder extends RecyclerView.ViewHolder{
         protected TextView name;
@@ -41,6 +42,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         protected ImageView cafeImage;
         protected LikeButton likeButton;
         protected ProgressBar progressBar;
+        protected LinearLayout clickZone;
         public CafeViewHolder(View v){
             super(v);
             name = (TextView)v.findViewById(R.id.name);
@@ -51,6 +53,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
             cafeImage = (ImageView)v.findViewById(R.id.imageView);
             likeButton = (LikeButton)v.findViewById(R.id.star_button);
             progressBar = (ProgressBar)v.findViewById(R.id.progressBar);
+            clickZone = (LinearLayout)v.findViewById(R.id.clickZone);
         }
     }
 
@@ -85,6 +88,12 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         }catch (Exception e){
 
         }
+        currentCafeHolder.clickZone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 07.01.2016 intent to menu
+            }
+        });
         currentCafeHolder.name.setText(currentCafe.getName());
         currentCafeHolder.type.setText(currentCafe.getType());
         currentCafeHolder.position.setText(currentCafe.getPosition());
@@ -93,12 +102,10 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         currentCafeHolder.likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked() {
-                mediaPlayer.start();
             }
 
             @Override
             public void unLiked() {
-                mediaPlayer.start();
             }
         });// TODO: 04.01.2016 make like/unlike event
 
