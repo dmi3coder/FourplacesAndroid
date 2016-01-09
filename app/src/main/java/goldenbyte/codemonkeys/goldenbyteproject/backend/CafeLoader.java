@@ -4,7 +4,6 @@ package goldenbyte.codemonkeys.goldenbyteproject.backend;
 import android.os.AsyncTask;
 import android.util.Log;
 
-
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -18,12 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.EventObject;
 
-import de.greenrobot.event.EventBus;
 import goldenbyte.codemonkeys.goldenbyteproject.bean.Cafe;
-import goldenbyte.codemonkeys.goldenbyteproject.events.FailedLoadEvent;
-import goldenbyte.codemonkeys.goldenbyteproject.events.LoadEvent;
 
 
 /**
@@ -47,7 +42,7 @@ public class CafeLoader {
                     if(i==0){
                         return "/api/getallcafe";
                     }
-                    return "api/getcafebytype/"+backendRuTypes[i];
+                    return "/api/getcafebytype/"+backendRuTypes[i];
                 }
             }
             throw new NullPointerException("Cafe type not found");
@@ -74,13 +69,14 @@ public class CafeLoader {
             try {
                 parseJsonArray(restResponseResult);
             } catch (JSONException e) {
-                EventBus.getDefault().post(new FailedLoadEvent(e.getMessage()));
+                Log.d(TAG, "onPostExecute: parseJsonError"+e);
             }
         }
     }
 
     private void parseJsonArray(String result) throws JSONException {
         JSONArray data_array = new JSONObject(result).getJSONArray("data");
+        Log.d(TAG, "parseJsonArray: json length "+data_array.length());
         JSONObject restCafeData;
         restCafesData = new ArrayList<>();
         Cafe cafe;
@@ -93,8 +89,10 @@ public class CafeLoader {
             cafe.setDescription(restCafeData.getString("description"));
             cafe.setPosition(restCafeData.getString("adress"));
             cafe.setWorkTime(restCafeData.getString("work_time"));
+            cafe.setImageUrl(API_URL+"/img/"+restCafeData.getString("img_path"));
             restCafesData.add(cafe);
         }
+        Log.d(TAG, "parseJsonArray: loaded size"+restCafesData.size());
         getRestCafesData();
 
     }
@@ -119,7 +117,7 @@ public class CafeLoader {
                 result = "Did not work!";
 
         } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
+            Log.d("InputStream", "error");
         }
 
         return result;
@@ -140,9 +138,5 @@ public class CafeLoader {
         if (onCafesLoadListener != null)
             onCafesLoadListener.onEvent(restCafesData);
 
-    }
-    public int size() {
-        // TODO: 30.12.2015 make return real value of size
-        return 25;
     }
 }

@@ -7,69 +7,54 @@
     android:paddingLeft="16dp"
     android:paddingTop="16dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/clickZone"
-        android:orientation="horizontal"></LinearLayout>
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
+        android:id="@+id/cafeImage"
         android:src="@drawable/no_image"
-        android:maxHeight="48dp"
-        android:maxWidth="48dp"
+        android:maxHeight="80dp"
+        android:maxWidth="80dp"
         android:adjustViewBounds="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TextView style="@style/CafeTextView"
         android:text="New Text"
         android:id="@+id/name"
         android:textSize="24dp"
-        android:paddingLeft="56dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignTop="@+id/cafeImage"
+        android:layout_toRightOf="@+id/cafeImage"
+        android:layout_toEndOf="@+id/cafeImage" />
 
-    <TextView
+    <TextView style="@style/CafeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Type"
         android:id="@+id/type"
-        android:paddingLeft="56dp"
-        android:textSize="15sp"
         android:layout_below="@+id/name"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-    <TextView
+        android:layout_toRightOf="@+id/cafeImage"
+        android:layout_toEndOf="@+id/cafeImage" />
+    <TextView style="@style/CafeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"
-        android:textSize="15sp"
-        android:paddingLeft="8dp"
         android:id="@+id/position"
-        android:layout_below="@+id/name"
-        android:layout_toRightOf="@+id/type"
-        android:layout_toEndOf="@+id/type" />
+        android:layout_below="@+id/type"
+        android:layout_toRightOf="@+id/cafeImage"
+        android:layout_toEndOf="@+id/cafeImage" />
 
-    <TextView
+    <TextView style="@style/CafeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Time"
-        android:textSize="15sp"
-        android:paddingLeft="8dp"
         android:id="@+id/time"
-        android:layout_alignTop="@+id/position"
-        android:layout_toRightOf="@+id/position"
-        android:layout_toEndOf="@+id/position" />
+        android:layout_below="@+id/position"
+        android:layout_toRightOf="@+id/cafeImage"
+        android:layout_toEndOf="@+id/cafeImage" />
 
     <com.like.LikeButton
-        app:icon_type="star"
+        app:icon_type="heart"
         app:icon_size="24dp"
         android:id="@+id/star_button"
         android:layout_width="64dp"
@@ -78,32 +63,32 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
+    <com.ms.square.android.expandabletextview.ExpandableTextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/description"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/type"
+        android:layout_below="@+id/cafeImage"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout">
-
+        expandableTextView:maxCollapsedLines="1"
+        expandableTextView:animDuration="200">
         <TextView
+            android:id="@id/expandable_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="description"
-            android:id="@+id/description"
-            android:textSize="13sp"/>
-    </LinearLayout>
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="visible"
-        android:id="@+id/progressBar"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="16sp"
+            android:textColor="#666666" />
+        <ImageButton
+            android:id="@id/expand_collapse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_gravity="right|bottom"
+            android:background="@android:color/transparent"/>
+    </com.ms.square.android.expandabletextview.ExpandableTextView>
 
 
 </RelativeLayout>

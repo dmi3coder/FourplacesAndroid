@@ -16,7 +16,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
 }
+
 
     dependencies {
         compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -31,5 +39,6 @@ android {
         compile 'de.greenrobot:eventbus:2.4.0'
         compile 'com.malinskiy:superrecyclerview:1.1.1'
         compile 'com.android.support:recyclerview-v7:+'
-
+        compile 'com.ms-square:expandableTextView:0.1.4'
+        compile 'com.jakewharton:butterknife:7.0.1'
 }

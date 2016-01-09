@@ -1,65 +1,62 @@
 package goldenbyte.codemonkeys.goldenbyteproject.adapters;
 
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.media.MediaPlayer;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.like.LikeButton;
 import com.like.OnLikeListener;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import goldenbyte.codemonkeys.goldenbyteproject.MainActivity;
 import goldenbyte.codemonkeys.goldenbyteproject.R;
 import goldenbyte.codemonkeys.goldenbyteproject.bean.Cafe;
 
 /**
- * Created by dmi3coder on 03.01.2016 16:08.
+ * Created by Naomi Blues on 03.01.2016 16:08.
  */
 public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder> {
     private ArrayList<Cafe> cafeList;
     ImageLoader imageLoader;
 
+    private static final String TAG = "dmi3debug";
+
+
     public static class CafeViewHolder extends RecyclerView.ViewHolder{
         protected TextView name;
         protected TextView type;
-        protected TextView descritption;
+        protected ExpandableTextView descritption;
         protected TextView workTime;
         protected TextView position;
         protected ImageView cafeImage;
         protected LikeButton likeButton;
-        protected ProgressBar progressBar;
-        protected LinearLayout clickZone;
         public CafeViewHolder(View v){
             super(v);
             name = (TextView)v.findViewById(R.id.name);
             type = (TextView)v.findViewById(R.id.type);
             workTime = (TextView)v.findViewById(R.id.time);
-            descritption = (TextView)v.findViewById(R.id.description);
+            descritption = (ExpandableTextView)v.findViewById(R.id.description);
             position = (TextView)v.findViewById(R.id.position);
-            cafeImage = (ImageView)v.findViewById(R.id.imageView);
+            cafeImage = (ImageView)v.findViewById(R.id.cafeImage);
             likeButton = (LikeButton)v.findViewById(R.id.star_button);
-            progressBar = (ProgressBar)v.findViewById(R.id.progressBar);
-            clickZone = (LinearLayout)v.findViewById(R.id.clickZone);
         }
     }
 
-    public  CafeAdapter(ArrayList<Cafe> cafeList){
+    public  CafeAdapter(ArrayList<Cafe> cafeList, Context context){
         this.cafeList = cafeList;
         imageLoader = ImageLoader.getInstance();
+        imageLoader.init(ImageLoaderConfiguration.createDefault(context));
     }
 
     @Override
@@ -70,30 +67,25 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
                     super.onLoadingStarted(imageUri, view);
-                    currentCafeHolder.progressBar.setVisibility(View.VISIBLE);
+                    Log.d(TAG, "onLoadingStarted: image load started");
 
                 }
 
                 @Override
                 public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                     super.onLoadingFailed(imageUri, view, failReason);
-                    currentCafeHolder.progressBar.setVisibility(View.GONE);
+                    Log.d(TAG, "onLoadingFailed: image load failed: " + failReason.toString());
                 }
 
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    Log.d(TAG, "onLoadingComplete: image load complete");
                     currentCafeHolder.cafeImage.setImageBitmap(loadedImage);
                 }
             });
         }catch (Exception e){
-
+            Log.d(TAG, "onBindViewHolder: image error"+e.toString());
         }
-        currentCafeHolder.clickZone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: 07.01.2016 intent to menu
-            }
-        });
         currentCafeHolder.name.setText(currentCafe.getName());
         currentCafeHolder.type.setText(currentCafe.getType());
         currentCafeHolder.position.setText(currentCafe.getPosition());
@@ -108,8 +100,6 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
             public void unLiked() {
             }
         });// TODO: 04.01.2016 make like/unlike event
-
-
 
     }
 
