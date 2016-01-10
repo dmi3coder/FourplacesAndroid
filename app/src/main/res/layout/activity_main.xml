@@ -8,10 +8,11 @@
     android:orientation="vertical"
     tools:context="goldenbyte.codemonkeys.goldenbyteproject.MainActivity">
 
+
     <include layout="@layout/widget_search_bar"
         android:id="@+id/search_view"/>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,9 +25,11 @@
             android:layout_height="match_parent"
             app:layout_empty="@layout/view_empty"
             app:recyclerClipToPadding="false"
-            app:scrollbarStyle="insideInset" />
+            app:scrollbarStyle="insideInset"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-
-    </FrameLayout>
+    </RelativeLayout>
 
 </LinearLayout>

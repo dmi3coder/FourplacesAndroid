@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 
@@ -15,8 +14,6 @@ import butterknife.ButterKnife;
 import goldenbyte.codemonkeys.goldenbyteproject.adapters.CafeAdapter;
 import goldenbyte.codemonkeys.goldenbyteproject.backend.CafeLoader;
 import goldenbyte.codemonkeys.goldenbyteproject.bean.Cafe;
-import goldenbyte.codemonkeys.goldenbyteproject.events.FailedLoadEvent;
-import goldenbyte.codemonkeys.goldenbyteproject.events.LoadEvent;
 import goldenbyte.codemonkeys.goldenbyteproject.fragment.SearchFragment;
 import xyz.sahildave.widget.SearchViewLayout;
 
@@ -84,24 +81,6 @@ public class MainActivity extends AppCompatActivity {
 //            });
 //        }
 
-    }
-
-
-    public void onEvent(LoadEvent loadEvent){
-        try {
-            recyclerView.setAdapter(new CafeAdapter(loadEvent.cafes,getBaseContext()));
-//            for(Cafe cafe: loadEvent.cafes){
-//                Log.d(TAG, "onEvent: "+cafe.getName()+cafe.getDescription()+cafe.getId());
-//            }
-            Log.d(TAG, "onEvent: working");
-        }catch (Exception e){
-            Log.d(TAG, e.getLocalizedMessage());
-        }
-    }
-
-    public void onEvent(FailedLoadEvent failedLoadEvent){
-        Log.d(TAG, "onFailEvent: unworking");
-        Toast.makeText(MainActivity.this, failedLoadEvent.message,Toast.LENGTH_LONG).show();
     }
 
 }

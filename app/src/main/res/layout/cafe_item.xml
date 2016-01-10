@@ -1,94 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingTop="16dp">
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/cafeImage"
-        android:src="@drawable/no_image"
-        android:maxHeight="80dp"
-        android:maxWidth="80dp"
-        android:adjustViewBounds="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView style="@style/CafeTextView"
-        android:text="New Text"
-        android:id="@+id/name"
-        android:textSize="24dp"
-        android:layout_alignTop="@+id/cafeImage"
-        android:layout_toRightOf="@+id/cafeImage"
-        android:layout_toEndOf="@+id/cafeImage" />
-
-    <TextView style="@style/CafeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Type"
-        android:id="@+id/type"
-        android:layout_below="@+id/name"
-        android:layout_toRightOf="@+id/cafeImage"
-        android:layout_toEndOf="@+id/cafeImage" />
-    <TextView style="@style/CafeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Location"
-        android:id="@+id/position"
-        android:layout_below="@+id/type"
-        android:layout_toRightOf="@+id/cafeImage"
-        android:layout_toEndOf="@+id/cafeImage" />
-
-    <TextView style="@style/CafeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time"
-        android:id="@+id/time"
-        android:layout_below="@+id/position"
-        android:layout_toRightOf="@+id/cafeImage"
-        android:layout_toEndOf="@+id/cafeImage" />
-
-    <com.like.LikeButton
-        app:icon_type="heart"
-        app:icon_size="24dp"
-        android:id="@+id/star_button"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <com.ms.square.android.expandabletextview.ExpandableTextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/description"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cafeImage"
-        android:layout_alignParentLeft="true"
-        expandableTextView:maxCollapsedLines="1"
-        expandableTextView:animDuration="200">
-        <TextView
-            android:id="@id/expandable_text"
+        android:layout_height="match_parent"
+        android:id="@+id/clickZone">
+
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/textHolder">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textSize="16sp"
-            android:textColor="#666666" />
-        <ImageButton
-            android:id="@id/expand_collapse"
+            android:layout_height="match_parent">
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_gravity="right|bottom"
-            android:background="@android:color/transparent"/>
-    </com.ms.square.android.expandabletextview.ExpandableTextView>
+            android:id="@+id/cafeImage"
+            android:src="@drawable/no_image"
+            android:maxHeight="80dp"
+            android:maxWidth="80dp"
+            android:adjustViewBounds="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
+        <TextView style="@style/CafeTextView"
+            android:text="New Text"
+            android:id="@+id/name"
+            android:textSize="24dp"
+            android:layout_alignTop="@+id/cafeImage"
+            android:layout_toRightOf="@+id/cafeImage"
+            android:layout_toEndOf="@+id/cafeImage" />
+
+        <TextView style="@style/CafeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type"
+            android:id="@+id/type"
+            android:layout_below="@+id/name"
+            android:layout_toRightOf="@+id/cafeImage"
+            android:layout_toEndOf="@+id/cafeImage" />
+        <TextView style="@style/CafeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:id="@+id/position"
+            android:layout_below="@+id/type"
+            android:layout_toRightOf="@+id/cafeImage"
+            android:layout_toEndOf="@+id/cafeImage" />
+
+        <TextView style="@style/CafeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time"
+            android:id="@+id/time"
+            android:layout_below="@+id/position"
+            android:layout_toRightOf="@+id/cafeImage"
+            android:layout_toEndOf="@+id/cafeImage" />
+        </RelativeLayout>
+    </com.balysv.materialripple.MaterialRippleLayout>
+        <com.like.LikeButton
+            app:icon_type="heart"
+            app:icon_size="24dp"
+            android:id="@+id/star_button"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <com.ms.square.android.expandabletextview.ExpandableTextView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textHolder"
+            android:layout_alignParentLeft="true"
+            expandableTextView:maxCollapsedLines="1"
+            expandableTextView:animDuration="200">
+            <TextView
+                android:id="@id/expandable_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="16sp"
+                android:textColor="#666666" />
+            <ImageButton
+                android:id="@id/expand_collapse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_gravity="right|bottom"
+                android:background="@android:color/transparent"/>
+        </com.ms.square.android.expandabletextview.ExpandableTextView>
 
 </RelativeLayout>

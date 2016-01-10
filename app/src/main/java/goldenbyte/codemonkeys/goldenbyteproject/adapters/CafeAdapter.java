@@ -8,15 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ import goldenbyte.codemonkeys.goldenbyteproject.bean.Cafe;
  */
 public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder> {
     private ArrayList<Cafe> cafeList;
-    ImageLoader imageLoader;
+    private Context context;
 
     private static final String TAG = "dmi3debug";
 
@@ -41,6 +41,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         protected TextView position;
         protected ImageView cafeImage;
         protected LikeButton likeButton;
+        protected RelativeLayout clickZone;
         public CafeViewHolder(View v){
             super(v);
             name = (TextView)v.findViewById(R.id.name);
@@ -50,42 +51,29 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
             position = (TextView)v.findViewById(R.id.position);
             cafeImage = (ImageView)v.findViewById(R.id.cafeImage);
             likeButton = (LikeButton)v.findViewById(R.id.star_button);
+            clickZone  = (RelativeLayout)v.findViewById(R.id.clickZone);
         }
     }
 
     public  CafeAdapter(ArrayList<Cafe> cafeList, Context context){
         this.cafeList = cafeList;
-        imageLoader = ImageLoader.getInstance();
-        imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+        this.context = context;
     }
 
     @Override
     public void onBindViewHolder(final CafeViewHolder currentCafeHolder, int cafeListPosition) {
     final Cafe currentCafe = cafeList.get(cafeListPosition);
-        try {
-            imageLoader.loadImage(currentCafe.getImageUrl(), new SimpleImageLoadingListener() {
-                @Override
-                public void onLoadingStarted(String imageUri, View view) {
-                    super.onLoadingStarted(imageUri, view);
-                    Log.d(TAG, "onLoadingStarted: image load started");
-
-                }
-
-                @Override
-                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                    super.onLoadingFailed(imageUri, view, failReason);
-                    Log.d(TAG, "onLoadingFailed: image load failed: " + failReason.toString());
-                }
-
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    Log.d(TAG, "onLoadingComplete: image load complete");
-                    currentCafeHolder.cafeImage.setImageBitmap(loadedImage);
-                }
-            });
-        }catch (Exception e){
-            Log.d(TAG, "onBindViewHolder: image error"+e.toString());
-        }
+//        Glide.with(context).load(currentCafe.getImageUrl()).into(currentCafeHolder.cafeImage);
+        Glide.with(context).load(
+                currentCafe.getImageUrl())
+                .asBitmap()
+                .centerCrop()
+                .into(new SimpleTarget<Bitmap>(250, 250) {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        currentCafeHolder.cafeImage.setImageBitmap(resource);
+                    }
+                });
         currentCafeHolder.name.setText(currentCafe.getName());
         currentCafeHolder.type.setText(currentCafe.getType());
         currentCafeHolder.position.setText(currentCafe.getPosition());
@@ -100,7 +88,13 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
             public void unLiked() {
             }
         });// TODO: 04.01.2016 make like/unlike event
-
+        currentCafeHolder.likeButton.setLiked(false);// TODO: 1/9/16 make like checker from realm
+        currentCafeHolder.clickZone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: ");
+            }
+        });
     }
 
     @Override

@@ -4,10 +4,6 @@ package goldenbyte.codemonkeys.goldenbyteproject.backend;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +15,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import goldenbyte.codemonkeys.goldenbyteproject.bean.Cafe;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 /**
@@ -26,11 +25,11 @@ import goldenbyte.codemonkeys.goldenbyteproject.bean.Cafe;
  */
 public class CafeLoader {
     private static final String TAG = "dmi3debug";
-
+    private OnCafesLoadListener onCafesLoadListener;
+    ArrayList<Cafe> restCafesData;
     public interface OnCafesLoadListener{
         void onEvent(ArrayList<Cafe> cafes);
     }
-    private OnCafesLoadListener onCafesLoadListener;
     public enum CafeType{ALL,CAFE,NIGHT_CLUB,FUN,RESTAURANT,FASTFOOD,SUSHI,ETC;
         String[] backendRuTypes = {"","Кофейня", "Ночной клуб", "Развлечения", "Ресторан", "Фаст фуд", "Суши бар", "Что то другое"};
 
@@ -48,20 +47,24 @@ public class CafeLoader {
             throw new NullPointerException("Cafe type not found");
             }
     }
-    ArrayList<Cafe> restCafesData;
-    public static final String API_URL = "http://goldenbyteproject.esy.es";
+    private static final String API_URL = "http://goldenbyteproject.esy.es";
 
     public CafeLoader(CafeType choosedCafeType) {
-        new HttpAsyncTask().execute(API_URL+choosedCafeType.toString());
+        new CafeLoadAsyncTask().execute(API_URL + choosedCafeType.toString());
     }
     public void setOnCafesLoadListener(OnCafesLoadListener listener){
         onCafesLoadListener = listener;
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+    private class CafeLoadAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
-            return GET(urls[0]);
+            try {
+                return GET(urls[0]);
+            } catch (IOException e) {
+                Log.e(TAG, "doInBackground: error to GET",e);
+                return null;
+            }
         }
 
         @Override
@@ -97,10 +100,9 @@ public class CafeLoader {
 
     }
 
-    public static String GET(String url){
+    public static String GET(String url) throws IOException{
         InputStream inputStream = null;
         String result = "";
-        try {
             // create HttpClient
             OkHttpClient client = new OkHttpClient();
 
@@ -115,11 +117,6 @@ public class CafeLoader {
                 result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
-
-        } catch (Exception e) {
-            Log.d("InputStream", "error");
-        }
-
         return result;
     }
     private static String convertInputStreamToString(InputStream inputStream) throws IOException{
