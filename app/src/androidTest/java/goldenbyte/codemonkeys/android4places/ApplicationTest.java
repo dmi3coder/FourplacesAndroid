@@ -1,4 +1,4 @@
-package goldenbyte.codemonkeys.goldenbyteproject;
+package goldenbyte.codemonkeys.android4places;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,4 @@
-package goldenbyte.codemonkeys.goldenbyteproject.bean;
+package goldenbyte.codemonkeys.android4places.bean;
 
 /**
  * Created by dmi3coder on 28.12.2015 20:11.

@@ -1,4 +1,4 @@
-package goldenbyte.codemonkeys.goldenbyteproject.bean;
+package goldenbyte.codemonkeys.android4places.bean;
 
 /**
  * Created by dmi3coder on 1/10/16.
@@ -8,7 +8,7 @@ public class Meal {
     private String description;
     private int price;
     private String imageUrl;
-    private boolean debugMode = true;
+    private boolean debugMode = false;
 
     public String getImageUrl() {
         if(debugMode)return "https://upload.wikimedia.org/wikipedia/commons/1/1b/Square_200x200.png";

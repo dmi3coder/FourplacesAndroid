@@ -1,4 +1,4 @@
-package goldenbyte.codemonkeys.goldenbyteproject.backend;
+package goldenbyte.codemonkeys.android4places.backend;
 
 
 import android.os.AsyncTask;
@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import goldenbyte.codemonkeys.goldenbyteproject.bean.Cafe;
+import goldenbyte.codemonkeys.android4places.bean.Cafe;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

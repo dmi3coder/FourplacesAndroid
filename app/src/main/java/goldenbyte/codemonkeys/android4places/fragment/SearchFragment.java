@@ -1,4 +1,4 @@
-package goldenbyte.codemonkeys.goldenbyteproject.fragment;
+package goldenbyte.codemonkeys.android4places.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 
-import goldenbyte.codemonkeys.goldenbyteproject.R;
-import goldenbyte.codemonkeys.goldenbyteproject.backend.CafeLoader;
+import goldenbyte.codemonkeys.android4places.R;
+import goldenbyte.codemonkeys.android4places.backend.CafeLoader;
 
 public class SearchFragment extends Fragment {
     SuperRecyclerView searchCafeListView;

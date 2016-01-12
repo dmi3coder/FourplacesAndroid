@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context="goldenbyte.codemonkeys.goldenbyteproject.MainActivity">
+    tools:context="goldenbyte.codemonkeys.android4places.MainActivity">
 
 
     <include layout="@layout/widget_search_bar"
@@ -30,6 +30,122 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:id="@+id/cafeHeader">
+
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:mrl_rippleColor="@color/colorAccent"
+                app:mrl_rippleBackground="@color/colorPrimary"
+                android:padding="5dp"
+                >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/header_button_all"
+                android:gravity="center"
+                android:drawableTop="@drawable/ic_restaurant_menu_white_24dp"
+                android:text="Всё"
+                android:textColor="@android:color/white"/>
+            </com.balysv.materialripple.MaterialRippleLayout>
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:mrl_rippleColor="@color/colorAccent"
+                app:mrl_rippleBackground="@color/colorPrimary"
+                android:padding="5dp"
+                >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/header_button_cafe"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:drawableTop="@drawable/ic_local_cafe_white_24dp"
+                android:text="Кофейня"
+                android:textColor="@android:color/white"/>
+            </com.balysv.materialripple.MaterialRippleLayout>
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:mrl_rippleColor="@color/colorAccent"
+                app:mrl_rippleBackground="@color/colorPrimary"
+                android:padding="5dp"
+                >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/header_button_night_club"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:drawableTop="@drawable/ic_champage"
+                android:text="Ночной клуб"
+                android:textColor="@android:color/white"/>
+            </com.balysv.materialripple.MaterialRippleLayout>
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:mrl_rippleColor="@color/colorAccent"
+                app:mrl_rippleBackground="@color/colorPrimary"
+                android:padding="5dp"
+                >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/header_button_fun"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:drawableTop="@drawable/ic_fun"
+                android:text="Развлечения"
+                android:textColor="@android:color/white"/>
+            </com.balysv.materialripple.MaterialRippleLayout>
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:mrl_rippleColor="@color/colorAccent"
+                app:mrl_rippleBackground="@color/colorPrimary"
+                android:padding="5dp"
+                >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/header_button_more"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:drawableTop="@drawable/ic_menu"
+                android:text="Еще"
+                android:textColor="@android:color/white"/>
+            </com.balysv.materialripple.MaterialRippleLayout>
+
+</LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cafeFooter"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="Test"
+            android:textSize="22sp"
+            android:orientation="horizontal" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:drawableTop="@android:drawable/ic_dialog_info"
+                android:text="test"
+                android:textColor="@android:color/white"/>
+
+        </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>

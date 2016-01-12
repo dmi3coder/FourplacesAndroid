@@ -1,6 +1,7 @@
-package goldenbyte.codemonkeys.goldenbyteproject.adapters;
+package goldenbyte.codemonkeys.android4places.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,8 +21,9 @@ import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import java.util.ArrayList;
 
-import goldenbyte.codemonkeys.goldenbyteproject.R;
-import goldenbyte.codemonkeys.goldenbyteproject.bean.Cafe;
+import goldenbyte.codemonkeys.android4places.CafeActivity;
+import goldenbyte.codemonkeys.android4places.R;
+import goldenbyte.codemonkeys.android4places.bean.Cafe;
 
 /**
  * Created by Naomi Blues on 03.01.2016 16:08.
@@ -42,6 +44,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         protected ImageView cafeImage;
         protected LikeButton likeButton;
         protected RelativeLayout clickZone;
+        protected View headerZone;
         public CafeViewHolder(View v){
             super(v);
             name = (TextView)v.findViewById(R.id.name);
@@ -52,6 +55,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
             cafeImage = (ImageView)v.findViewById(R.id.cafeImage);
             likeButton = (LikeButton)v.findViewById(R.id.star_button);
             clickZone  = (RelativeLayout)v.findViewById(R.id.clickZone);
+            headerZone = v.findViewById(R.id.HeaderZone);
         }
     }
 
@@ -64,6 +68,9 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
     public void onBindViewHolder(final CafeViewHolder currentCafeHolder, int cafeListPosition) {
     final Cafe currentCafe = cafeList.get(cafeListPosition);
 //        Glide.with(context).load(currentCafe.getImageUrl()).into(currentCafeHolder.cafeImage);
+        if(cafeListPosition ==0){
+        currentCafeHolder.headerZone.setVisibility(View.VISIBLE);
+        }
         Glide.with(context).load(
                 currentCafe.getImageUrl())
                 .asBitmap()
@@ -92,6 +99,10 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         currentCafeHolder.clickZone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent menuIntent = new Intent(context, CafeActivity.class);
+                menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                menuIntent.putExtra("menu_id",currentCafe.getId());
+                context.startActivity(menuIntent);
                 Log.d(TAG, "onClick: ");
             }
         });
