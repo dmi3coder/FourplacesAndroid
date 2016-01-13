@@ -7,32 +7,37 @@ package goldenbyte.codemonkeys.android4places;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 
+import goldenbyte.codemonkeys.android4places.backend.MenuLoader;
+import goldenbyte.codemonkeys.android4places.backend.MenuParser;
 import goldenbyte.codemonkeys.android4places.bean.Meal;
 import goldenbyte.codemonkeys.android4places.fragment.ScrollTabHolderFragment;
 
 public class SampleListFragment extends ScrollTabHolderFragment {
 
     private static final String ARG_POSITION = "position";
+    private static final String  ARG_JSON = "json";
 
     private ListView mListView;
-    private ArrayList<Meal> currentMeals;
-    private ArrayList<String> mListItems;
-
+    private ArrayList<Meal> mListItems;
     private int mPosition;
-    public static Fragment newInstance(int position) {
+    private String menuLoaderResult;
+    private MenuParser menuParser;
+
+    public static Fragment newInstance(int position,String result) {
         SampleListFragment f = new SampleListFragment();
         Bundle b = new Bundle();
+        b.putString(ARG_JSON,result);
         b.putInt(ARG_POSITION, position);
         f.setArguments(b);
         return f;
@@ -42,9 +47,12 @@ public class SampleListFragment extends ScrollTabHolderFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPosition = getArguments().getInt(ARG_POSITION);
-        mListItems = new ArrayList<String>();
-        for (int i = 1; i <= 100; i++) {
-            mListItems.add("static test");
+        menuLoaderResult = getArguments().getString(ARG_JSON);
+        menuParser = new MenuParser(menuLoaderResult); // TODO: 1/14/16 remove constructor from initialisation
+        try {
+            mListItems = menuParser.getMeals(MenuLoader.MealType.values()[mPosition]);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
@@ -65,18 +73,13 @@ public class SampleListFragment extends ScrollTabHolderFragment {
         super.onActivityCreated(savedInstanceState);
 
         mListView.setOnScrollListener(new OnScroll());
-        mListView.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.list_item, android.R.id.text1, mListItems));
-
-        if(CafeActivity.NEEDS_PROXY){//in my moto phone(android 2.1),setOnScrollListener do not work well
-            mListView.setOnTouchListener(new OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (mScrollTabHolder != null)
-                        mScrollTabHolder.onScroll(mListView, 0, 0, 0, mPosition);
-                    return false;
-                }
-            });
+        ArrayList<String> test = new ArrayList<>();
+        for (Meal m :
+                mListItems) {
+            test.add(m.getName());
         }
+        mListView.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.list_item, android.R.id.text1, test));
+
     }
 
     @Override

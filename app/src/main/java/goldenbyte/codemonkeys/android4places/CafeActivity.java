@@ -1,7 +1,6 @@
 package goldenbyte.codemonkeys.android4places;
 
 import android.annotation.SuppressLint;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,7 +12,10 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import goldenbyte.codemonkeys.android4places.backend.MenuLoader;
+import goldenbyte.codemonkeys.android4places.backend.MenuParser;
 import goldenbyte.codemonkeys.android4places.fragment.ScrollTabHolderFragment;
 import goldenbyte.codemonkeys.android4places.views.PagerSlidingTabStrip;
 
@@ -23,44 +25,50 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
 
 
 
-    public static final boolean NEEDS_PROXY = Integer.valueOf(Build.VERSION.SDK_INT).intValue() < 11;
-    private View mHeader;
-    private PagerSlidingTabStrip mPagerSlidingTabStrip;
-    private ViewPager mViewPager;
+    @Bind(R.id.header) View mHeader;
+    @Bind(R.id.info) TextView info;
+    @Bind(R.id.tabs) PagerSlidingTabStrip mPagerSlidingTabStrip;
+    @Bind(R.id.pager) ViewPager mViewPager;
     private PagerAdapter mPagerAdapter;
-    private int mMinHeaderHeight;
-    private int mHeaderHeight;
-    private int mMinHeaderTranslation;
-    private TextView info;
+    private int minimalHeaderHeight;
+    private int headerHeight;
+    private int minimalHeaderTranslation;
     private int mLastY;
     public MenuLoader menuLoader;
     private int menu_id;
+    private MenuParser menuParser;
+    private static String result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        menu_id = getIntent().getIntExtra("menu_id", 0);
-        menuLoader = new MenuLoader(menu_id);
-        mMinHeaderHeight = getResources().getDimensionPixelSize(R.dimen.min_header_height);
-        mHeaderHeight = getResources().getDimensionPixelSize(R.dimen.header_height);
-        mMinHeaderTranslation = -mMinHeaderHeight;
+        defineValues();
         setContentView(R.layout.activity_cafe);
-
-        mHeader = findViewById(R.id.header);
-        info = (TextView) findViewById(R.id.info);
-
-        mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        mViewPager = (ViewPager) findViewById(R.id.pager);
+        ButterKnife.bind(this);
+        new MenuLoader(menu_id).setOnMenuLoadListener(new MenuLoader.OnMenuLoadListener() {
+            @Override
+            public void onEvent(String result) {
+                CafeActivity.result = result;
+                mViewPager.setAdapter(mPagerAdapter);
+                mPagerSlidingTabStrip.setViewPager(mViewPager);
+                mPagerSlidingTabStrip.setOnPageChangeListener(CafeActivity.this);
+                mLastY = 0;
+            }
+        });
         mViewPager.setOffscreenPageLimit(4);
 
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
         mPagerAdapter.setTabHolderScrollingContent(this);
 
-        mViewPager.setAdapter(mPagerAdapter);
 
-        mPagerSlidingTabStrip.setViewPager(mViewPager);
-        mPagerSlidingTabStrip.setOnPageChangeListener(this);
-        mLastY=0;
+    }
+
+    private void defineValues() {
+        menu_id = getIntent().getIntExtra("menu_id", 0);
+        menuLoader = new MenuLoader(menu_id);
+        minimalHeaderHeight = getResources().getDimensionPixelSize(R.dimen.min_header_height);
+        headerHeight = getResources().getDimensionPixelSize(R.dimen.header_height);
+        minimalHeaderTranslation = -minimalHeaderHeight;
     }
 
     @Override
@@ -83,13 +91,6 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
                 currentHolder = scrollTabHolders.valueAt(position + 1);
             }
 
-            if (NEEDS_PROXY) {
-                // TODO is not good
-                currentHolder.adjustScroll(mHeader.getHeight() - mLastY);
-                mHeader.postInvalidate();
-            } else {
-                currentHolder.adjustScroll((int) (mHeader.getHeight() + mHeader.getTranslationY()));
-            }
         }
     }
 
@@ -97,28 +98,15 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
     public void onPageSelected(int position) {
         SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter.getScrollTabHolders();
         ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
-        if(NEEDS_PROXY){
-            //TODO is not good
-            currentHolder.adjustScroll(mHeader.getHeight()-mLastY);
-            mHeader.postInvalidate();
-        }else{
+
             currentHolder.adjustScroll((int) (mHeader.getHeight() +mHeader.getTranslationY()));
-        }
     }
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount, int pagePosition) {
         if (mViewPager.getCurrentItem() == pagePosition) {
             int scrollY = getScrollY(view);
-            if(NEEDS_PROXY){
-                //TODO is not good
-                mLastY=-Math.max(-scrollY, mMinHeaderTranslation);
-                info.setText(String.valueOf(scrollY));
-                mHeader.scrollTo(0, mLastY);
-                mHeader.postInvalidate();
-            }else{
-                mHeader.setTranslationY(Math.max(-scrollY, mMinHeaderTranslation));
-            }
+                mHeader.setTranslationY(Math.max(-scrollY, minimalHeaderTranslation));
         }
     }
 
@@ -138,7 +126,7 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
 
         int headerHeight = 0;
         if (firstVisiblePosition >= 1) {
-            headerHeight = mHeaderHeight;
+            headerHeight = this.headerHeight;
         }
 
         return -top + firstVisiblePosition * c.getHeight() + headerHeight;
@@ -151,7 +139,7 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
     public class PagerAdapter extends FragmentPagerAdapter {
 
         private SparseArrayCompat<ScrollTabHolder> mScrollTabHolders;
-        private final String[] TITLES = { "Page 1", "Page 2", "Page 3", "Page 4"};
+        private final String[] TITLES = MenuLoader.MealType.backendRuTypes;
         private ScrollTabHolder mListener;
 
         public PagerAdapter(FragmentManager fm) {
@@ -175,7 +163,7 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
 
         @Override
         public Fragment getItem(int position) {
-            ScrollTabHolderFragment fragment = (ScrollTabHolderFragment) SampleListFragment.newInstance(position);
+            ScrollTabHolderFragment fragment = (ScrollTabHolderFragment) SampleListFragment.newInstance(position,result);
 
             mScrollTabHolders.put(position, fragment);
             if (mListener != null) {
