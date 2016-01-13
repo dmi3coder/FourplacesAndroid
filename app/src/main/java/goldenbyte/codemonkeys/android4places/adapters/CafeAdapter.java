@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -43,7 +42,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         protected TextView position;
         protected ImageView cafeImage;
         protected LikeButton likeButton;
-        protected RelativeLayout clickZone;
+        protected View clickZone;
         protected View headerZone;
         public CafeViewHolder(View v){
             super(v);
@@ -54,7 +53,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
             position = (TextView)v.findViewById(R.id.position);
             cafeImage = (ImageView)v.findViewById(R.id.cafeImage);
             likeButton = (LikeButton)v.findViewById(R.id.star_button);
-            clickZone  = (RelativeLayout)v.findViewById(R.id.clickZone);
+            clickZone  = v.findViewById(R.id.clickZone);
             headerZone = v.findViewById(R.id.HeaderZone);
         }
     }

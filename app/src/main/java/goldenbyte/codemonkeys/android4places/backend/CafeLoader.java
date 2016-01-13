@@ -8,16 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import goldenbyte.codemonkeys.android4places.bean.Cafe;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 
 /**
@@ -60,7 +54,7 @@ public class CafeLoader {
         @Override
         protected String doInBackground(String... urls) {
             try {
-                return GET(urls[0]);
+                return new InputStreamProcessor(urls[0]).GET();
             } catch (IOException e) {
                 Log.e(TAG, "doInBackground: error to GET",e);
                 return null;
@@ -97,37 +91,6 @@ public class CafeLoader {
         }
         Log.d(TAG, "parseJsonArray: loaded size"+restCafesData.size());
         getRestCafesData();
-
-    }
-
-    public static String GET(String url) throws IOException{
-        InputStream inputStream = null;
-        String result = "";
-            // create HttpClient
-            OkHttpClient client = new OkHttpClient();
-
-            // make GET request to the given URL
-            Request request = new Request.Builder().url(url).build();
-            Response response = client.newCall(request).execute();
-
-            // receive response as inputStream
-            inputStream = response.body().byteStream();
-            // convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-        return result;
-    }
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException{
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
 
     }
 

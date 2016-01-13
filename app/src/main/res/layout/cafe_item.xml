@@ -5,8 +5,7 @@
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/clickZone">
+        android:layout_height="match_parent">
     <View
         android:id="@+id/HeaderZone"
         android:layout_width="match_parent"
@@ -18,7 +17,7 @@
     <com.balysv.materialripple.MaterialRippleLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/textHolder"
+        android:id="@+id/clickZone"
         android:layout_below="@+id/HeaderZone">
     <RelativeLayout
         android:layout_width="match_parent"

@@ -15,8 +15,8 @@ public class SearchFragment extends Fragment {
     SuperRecyclerView searchCafeListView;
     CafeLoader.CafeType fragmentCurrentCafeType = CafeLoader.CafeType.ALL;
 
+    public SearchFragment(CafeLoader.CafeType choosedCafeType) {
 
-    public SearchFragment(CafeLoader.CafeType newType) {
     }
 
     @Override

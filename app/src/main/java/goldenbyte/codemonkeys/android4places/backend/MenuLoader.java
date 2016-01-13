@@ -7,49 +7,64 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import goldenbyte.codemonkeys.android4places.bean.Meal;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by dmi3coder on 1/10/16.
  */
 public class MenuLoader {
+    public enum MealType {FIRST,SECOND,DRINK,SNACKS,BAKERY,CANDY,SEA;// TODO: 1/13/16 add etc
+        private static final String[] backendJsonTypes = {"first","second","drink","snacks","bread","confectionery","seaproduct","etc"};
+        private static final String[] backendRuTypes={"Первое","Второе","Напитки","Закуски","Хлебные изделия","Кондитерские изделия","Морские продукты","Другое"};
+        @Override
+        public String toString() {
+            for (int i = 0; i < MealType.values().length; i++) {
+                if(this == MealType.values()[i]){
+                    return MealType.backendRuTypes[i];
+                }
+            }
+            return null;
+        }
+
+        public String toJson(){
+            for (int i = 0; i < MealType.values().length; i++) {
+                if(this == MealType.values()[i]){
+                    return MealType.backendJsonTypes[i];
+                }
+            }
+            return null;
+        }
+    }
     private static final String TAG = "MenuLoader";
     private static final String API_URL = "http://goldenbyteproject.esy.es/api";
     private JSONObject data_array;
     private OnMenuLoadListener onMenuLoadListener;
-    private String[] categories;
 
 
 
     public interface OnMenuLoadListener{
-        void onEvent(String[] categories);
+        void onEvent();
     }
-
-    public MenuLoader(int menuId){
-        new MenuLoadAsyncTast().execute(API_URL + "/getmenu/" + menuId);
-    }
-
     public void setOnMenuLoadListener(OnMenuLoadListener onMenuLoadListener){
         this.onMenuLoadListener = onMenuLoadListener;
     }
 
 
-    private class MenuLoadAsyncTast extends AsyncTask<String,Void,String> {
+    public MenuLoader(int menuId){
+        new MenuLoadAsyncTask().execute(API_URL + "/getmenu/" + menuId);
+    }
+
+
+    private class MenuLoadAsyncTask extends AsyncTask<String,Void,String> {
         @Override
         protected String doInBackground(String... urls) {
             try {
-                return GET(urls[0]);
+                return new InputStreamProcessor(urls[0]).GET();
             } catch (IOException e) {
-                Log.e(TAG, "doInBackground: errot to GET", e);
+                Log.e(TAG, "doInBackground: error to GET", e);
                 return null;
             }
         }
@@ -68,53 +83,18 @@ public class MenuLoader {
     }
 
     private void parseJsonMenu(String result) throws JSONException{
-        data_array = new JSONObject(result);// TODO: 1/12/16 make normal input data
-
-        Log.d(TAG, "parseJsonMenu: "+data_array.getJSONArray("drink").getJSONObject(0).getString("name"));
-    }
-
-    private void parseCafeCategories(JSONObject data) throws JSONException {
-        categories = new String[data_array.length()];
-        for (int i = 0;i<data_array.length();i++){
-            //categories[i] = data_array.getJSONObject(i).toString();// FIXME: 1/10/16 set true values
-            Log.d(TAG, "parseCafeCategories: "+categories[i]);
-
-        }
-        getRestMenuData();
-    }
-
-    private String GET(String url) throws IOException{
-        InputStream inputStream = null;
-        String result = "";
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(url).build();
-        Response response = client.newCall(request).execute();
-        inputStream = response.body().byteStream();
-        if(inputStream!= null)
-            result = convertInputStreamToString(inputStream);
-        else
-            result = "Did not work!";
-        return result;
-    }
-
-    private String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
-        inputStream.close();
-        return result;
+        data_array = new JSONObject(result).getJSONObject("data");// TODO: 1/12/16 make normal input data
+        Log.d(TAG, "parseJsonMenu: " + data_array);
     }
 
     public void getRestMenuData(){
         if(onMenuLoadListener != null)
-            onMenuLoadListener.onEvent(categories);
+            onMenuLoadListener.onEvent();
     }
 
-    private ArrayList<Meal> getMeal(int category) throws JSONException {
+    public ArrayList<Meal> getMeals(MealType mealType) throws JSONException {
         ArrayList<Meal> result = new ArrayList<>();
-        JSONArray mealArray = data_array.getJSONObject(null).getJSONArray("data");// FIXME: 1/12/16 remove null to category
+        JSONArray mealArray = data_array.getJSONArray(mealType.toJson());
         Meal currentMeal;
         JSONObject currentObject;
         for(int i = 0; i < mealArray.length();i++){
@@ -123,7 +103,7 @@ public class MenuLoader {
             currentMeal.setName(currentObject.getString("name"));
             currentMeal.setDescription(currentObject.getString("description"));
             currentMeal.setPrice(currentObject.getInt("price"));
-            currentMeal.setImageUrl("path to image");// FIXME: 1/10/16 set real image path to meal
+            currentMeal.setImageUrl("imgpath");
             result.add(currentMeal);
         }
         return result;
