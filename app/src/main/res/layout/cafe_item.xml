@@ -89,7 +89,7 @@
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textHolder"
+        android:layout_below="@+id/star_button"
         android:layout_alignParentLeft="true"
         expandableTextView:maxCollapsedLines="1"
         expandableTextView:animDuration="200">

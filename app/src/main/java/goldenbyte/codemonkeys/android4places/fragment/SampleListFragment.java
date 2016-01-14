@@ -1,4 +1,4 @@
-package goldenbyte.codemonkeys.android4places;
+package goldenbyte.codemonkeys.android4places.fragment;
 
 /**
  * Created by naomi on 1/12/16.
@@ -11,17 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
 
+import goldenbyte.codemonkeys.android4places.R;
+import goldenbyte.codemonkeys.android4places.adapters.MenuAdapter;
 import goldenbyte.codemonkeys.android4places.backend.MenuLoader;
 import goldenbyte.codemonkeys.android4places.backend.MenuParser;
 import goldenbyte.codemonkeys.android4places.bean.Meal;
-import goldenbyte.codemonkeys.android4places.fragment.ScrollTabHolderFragment;
 
 public class SampleListFragment extends ScrollTabHolderFragment {
 
@@ -50,7 +50,7 @@ public class SampleListFragment extends ScrollTabHolderFragment {
         menuLoaderResult = getArguments().getString(ARG_JSON);
         menuParser = new MenuParser(menuLoaderResult); // TODO: 1/14/16 remove constructor from initialisation
         try {
-            mListItems = menuParser.getMeals(MenuLoader.MealType.values()[mPosition]);
+            mListItems = menuParser.getMeals(MenuLoader.MealType.values()[mPosition+1]);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -71,14 +71,9 @@ public class SampleListFragment extends ScrollTabHolderFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         mListView.setOnScrollListener(new OnScroll());
-        ArrayList<String> test = new ArrayList<>();
-        for (Meal m :
-                mListItems) {
-            test.add(m.getName());
-        }
-        mListView.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.list_item, android.R.id.text1, test));
+//        Log.d("dmi3debug", "onActivityCreated: arraylist"+mListItems.get(0).getName().toString());
+        mListView.setAdapter(new MenuAdapter(mListItems,getContext()));
 
     }
 

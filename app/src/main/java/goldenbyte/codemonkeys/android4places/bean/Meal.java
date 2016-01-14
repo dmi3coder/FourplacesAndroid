@@ -6,7 +6,7 @@ package goldenbyte.codemonkeys.android4places.bean;
 public class Meal {
     private String name = "";
     private String description = "";
-    private int price = 0;
+    private String price = "";
     private String imageUrl = "";
     private boolean debugMode = false;
 
@@ -14,8 +14,8 @@ public class Meal {
         if(debugMode)return "https://upload.wikimedia.org/wikipedia/commons/1/1b/Square_200x200.png";
         return imageUrl;
     }
-    public int getPrice() {
-        if(debugMode)return 300;
+    public String getPrice() {
+        if(debugMode)return "300";
         return price;
     }
     public String getDescription() {
@@ -30,7 +30,7 @@ public class Meal {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
     public void setDescription(String description) {

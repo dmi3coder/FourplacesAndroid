@@ -16,6 +16,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import goldenbyte.codemonkeys.android4places.backend.MenuLoader;
 import goldenbyte.codemonkeys.android4places.backend.MenuParser;
+import goldenbyte.codemonkeys.android4places.fragment.SampleListFragment;
 import goldenbyte.codemonkeys.android4places.fragment.ScrollTabHolderFragment;
 import goldenbyte.codemonkeys.android4places.views.PagerSlidingTabStrip;
 
@@ -163,9 +164,9 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
 
         @Override
         public Fragment getItem(int position) {
-            ScrollTabHolderFragment fragment = (ScrollTabHolderFragment) SampleListFragment.newInstance(position,result);
+            ScrollTabHolderFragment fragment = (ScrollTabHolderFragment) SampleListFragment.newInstance(position-1, result);
 
-            mScrollTabHolders.put(position, fragment);
+            mScrollTabHolders.put(position-1, fragment);
             if (mListener != null) {
                 fragment.setScrollTabHolder(mListener);
             }

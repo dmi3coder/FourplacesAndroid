@@ -36,7 +36,7 @@ public class MenuParser {
             currentMeal = new Meal();
             currentMeal.setName(currentObject.getString("name"));
             currentMeal.setDescription(currentObject.getString("description"));
-            currentMeal.setPrice(currentObject.getInt("price"));
+            currentMeal.setPrice(currentObject.getString("price"));
             currentMeal.setImageUrl("imgpath");
             result.add(currentMeal);
         }

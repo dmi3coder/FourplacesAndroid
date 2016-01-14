@@ -11,9 +11,9 @@ import java.io.IOException;
 public class MenuLoader {
 
     public enum MealType {
-        FIRST, SECOND, DRINK, SNACKS, BAKERY, CANDY, SEA,ETC;// TODO: 1/13/16 add etc
+        FIRST, SECOND, DRINK, SNACKS, BAKERY, CANDY, SEA;// TODO: 1/13/16 add etc
         private static final String[] backendJsonTypes = {"first", "second", "drink", "snacks", "bread", "confectionery", "seaproduct", "etc"};
-        public static final String[] backendRuTypes = {"Первое", "Второе", "Напитки", "Закуски", "Хлебные изделия", "Кондитерские изделия", "Морские продукты", "Другое"};
+        public static final String[] backendRuTypes = {"Первое", "Второе", "Напитки", "Закуски", "Хлебные изделия", "Кондитерские изделия", "Морские продукты"};
 
         @Override
         public String toString() {
