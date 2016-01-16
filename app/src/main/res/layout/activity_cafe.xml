@@ -23,7 +23,7 @@
             android:background="#0072C6"
             />
 
-        <goldenbyte.codemonkeys.android4places.views.PagerSlidingTabStrip
+        <studio.jhl.android4places.views.PagerSlidingTabStrip
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="48dip"

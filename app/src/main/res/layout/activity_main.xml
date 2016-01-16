@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context="goldenbyte.codemonkeys.android4places.MainActivity">
+    tools:context="studio.jhl.android4places.MainActivity">
 
 
     <include layout="@layout/widget_search_bar"
@@ -47,14 +47,21 @@
                 app:mrl_rippleBackground="@color/colorPrimary"
                 android:padding="5dp"
                 >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/header_button_all"
-                android:gravity="center"
-                android:drawableTop="@drawable/ic_restaurant_menu_white_24dp"
-                android:text="Всё"
-                android:textColor="@android:color/white"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/header_button_all"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_restaurant_menu_white_24dp"/>
+
+                    <TextView style="@style/HeaderTextView"
+                        android:text="Всё"/>
+                </LinearLayout>
             </com.balysv.materialripple.MaterialRippleLayout>
             <com.balysv.materialripple.MaterialRippleLayout
                 android:layout_width="wrap_content"
@@ -63,15 +70,22 @@
                 app:mrl_rippleBackground="@color/colorPrimary"
                 android:padding="5dp"
                 >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/header_button_cafe"
-                android:gravity="center"
-                android:paddingLeft="5dp"
-                android:drawableTop="@drawable/ic_local_cafe_white_24dp"
-                android:text="Кофейня"
-                android:textColor="@android:color/white"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/header_button_cafe"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_local_cafe_white_24dp"
+                        />
+
+                    <TextView style="@style/HeaderTextView"
+                        android:text="Кофейня"/>
+                </LinearLayout>
             </com.balysv.materialripple.MaterialRippleLayout>
             <com.balysv.materialripple.MaterialRippleLayout
                 android:layout_width="wrap_content"
@@ -80,15 +94,46 @@
                 app:mrl_rippleBackground="@color/colorPrimary"
                 android:padding="5dp"
                 >
-            <TextView
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/header_button_night_club"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_champage"
+                        />
+
+                    <TextView style="@style/HeaderTextView"
+                        android:text="Ночной клуб"/>
+                </LinearLayout>
+            </com.balysv.materialripple.MaterialRippleLayout>
+            <com.balysv.materialripple.MaterialRippleLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/header_button_night_club"
-                android:gravity="center"
-                android:paddingLeft="5dp"
-                android:drawableTop="@drawable/ic_champage"
-                android:text="Ночной клуб"
-                android:textColor="@android:color/white"/>
+                app:mrl_rippleColor="@color/colorAccent"
+                app:mrl_rippleBackground="@color/colorPrimary"
+                >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/header_button_fun"
+                    android:orientation="vertical"
+                    android:paddingLeft="5dp"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_fun"
+                        />
+
+                    <TextView style="@style/HeaderTextView"
+                        android:text="Развлечения"/>
+                </LinearLayout>
             </com.balysv.materialripple.MaterialRippleLayout>
             <com.balysv.materialripple.MaterialRippleLayout
                 android:layout_width="wrap_content"
@@ -97,32 +142,22 @@
                 app:mrl_rippleBackground="@color/colorPrimary"
                 android:padding="5dp"
                 >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/header_button_fun"
-                android:gravity="center"
-                android:paddingLeft="5dp"
-                android:drawableTop="@drawable/ic_fun"
-                android:text="Развлечения"
-                android:textColor="@android:color/white"/>
-            </com.balysv.materialripple.MaterialRippleLayout>
-            <com.balysv.materialripple.MaterialRippleLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:mrl_rippleColor="@color/colorAccent"
-                app:mrl_rippleBackground="@color/colorPrimary"
-                android:padding="5dp"
-                >
-            <TextView
+                <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/header_button_more"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:paddingLeft="5dp"
-                android:drawableTop="@drawable/ic_menu"
-                android:text="Еще"
-                android:textColor="@android:color/white"/>
+                >
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_menu"
+                    />
+
+                <TextView style="@style/HeaderTextView"
+                    android:text="Еще"/>
+            </LinearLayout>
             </com.balysv.materialripple.MaterialRippleLayout>
 
 </LinearLayout>
@@ -132,8 +167,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
+            android:background="@drawable/divider"
             android:text="Test"
             android:textSize="22sp"
             android:orientation="horizontal" >
@@ -146,6 +180,18 @@
                 android:textColor="@android:color/white"/>
 
         </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/cafeFooter"
+            android:layout_below="@+id/cafeHeader"
+            android:background="#99FFFFFF"
+            android:visibility="gone">
+
+
+        </GridLayout>
     </RelativeLayout>
 
 </LinearLayout>
