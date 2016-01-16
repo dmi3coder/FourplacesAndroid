@@ -6,20 +6,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnRecyclerViewOnScrollListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import studio.jhl.android4places.adapters.CafeAdapter;
 import studio.jhl.android4places.backend.CafeLoader;
-import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.fragment.SearchFragment;
 import xyz.sahildave.widget.SearchViewLayout;
 
@@ -29,9 +29,22 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.list) SuperRecyclerView recyclerView;
     @Bind(R.id.search_view)SearchViewLayout searchViewLayout;
     @Bind(R.id.cafeFooter)LinearLayout cafeFooter; // TODO: 1/10/16 make normal footer
-    @Bind(R.id.cafeHeader)LinearLayout cafeHeader;
-    @Bind({R.id.header_button_all,R.id.header_button_cafe,R.id.header_button_night_club,R.id.header_button_fun,R.id.header_button_more})List<LinearLayout> headerButtons;
-
+    @Bind(R.id.cafeHeader)RelativeLayout cafeHeader;
+    @Bind({R.id.header_button_all,
+            R.id.header_button_cafe,
+            R.id.header_button_night_club,
+            R.id.header_button_fun,
+            R.id.header_button_more
+    })List<LinearLayout> headerButtons;
+    @Bind({R.id.choose_button_all,
+            R.id.choose_button_cafe,
+            R.id.choose_button_night_club,
+            R.id.choose_button_fun,
+            R.id.choose_button_restaurant,
+            R.id.choose_button_fastfood,
+            R.id.choose_button_sushi,
+            R.id.choose_button_etc
+    }) List<Button> chooseButtons;
     CafeLoader fragmentCafeLoader;
     CafeLoader.CafeType fragmentCurrentCafeType = CafeLoader.CafeType.ALL;
 
@@ -65,12 +78,9 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setOnScrollListener(scrollListener);
 
-        new CafeLoader(choosedCafeType).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
-            @Override
-            public void onEvent(ArrayList<Cafe> cafes) {
-                Log.d(TAG, "onEvent: working");
-                recyclerView.setAdapter(new CafeAdapter(cafes, getBaseContext()));
-            }
+        new CafeLoader(choosedCafeType).setOnCafesLoadListener(cafes -> {
+            Log.d(TAG, "onEvent: working");
+            recyclerView.setAdapter(new CafeAdapter(cafes, MainActivity.this.getBaseContext()));
         });
     }
 
@@ -82,9 +92,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void defineTypeButtons() {
         defineHeaderButtons();
-        defineMoreButton();
+        defineChooseButtons();
 
     }
+
 
     private void defineHeaderButtons() {
         for(int currentButton = 0;currentButton<headerButtons.size()-1;currentButton++){
@@ -97,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+        defineMoreButton();
     }
 
     private void defineMoreButton() {
@@ -106,6 +119,19 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void defineChooseButtons() {
+        for(int i = 0; i< chooseButtons.size()-1;i++){
+            chooseButtons.get(i).setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+
+                                                            Log.d(TAG, "defineChooseButtons: test");
+
+                                                    }
+            });
+        }
     }
 
 

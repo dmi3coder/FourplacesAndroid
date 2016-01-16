@@ -3,4 +3,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cafe_type_all">Все</string>
+    <string name="cafe_type_cafe">Кофейня</string>
+    <string name="cafe_type_club">Ночной клуб</string>
+    <string name="cafe_type_fun">Развлечения</string>
+    <string name="cafe_type_restaurant">Ресторан</string>
+    <string name="cafe_type_fastfood">Фастфуд</string>
+    <string name="cafe_type_sushi">Суши</string>
+    <string name="cafe_type_etc">Прочее</string>
+    <string name="cafe_type_favourite">Закладки</string>
+    <string name="opened_header_text">Я ищу...</string>
 </resources>
