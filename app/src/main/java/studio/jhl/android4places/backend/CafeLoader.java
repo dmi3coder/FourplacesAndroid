@@ -41,7 +41,7 @@ public class CafeLoader {
             throw new NullPointerException("Cafe type not found");
             }
     }
-    private static final String API_URL = "http://goldenbyteproject.esy.es";
+    private static final String API_URL = "http://codylab.net";
 
     public CafeLoader(CafeType choosedCafeType) {
         new CafeLoadAsyncTask().execute(API_URL + choosedCafeType.toString());

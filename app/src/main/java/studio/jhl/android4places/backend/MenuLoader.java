@@ -11,7 +11,7 @@ import java.io.IOException;
 public class MenuLoader {
 
     public enum MealType {
-        FIRST, SECOND, DRINK, SNACKS, BAKERY, CANDY, SEA;// TODO: 1/13/16 add etc
+        FIRST, SECOND, DRINK, SNACKS, BAKERY, CANDY, SEA, ETC;
         private static final String[] backendJsonTypes = {"first", "second", "drink", "snacks", "bread", "confectionery", "seaproduct", "etc"};
         public static final String[] backendRuTypes = {"Первое", "Второе", "Напитки", "Закуски", "Хлебные изделия", "Кондитерские изделия", "Морские продукты"};
 
@@ -36,7 +36,7 @@ public class MenuLoader {
     }
 
     private static final String TAG = "MenuLoader";
-    private static final String API_URL = "http://goldenbyteproject.esy.es/api";
+    private static final String API_URL = "http://codylab.net/api";
     private OnMenuLoadListener onMenuLoadListener;
     private String result;
 

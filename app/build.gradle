@@ -1,6 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'retrolambda'
-
 
 android {
     compileSdkVersion 23
@@ -11,10 +9,6 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "0.01"
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
@@ -53,9 +47,3 @@ dependencies {
     compile 'com.github.lawloretienne:quickreturn:0.0.3'
     compile 'org.parceler:parceler-api:1.0.4'
 }
-retrolambda {
-    jdk "/usr/lib/jvm/java-8-openjdk-amd64"
-    oldJdk "/usr/lib/jvm/java-6-openjdk-amd64"
-    javaVersion JavaVersion.VERSION_1_6
-}
-

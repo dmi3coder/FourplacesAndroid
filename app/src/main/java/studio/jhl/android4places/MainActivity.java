@@ -14,12 +14,14 @@ import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnRecyclerViewOnScrollListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import studio.jhl.android4places.adapters.CafeAdapter;
 import studio.jhl.android4places.backend.CafeLoader;
+import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.fragment.SearchFragment;
 import xyz.sahildave.widget.SearchViewLayout;
 
@@ -78,9 +80,13 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setOnScrollListener(scrollListener);
 
-        new CafeLoader(choosedCafeType).setOnCafesLoadListener(cafes -> {
-            Log.d(TAG, "onEvent: working");
-            recyclerView.setAdapter(new CafeAdapter(cafes, MainActivity.this.getBaseContext()));
+        new CafeLoader(choosedCafeType).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
+            @Override
+            public void onEvent(ArrayList<Cafe> cafes) {
+                Log.d(TAG, "onEvent: working");
+                recyclerView.setAdapter(new CafeAdapter(cafes, MainActivity.this.getBaseContext()));
+            }
+
         });
     }
 

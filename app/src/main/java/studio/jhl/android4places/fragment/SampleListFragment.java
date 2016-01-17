@@ -7,16 +7,16 @@ package studio.jhl.android4places.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
 
+import studio.jhl.android4places.CafeActivity;
 import studio.jhl.android4places.R;
 import studio.jhl.android4places.adapters.MenuAdapter;
 import studio.jhl.android4places.backend.MenuLoader;
@@ -34,10 +34,10 @@ public class SampleListFragment extends ScrollTabHolderFragment {
     private String menuLoaderResult;
     private MenuParser menuParser;
 
-    public static Fragment newInstance(int position,String result) {
+    public static Fragment newInstance(int position) {
         SampleListFragment f = new SampleListFragment();
         Bundle b = new Bundle();
-        b.putString(ARG_JSON,result);
+        //fix of stack error, if remove position - food position'll be incremented
         b.putInt(ARG_POSITION, position);
         f.setArguments(b);
         return f;
@@ -47,13 +47,18 @@ public class SampleListFragment extends ScrollTabHolderFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPosition = getArguments().getInt(ARG_POSITION);
-        menuLoaderResult = getArguments().getString(ARG_JSON);
-        menuParser = new MenuParser(menuLoaderResult); // TODO: 1/14/16 remove constructor from initialisation
+        menuParser = new MenuParser(CafeActivity.result);
         try {
-            mListItems = menuParser.getMeals(MenuLoader.MealType.values()[mPosition+1]);
-        } catch (JSONException e) {
+            mListItems = menuParser.getMeals(MenuLoader.MealType.values()[mPosition]);
+//            mListItems = new ArrayList<>();
+//            for (int i = 0; i < 100; i++) {
+//                Meal meal = new Meal();
+//                meal.setName("test"+i);
+//                mListItems.add(meal);
+//            }
+        } catch (Exception e) {
             e.printStackTrace();
-        }
+       }
     }
 
     @Override
@@ -72,9 +77,18 @@ public class SampleListFragment extends ScrollTabHolderFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mListView.setOnScrollListener(new OnScroll());
-//        Log.d("dmi3debug", "onActivityCreated: arraylist"+mListItems.get(0).getName().toString());
         mListView.setAdapter(new MenuAdapter(mListItems,getContext()));
 
+        if(CafeActivity.NEEDS_PROXY){//in my moto phone(android 2.1),setOnScrollListener do not work well
+            mListView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (mScrollTabHolder != null)
+                        mScrollTabHolder.onScroll(mListView, 0, 0, 0, mPosition);
+                    return false;
+                }
+            });
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package studio.jhl.android4places;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -12,8 +13,6 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import studio.jhl.android4places.backend.MenuLoader;
 import studio.jhl.android4places.backend.MenuParser;
 import studio.jhl.android4places.fragment.SampleListFragment;
@@ -26,50 +25,51 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
 
 
 
-    @Bind(R.id.header) View mHeader;
-    @Bind(R.id.info) TextView info;
-    @Bind(R.id.tabs) PagerSlidingTabStrip mPagerSlidingTabStrip;
-    @Bind(R.id.pager) ViewPager mViewPager;
+    public static final boolean NEEDS_PROXY = Integer.valueOf(Build.VERSION.SDK_INT).intValue() < 11;
+    private View mHeader;
+    private PagerSlidingTabStrip mPagerSlidingTabStrip;
+    private ViewPager mViewPager;
     private PagerAdapter mPagerAdapter;
-    private int minimalHeaderHeight;
-    private int headerHeight;
-    private int minimalHeaderTranslation;
+    private int mMinHeaderHeight;
+    private int mHeaderHeight;
+    private int mMinHeaderTranslation;
+    private TextView info;
     private int mLastY;
     public MenuLoader menuLoader;
     private int menu_id;
     private MenuParser menuParser;
-    private static String result;
+    public static String result;
 
-    @Override
+  @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        defineValues();
+        menu_id = getIntent().getIntExtra("menu_id", 0);
+        menuLoader = new MenuLoader(menu_id);
+        mMinHeaderHeight = getResources().getDimensionPixelSize(R.dimen.min_header_height);
+        mHeaderHeight = getResources().getDimensionPixelSize(R.dimen.header_height);
+        mMinHeaderTranslation = -mMinHeaderHeight;
         setContentView(R.layout.activity_cafe);
-        ButterKnife.bind(this);
-        new MenuLoader(menu_id).setOnMenuLoadListener(new MenuLoader.OnMenuLoadListener() {
+
+        mHeader = findViewById(R.id.header);
+        info = (TextView) findViewById(R.id.info);
+
+        mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setOffscreenPageLimit(4);
+
+        mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        mPagerAdapter.setTabHolderScrollingContent(this);
+
+        menuLoader.setOnMenuLoadListener(new MenuLoader.OnMenuLoadListener() {
             @Override
             public void onEvent(String result) {
                 CafeActivity.result = result;
                 mViewPager.setAdapter(mPagerAdapter);
                 mPagerSlidingTabStrip.setViewPager(mViewPager);
                 mPagerSlidingTabStrip.setOnPageChangeListener(CafeActivity.this);
-                mLastY = 0;
+                mLastY=0;
             }
         });
-        mViewPager.setOffscreenPageLimit(4);
-
-        mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
-        mPagerAdapter.setTabHolderScrollingContent(this);
-
-
-    }
-
-    private void defineValues() {
-        menu_id = getIntent().getIntExtra("menu_id", 0);
-        menuLoader = new MenuLoader(menu_id);
-        minimalHeaderHeight = getResources().getDimensionPixelSize(R.dimen.min_header_height);
-        headerHeight = getResources().getDimensionPixelSize(R.dimen.header_height);
-        minimalHeaderTranslation = -minimalHeaderHeight;
     }
 
     @Override
@@ -91,7 +91,13 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
             } else {
                 currentHolder = scrollTabHolders.valueAt(position + 1);
             }
-
+            if (NEEDS_PROXY) {
+                // TODO is not good
+                currentHolder.adjustScroll(mHeader.getHeight() - mLastY);
+                mHeader.postInvalidate();
+            } else {
+                currentHolder.adjustScroll((int) (mHeader.getHeight() + mHeader.getTranslationY()));
+            }
         }
     }
 
@@ -99,15 +105,28 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
     public void onPageSelected(int position) {
         SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter.getScrollTabHolders();
         ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
-
+        if(NEEDS_PROXY){
+            //TODO is not good
+            currentHolder.adjustScroll(mHeader.getHeight()-mLastY);
+            mHeader.postInvalidate();
+        }else{
             currentHolder.adjustScroll((int) (mHeader.getHeight() +mHeader.getTranslationY()));
+        }
     }
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount, int pagePosition) {
         if (mViewPager.getCurrentItem() == pagePosition) {
             int scrollY = getScrollY(view);
-                mHeader.setTranslationY(Math.max(-scrollY, minimalHeaderTranslation));
+            if(NEEDS_PROXY){
+                //TODO is not good
+                mLastY=-Math.max(-scrollY, mMinHeaderTranslation);
+                info.setText(String.valueOf(scrollY));
+                mHeader.scrollTo(0, mLastY);
+                mHeader.postInvalidate();
+            }else{
+                mHeader.setTranslationY(Math.max(-scrollY, mMinHeaderTranslation));
+            }
         }
     }
 
@@ -127,7 +146,7 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
 
         int headerHeight = 0;
         if (firstVisiblePosition >= 1) {
-            headerHeight = this.headerHeight;
+            headerHeight = mHeaderHeight;
         }
 
         return -top + firstVisiblePosition * c.getHeight() + headerHeight;
@@ -164,9 +183,9 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
 
         @Override
         public Fragment getItem(int position) {
-            ScrollTabHolderFragment fragment = (ScrollTabHolderFragment) SampleListFragment.newInstance(position-1, result);
+            ScrollTabHolderFragment fragment = (ScrollTabHolderFragment) SampleListFragment.newInstance(position);
 
-            mScrollTabHolders.put(position-1, fragment);
+            mScrollTabHolders.put(position, fragment);
             if (mListener != null) {
                 fragment.setScrollTabHolder(mListener);
             }

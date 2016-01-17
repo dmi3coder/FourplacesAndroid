@@ -205,7 +205,7 @@
             android:layout_above="@+id/cafeFooter"
             android:layout_below="@+id/cafeHeader"
             android:background="#99FFFFFF"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"

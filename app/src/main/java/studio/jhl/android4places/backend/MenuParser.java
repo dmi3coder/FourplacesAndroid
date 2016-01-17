@@ -18,7 +18,7 @@ public class MenuParser {
     private static final String TAG = "MenuParser";
     public MenuParser(String result){
         try {
-            data_array = new JSONObject(result).getJSONObject("data");// TODO: 1/12/16 make normal input data
+            data_array = new JSONObject(result).getJSONObject("data");
         } catch (JSONException e) {
             e.printStackTrace();
         }
