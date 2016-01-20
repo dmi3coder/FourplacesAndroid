@@ -3,7 +3,7 @@ package studio.jhl.android4places;
 import android.widget.AbsListView;
 
 /**
- * Created by naomi on 1/12/16.
+ * Created by dmi3coder on 1/12/16.
  */
 public interface ScrollTabHolder {
 

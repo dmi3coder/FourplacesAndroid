@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import studio.jhl.android4places.MainActivity;
 import studio.jhl.android4places.bean.Cafe;
 
 
@@ -41,10 +42,10 @@ public class CafeLoader {
             throw new NullPointerException("Cafe type not found");
             }
     }
-    private static final String API_URL = "http://codylab.net";
+
 
     public CafeLoader(CafeType choosedCafeType) {
-        new CafeLoadAsyncTask().execute(API_URL + choosedCafeType.toString());
+        new CafeLoadAsyncTask().execute(MainActivity.API_URL + choosedCafeType.toString());
     }
     public void setOnCafesLoadListener(OnCafesLoadListener listener){
         onCafesLoadListener = listener;
@@ -86,7 +87,7 @@ public class CafeLoader {
             cafe.setDescription(restCafeData.getString("description"));
             cafe.setPosition(restCafeData.getString("adress"));
             cafe.setWorkTime(restCafeData.getString("work_time"));
-            cafe.setImageUrl(API_URL+"/img/"+restCafeData.getString("img_path"));
+            cafe.setImageUrl(MainActivity.API_URL+"/img/"+restCafeData.getString("img_path"));
             restCafesData.add(cafe);
         }
         Log.d(TAG, "parseJsonArray: loaded size"+restCafesData.size());

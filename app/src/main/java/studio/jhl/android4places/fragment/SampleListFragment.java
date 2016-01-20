@@ -14,6 +14,8 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 
 import studio.jhl.android4places.CafeActivity;
@@ -47,18 +49,8 @@ public class SampleListFragment extends ScrollTabHolderFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPosition = getArguments().getInt(ARG_POSITION);
-        menuParser = new MenuParser(CafeActivity.result);
-        try {
-            mListItems = menuParser.getMeals(MenuLoader.MealType.values()[mPosition]);
-//            mListItems = new ArrayList<>();
-//            for (int i = 0; i < 100; i++) {
-//                Meal meal = new Meal();
-//                meal.setName("test"+i);
-//                mListItems.add(meal);
-//            }
-        } catch (Exception e) {
-            e.printStackTrace();
-       }
+
+
     }
 
     @Override
@@ -77,7 +69,29 @@ public class SampleListFragment extends ScrollTabHolderFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mListView.setOnScrollListener(new OnScroll());
-        mListView.setAdapter(new MenuAdapter(mListItems,getContext()));
+        menuParser = new MenuParser(CafeActivity.result);
+        try {
+            mListItems = menuParser.getMeals(MenuLoader.MealType.values()[mPosition]);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        menuParser.setOnMenuParseListener(new MenuParser.OnMenuParseListener() {
+            @Override
+            public void onEvent() {
+                try {
+                    mListView.setAdapter(new MenuAdapter(mListItems,getContext()));
+//            mListItems = new ArrayList<>();
+//            for (int i = 0; i < 100; i++) {
+//                Meal meal = new Meal();
+//                meal.setName("test"+i);
+//                mListItems.add(meal);
+//            }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
         if(CafeActivity.NEEDS_PROXY){//in my moto phone(android 2.1),setOnScrollListener do not work well
             mListView.setOnTouchListener(new View.OnTouchListener() {

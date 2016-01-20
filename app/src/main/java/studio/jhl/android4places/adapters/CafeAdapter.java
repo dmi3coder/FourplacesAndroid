@@ -20,16 +20,18 @@ import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import java.util.ArrayList;
 
+import io.realm.Realm;
 import studio.jhl.android4places.CafeActivity;
 import studio.jhl.android4places.R;
 import studio.jhl.android4places.bean.Cafe;
 
 /**
- * Created by Naomi Blues on 03.01.2016 16:08.
+ * Created by dmi3coder on 03.01.2016 16:08.
  */
 public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder> {
     private ArrayList<Cafe> cafeList;
     private Context context;
+    private static Realm realm;
 
     private static final String TAG = "dmi3debug";
 
@@ -46,6 +48,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         protected View headerZone;
         public CafeViewHolder(View v){
             super(v);
+            realm = Realm.getDefaultInstance();
             name = (TextView)v.findViewById(R.id.name);
             type = (TextView)v.findViewById(R.id.type);
             workTime = (TextView)v.findViewById(R.id.time);
@@ -61,6 +64,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
     public  CafeAdapter(ArrayList<Cafe> cafeList, Context context){
         this.cafeList = cafeList;
         this.context = context;
+        realm = Realm.getInstance(context);
     }
 
     @Override
@@ -88,21 +92,40 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         currentCafeHolder.likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked() {
+                Cafe cafe = currentCafe;
+                realm.beginTransaction();
+                realm.copyToRealm(cafe);
+                realm.commitTransaction();
             }
 
             @Override
             public void unLiked() {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Get a Realm instance for this thread
+                        Realm realm = Realm.getInstance(context);
+                        realm.beginTransaction();
+                        Cafe cafe = realm.where(Cafe.class).equalTo("id", currentCafe.getId()).findFirst();
+                        Log.d(TAG,"removed cafeID equals "+cafe.getId());
+                        cafe.removeFromRealm();
+                        realm.commitTransaction();
+                    }
+                });
+                thread.start();
             }
         });// TODO: 04.01.2016 make like/unlike event
-        currentCafeHolder.likeButton.setLiked(false);// TODO: 1/9/16 make like checker from realm
+
+        currentCafeHolder.likeButton.setLiked(realm.where(Cafe.class).equalTo("id", currentCafe.getId()).findFirst()!=null);// TODO: 1/9/16 make like checker from realm
         currentCafeHolder.clickZone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent menuIntent = new Intent(context, CafeActivity.class);
                 menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 menuIntent.putExtra("menu_id",currentCafe.getId());
+                menuIntent.putExtra("img_url",currentCafe.getImageUrl());
+                menuIntent.putExtra("cafe_name",currentCafe.getName());
                 context.startActivity(menuIntent);
-                Log.d(TAG, "onClick: ");
             }
         });
     }

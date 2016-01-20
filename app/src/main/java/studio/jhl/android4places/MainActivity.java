@@ -19,6 +19,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import studio.jhl.android4places.adapters.CafeAdapter;
 import studio.jhl.android4places.backend.CafeLoader;
 import studio.jhl.android4places.bean.Cafe;
@@ -27,6 +29,7 @@ import xyz.sahildave.widget.SearchViewLayout;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "dmi3debug";
+    public static final String API_URL = "http://codylab.net";
     private CafeLoader.CafeType choosedCafeType;
     @Bind(R.id.list) SuperRecyclerView recyclerView;
     @Bind(R.id.search_view)SearchViewLayout searchViewLayout;
@@ -47,15 +50,20 @@ public class MainActivity extends AppCompatActivity {
             R.id.choose_button_sushi,
             R.id.choose_button_etc
     }) List<Button> chooseButtons;
+    @Bind(R.id.chooseLayout) LinearLayout chooseLayout;
     CafeLoader fragmentCafeLoader;
     CafeLoader.CafeType fragmentCurrentCafeType = CafeLoader.CafeType.ALL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        RealmConfiguration config = new RealmConfiguration.Builder(this)
+                .build();
+        Realm.setDefaultConfiguration(config);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         choosedCafeType = CafeLoader.CafeType.ALL;
         ButterKnife.bind(this);
+        chooseLayout.setOnClickListener(null);
         defineRecyclerViewAndLoad(choosedCafeType);
         defineSearchViewLayout();
         defineTypeButtons();
@@ -79,15 +87,23 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         recyclerView.setOnScrollListener(scrollListener);
+        ArrayList<Cafe> debug = new ArrayList<Cafe>();
+        for (int i = 0; i < 100; i++) {
+            Cafe cafe = new Cafe();
+            cafe.setName("test");
+            cafe.setId(i);
+            debug.add(cafe);
+        }
 
-        new CafeLoader(choosedCafeType).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
-            @Override
-            public void onEvent(ArrayList<Cafe> cafes) {
-                Log.d(TAG, "onEvent: working");
-                recyclerView.setAdapter(new CafeAdapter(cafes, MainActivity.this.getBaseContext()));
-            }
-
-        });
+        recyclerView.setAdapter(new CafeAdapter(debug, MainActivity.this.getBaseContext()));
+//        new CafeLoader(choosedCafeType).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
+//            @Override
+//            public void onEvent(ArrayList<Cafe> cafes) {
+//                Log.d(TAG, "onEvent: working");
+//                recyclerView.setAdapter(new CafeAdapter(cafes, MainActivity.this.getBaseContext()));
+//            }
+//
+//        });
     }
 
     private void defineSearchViewLayout() {
@@ -109,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
             headerButtons.get(currentButton).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     defineRecyclerViewAndLoad(CafeLoader.CafeType.values()[currentButtonFinal]);
                 }
             });
@@ -122,20 +137,28 @@ public class MainActivity extends AppCompatActivity {
         headerButtons.get(headerButtons.size()-1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.d(TAG, "onClick: ");
+                hideOrShowChooseLayout();
             }
         });
     }
 
+    private void hideOrShowChooseLayout(){
+
+        if(chooseLayout.getVisibility()==View.VISIBLE)
+            chooseLayout.setVisibility(View.GONE);
+        else chooseLayout.setVisibility(View.VISIBLE);
+    }
+
     private void defineChooseButtons() {
         for(int i = 0; i< chooseButtons.size()-1;i++){
+            final int finalI = i;
             chooseButtons.get(i).setOnClickListener(new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View v) {
-
-                                                            Log.d(TAG, "defineChooseButtons: test");
-
-                                                    }
+                @Override
+                public void onClick(View v) {
+                    defineRecyclerViewAndLoad(CafeLoader.CafeType.values()[finalI]);
+                    hideOrShowChooseLayout();
+                }
             });
         }
     }

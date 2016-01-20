@@ -5,6 +5,8 @@ import android.util.Log;
 
 import java.io.IOException;
 
+import studio.jhl.android4places.MainActivity;
+
 /**
  * Created by dmi3coder on 1/10/16.
  */
@@ -36,7 +38,6 @@ public class MenuLoader {
     }
 
     private static final String TAG = "MenuLoader";
-    private static final String API_URL = "http://codylab.net/api";
     private OnMenuLoadListener onMenuLoadListener;
     private String result;
 
@@ -55,7 +56,7 @@ public class MenuLoader {
 
 
     public MenuLoader(int menuId) {
-        new MenuLoadAsyncTask().execute(API_URL + "/getmenu/" + menuId);
+        new MenuLoadAsyncTask().execute(MainActivity.API_URL + "/api/getmenu/" + menuId);
     }
 
 

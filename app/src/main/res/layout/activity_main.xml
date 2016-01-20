@@ -200,12 +200,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/chooseLayout"
             android:orientation="vertical"
             android:layout_centerHorizontal="true"
             android:layout_above="@+id/cafeFooter"
             android:layout_below="@+id/cafeHeader"
             android:background="#99FFFFFF"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -15,6 +15,7 @@
 
 
     <com.balysv.materialripple.MaterialRippleLayout
+        app:mrl_rippleColor="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/clickZone"

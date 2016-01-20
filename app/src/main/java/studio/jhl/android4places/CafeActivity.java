@@ -11,8 +11,14 @@ import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import studio.jhl.android4places.backend.MenuLoader;
 import studio.jhl.android4places.backend.MenuParser;
 import studio.jhl.android4places.fragment.SampleListFragment;
@@ -39,37 +45,44 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
     private int menu_id;
     private MenuParser menuParser;
     public static String result;
+    @Bind(R.id.progressBar) ProgressBar progressBar;
+    @Bind(R.id.cafeImage) ImageView cafeImage;
+    @Bind(R.id.cafeName) TextView cafeName;
 
   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         menu_id = getIntent().getIntExtra("menu_id", 0);
-        menuLoader = new MenuLoader(menu_id);
+        cafeName.setText(getIntent().getStringExtra("cafe_name"));
+        Glide.with(this).load(getIntent().getStringExtra("img_url")).asBitmap().into(cafeImage);
         mMinHeaderHeight = getResources().getDimensionPixelSize(R.dimen.min_header_height);
         mHeaderHeight = getResources().getDimensionPixelSize(R.dimen.header_height);
         mMinHeaderTranslation = -mMinHeaderHeight;
         setContentView(R.layout.activity_cafe);
+        ButterKnife.bind(this);
 
         mHeader = findViewById(R.id.header);
         info = (TextView) findViewById(R.id.info);
 
         mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setOffscreenPageLimit(3);
 
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
         mPagerAdapter.setTabHolderScrollingContent(this);
 
-        menuLoader.setOnMenuLoadListener(new MenuLoader.OnMenuLoadListener() {
-            @Override
-            public void onEvent(String result) {
-                CafeActivity.result = result;
-                mViewPager.setAdapter(mPagerAdapter);
-                mPagerSlidingTabStrip.setViewPager(mViewPager);
-                mPagerSlidingTabStrip.setOnPageChangeListener(CafeActivity.this);
-                mLastY=0;
-            }
-        });
+//      menuLoader = new MenuLoader(menu_id);
+//        menuLoader.setOnMenuLoadListener(new MenuLoader.OnMenuLoadListener() {
+//            @Override
+//            public void onEvent(String result) {
+//                progressBar.setVisibility(View.GONE);
+//                CafeActivity.result = result;
+//                mViewPager.setAdapter(mPagerAdapter);
+//                mPagerSlidingTabStrip.setViewPager(mViewPager);
+//                mPagerSlidingTabStrip.setOnPageChangeListener(CafeActivity.this);
+//                mLastY=0;
+//            }
+//        });
     }
 
     @Override
