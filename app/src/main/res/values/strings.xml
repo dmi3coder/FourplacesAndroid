@@ -14,4 +14,8 @@
     <string name="cafe_type_favourite">Закладки</string>
     <string name="opened_header_text">Я ищу...</string>
     <string name="title_activity_maps">Map</string>
+    <string name="noresult">Заведения не найдены</string>
+    <string name="cafe_header_telephone">Телефон</string>
+    <string name="cafe_header_map">Расположение</string>
+    <string name="noapp">У вас нет подходящего приложения</string>
 </resources>

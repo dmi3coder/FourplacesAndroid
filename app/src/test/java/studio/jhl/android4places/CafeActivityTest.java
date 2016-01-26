@@ -9,6 +9,8 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by naomi on 1/13/16.
  */
@@ -16,13 +18,14 @@ import org.robolectric.annotation.Config;
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
 @RunWith(RobolectricGradleTestRunner.class)
 public class CafeActivityTest {
-    CafeActivity cafeActivity;
+    MainActivity mainActivity;
     @Before
     public void setup(){
-        cafeActivity = Robolectric.setupActivity(CafeActivity.class);
+        mainActivity = Robolectric.setupActivity(MainActivity.class);
     }
 
     @Test
     public void cafeActivityTest(){
+        assertTrue(mainActivity.cafeFooter!=null);
     }
 }

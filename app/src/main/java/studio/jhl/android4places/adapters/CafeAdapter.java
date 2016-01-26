@@ -18,12 +18,17 @@ import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 
 import io.realm.Realm;
 import studio.jhl.android4places.CafeActivity;
 import studio.jhl.android4places.R;
+import studio.jhl.android4places.backend.MenuLoader;
+import studio.jhl.android4places.backend.MenuParser;
 import studio.jhl.android4places.bean.Cafe;
+import studio.jhl.android4places.bean.Meal;
 
 /**
  * Created by dmi3coder on 03.01.2016 16:08.
@@ -92,10 +97,32 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         currentCafeHolder.likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked() {
-                Cafe cafe = currentCafe;
-                realm.beginTransaction();
-                realm.copyToRealm(cafe);
-                realm.commitTransaction();
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cafe cafe = currentCafe;
+                        final ArrayList<ArrayList<Meal>> mealArrayLists = new ArrayList<ArrayList<Meal>>();
+                        new MenuLoader(cafe.getId()).setOnMenuLoadListener(new MenuLoader.OnMenuLoadListener() {
+                            @Override
+                            public void onEvent(String result) {
+                                for(MenuLoader.MealType mealType :MenuLoader.MealType.values()){
+                                    try {
+                                        mealArrayLists.add(new MenuParser(result).getMeals(mealType));
+                                    } catch (JSONException e) {
+
+                                    }
+                                }
+
+                            }
+
+                        });
+
+                        realm.beginTransaction();
+//                        realm.copyToRealm(new Favorite(cafe,cafe.getId(), (ArrayList<Meal>[]) mealArrayLists.toArray()));
+                        realm.commitTransaction();
+                    }
+                });
+                thread.start();
             }
 
             @Override

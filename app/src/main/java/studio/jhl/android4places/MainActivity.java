@@ -4,15 +4,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnRecyclerViewOnScrollListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
+import com.nineoldandroids.animation.Animator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +32,7 @@ import xyz.sahildave.widget.SearchViewLayout;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "dmi3debug";
-    public static final String API_URL = "http://codylab.net";
+    public static final String API_URL = "http://bookster.hol.es";
     private CafeLoader.CafeType choosedCafeType;
     @Bind(R.id.list) SuperRecyclerView recyclerView;
     @Bind(R.id.search_view)SearchViewLayout searchViewLayout;
@@ -51,13 +54,15 @@ public class MainActivity extends AppCompatActivity {
             R.id.choose_button_etc
     }) List<Button> chooseButtons;
     @Bind(R.id.chooseLayout) LinearLayout chooseLayout;
+    @Bind({
+            R.id.choose_button_favourite
+    }) ImageButton[] footerButtons;
     CafeLoader fragmentCafeLoader;
     CafeLoader.CafeType fragmentCurrentCafeType = CafeLoader.CafeType.ALL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        RealmConfiguration config = new RealmConfiguration.Builder(this)
-                .build();
+        RealmConfiguration config = new RealmConfiguration.Builder(this).build();
         Realm.setDefaultConfiguration(config);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -107,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void defineSearchViewLayout() {
-        final SearchFragment searchFragment = new SearchFragment(choosedCafeType);
+        final SearchFragment searchFragment = new SearchFragment(searchViewLayout,this);
         searchViewLayout.setExpandedContentFragment(this, searchFragment);
     }
 
@@ -137,17 +142,58 @@ public class MainActivity extends AppCompatActivity {
         headerButtons.get(headerButtons.size()-1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: ");
                 hideOrShowChooseLayout();
             }
         });
     }
 
     private void hideOrShowChooseLayout(){
+        if(chooseLayout.getVisibility()==View.VISIBLE){
+            YoYo.with(Techniques.FadeOut).duration(300)
+                    .withListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
 
-        if(chooseLayout.getVisibility()==View.VISIBLE)
-            chooseLayout.setVisibility(View.GONE);
-        else chooseLayout.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    chooseLayout.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            }).playOn(chooseLayout);
+        }
+        else  YoYo.with(Techniques.FadeIn).duration(300)
+                .withListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+                chooseLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        }).playOn(chooseLayout);
     }
 
     private void defineChooseButtons() {

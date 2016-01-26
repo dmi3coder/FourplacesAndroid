@@ -1,6 +1,8 @@
 package studio.jhl.android4places;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +16,7 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -48,22 +51,22 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
     @Bind(R.id.progressBar) ProgressBar progressBar;
     @Bind(R.id.cafeImage) ImageView cafeImage;
     @Bind(R.id.cafeName) TextView cafeName;
+    @Bind(R.id.header_text_telephone) TextView callView;
+    @Bind(R.id.header_text_map)TextView mapView;
 
   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        menu_id = getIntent().getIntExtra("menu_id", 0);
-        cafeName.setText(getIntent().getStringExtra("cafe_name"));
-        Glide.with(this).load(getIntent().getStringExtra("img_url")).asBitmap().into(cafeImage);
-        mMinHeaderHeight = getResources().getDimensionPixelSize(R.dimen.min_header_height);
+        setContentView(R.layout.activity_cafe);
+
+      mMinHeaderHeight = getResources().getDimensionPixelSize(R.dimen.min_header_height);
         mHeaderHeight = getResources().getDimensionPixelSize(R.dimen.header_height);
         mMinHeaderTranslation = -mMinHeaderHeight;
-        setContentView(R.layout.activity_cafe);
-        ButterKnife.bind(this);
 
         mHeader = findViewById(R.id.header);
         info = (TextView) findViewById(R.id.info);
-
+        ButterKnife.bind(this);
+        defineHeader();
         mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setOffscreenPageLimit(3);
@@ -71,18 +74,54 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
         mPagerAdapter.setTabHolderScrollingContent(this);
 
-//      menuLoader = new MenuLoader(menu_id);
-//        menuLoader.setOnMenuLoadListener(new MenuLoader.OnMenuLoadListener() {
-//            @Override
-//            public void onEvent(String result) {
-//                progressBar.setVisibility(View.GONE);
-//                CafeActivity.result = result;
-//                mViewPager.setAdapter(mPagerAdapter);
-//                mPagerSlidingTabStrip.setViewPager(mViewPager);
-//                mPagerSlidingTabStrip.setOnPageChangeListener(CafeActivity.this);
-//                mLastY=0;
-//            }
-//        });
+      menuLoader = new MenuLoader(menu_id);
+        menuLoader.setOnMenuLoadListener(new MenuLoader.OnMenuLoadListener() {
+            @Override
+            public void onEvent(String result) {
+                progressBar.setVisibility(View.GONE);
+                CafeActivity.result = result;
+                mViewPager.setAdapter(mPagerAdapter);
+                mPagerSlidingTabStrip.setViewPager(mViewPager);
+                mPagerSlidingTabStrip.setOnPageChangeListener(CafeActivity.this);
+                mLastY=0;
+            }
+        });
+    }
+
+    private void defineHeader() {
+        menu_id = getIntent().getIntExtra("menu_id", 0);
+        cafeName.setText(getIntent().getStringExtra("cafe_name"));
+        Glide.with(this).load("http://cs631720.vk.me/v631720218/d34b/4Bfp-txaiTE.jpg").asBitmap().into(cafeImage);
+        defineCallAction();
+        defineMapAction();
+    }
+
+    private void defineCallAction() {
+        callView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+getIntent().getStringExtra("cafe_telephone")));
+                startIntent(intent);
+            }
+        });
+    }
+    private void defineMapAction(){
+        mapView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("geo:0,0?q=34.99,-106.61("+getIntent().getStringExtra("cafe_name")+")"));// TODO: 1/26/16 add normal data from intent form MainActivity
+                startIntent(intent);
+            }
+        });
+    }
+
+    private void startIntent(Intent intent) {
+        if(intent.resolveActivity(getPackageManager())!=null){
+            startActivity(intent);
+        }
+        else Toast.makeText(this,getResources().getString(R.string.noapp),Toast.LENGTH_SHORT).show();
     }
 
     @Override

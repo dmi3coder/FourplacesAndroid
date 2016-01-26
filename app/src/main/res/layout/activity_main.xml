@@ -184,16 +184,15 @@
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:background="@drawable/divider"
-            android:text="Test"
             android:textSize="22sp"
-            android:orientation="horizontal" >
-            <TextView
-                android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageButton
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:drawableTop="@android:drawable/ic_dialog_info"
-                android:text="test"
-                android:textColor="@android:color/white"/>
+                android:layout_width="wrap_content"
+                android:src="@android:drawable/btn_star"
+                android:id="@+id/choose_button_favourite"/>
 
         </LinearLayout>
 
@@ -206,7 +205,7 @@
             android:layout_above="@+id/cafeFooter"
             android:layout_below="@+id/cafeHeader"
             android:background="#99FFFFFF"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -257,10 +256,6 @@
                     android:drawableTop="@drawable/cookie"
                     android:id="@+id/choose_button_etc"
                     android:text="@string/cafe_type_etc"/>
-                <Button style="@style/ChooseButton"
-                    android:drawableTop="@android:drawable/btn_star"
-                    android:id="@+id/choose_button_favourite"
-                    android:text="@string/cafe_type_favourite"/>
             </LinearLayout>
 
         </LinearLayout>
