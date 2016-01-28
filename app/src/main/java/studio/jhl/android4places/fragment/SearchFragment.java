@@ -58,8 +58,8 @@ public class SearchFragment extends Fragment {
                         for (int i = 0; i < cafes.size(); i++) {
                             Cafe cafe = cafes.get(i);
                             if((cafe.getName().contains(searchKeyword))
-//                                    |cafe.getType().contains(searchKeyword)
-//                                    |cafe.getDescription().contains(searchKeyword)
+                                    |cafe.getType().contains(searchKeyword)
+                                    |cafe.getDescription().contains(searchKeyword)
                                     ){
                                 cafesToSearch.add(cafe);
                             }

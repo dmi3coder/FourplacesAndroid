@@ -28,22 +28,20 @@
             app:scrollbarStyle="insideInset"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/linearLayout"
+            android:layout_toStartOf="@+id/linearLayout" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@color/colorPrimary"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:gravity="center"
-            android:id="@+id/cafeHeader">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            android:background="@color/colorPrimary"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/linearLayout">
 
             <com.balysv.materialripple.MaterialRippleLayout
                 android:layout_width="wrap_content"
@@ -57,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/header_button_all"
                     android:orientation="vertical"
-                    android:gravity="center"
+                    android:gravity="right"
                     >
                     <ImageView
                         android:layout_width="wrap_content"
@@ -148,23 +146,35 @@
                 android:padding="5dp"
                 >
                 <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/header_button_more"
-                android:orientation="vertical"
-                android:gravity="center"
-                >
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_menu"
-                    />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/header_button_more"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_menu"
+                        />
 
-                <TextView style="@style/HeaderTextView"
-                    android:text="Еще"/>
-            </LinearLayout>
+                    <TextView style="@style/HeaderTextView"
+                        android:text="Еще"/>
+                </LinearLayout>
             </com.balysv.materialripple.MaterialRippleLayout>
-            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimary"
+            android:gravity="end"
+            android:id="@+id/cafeHeader">
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -176,7 +186,7 @@
                 android:textSize="36dp"
                 android:visibility="gone"/>
 
-</RelativeLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/cafeFooter"
@@ -262,6 +272,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
     </RelativeLayout>
 
 </LinearLayout>

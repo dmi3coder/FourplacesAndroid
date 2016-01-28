@@ -54,18 +54,18 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
     @Bind(R.id.header_text_telephone) TextView callView;
     @Bind(R.id.header_text_map)TextView mapView;
 
-  @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cafe);
 
-      mMinHeaderHeight = getResources().getDimensionPixelSize(R.dimen.min_header_height);
+        mMinHeaderHeight = getResources().getDimensionPixelSize(R.dimen.min_header_height);
         mHeaderHeight = getResources().getDimensionPixelSize(R.dimen.header_height);
         mMinHeaderTranslation = -mMinHeaderHeight;
 
+        ButterKnife.bind(this);
         mHeader = findViewById(R.id.header);
         info = (TextView) findViewById(R.id.info);
-        ButterKnife.bind(this);
         defineHeader();
         mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -91,7 +91,7 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
     private void defineHeader() {
         menu_id = getIntent().getIntExtra("menu_id", 0);
         cafeName.setText(getIntent().getStringExtra("cafe_name"));
-        Glide.with(this).load("http://cs631720.vk.me/v631720218/d34b/4Bfp-txaiTE.jpg").asBitmap().into(cafeImage);
+        Glide.with(this).load(getIntent().getStringExtra("img_url")).asBitmap().into(cafeImage);
         defineCallAction();
         defineMapAction();
     }

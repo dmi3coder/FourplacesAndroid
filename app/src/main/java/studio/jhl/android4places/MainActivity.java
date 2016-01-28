@@ -1,12 +1,13 @@
 package studio.jhl.android4places;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -32,11 +33,11 @@ import xyz.sahildave.widget.SearchViewLayout;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "dmi3debug";
-    public static final String API_URL = "http://bookster.hol.es";
+    public static final String API_URL = "http://fourplaces.pp.ua";
     private CafeLoader.CafeType choosedCafeType;
     @Bind(R.id.list) SuperRecyclerView recyclerView;
     @Bind(R.id.search_view)SearchViewLayout searchViewLayout;
-    @Bind(R.id.cafeFooter)LinearLayout cafeFooter; // TODO: 1/10/16 make normal footer
+    @Bind(R.id.cafeFooter)LinearLayout cafeFooter;
     @Bind(R.id.cafeHeader)RelativeLayout cafeHeader;
     @Bind({R.id.header_button_all,
             R.id.header_button_cafe,
@@ -54,61 +55,64 @@ public class MainActivity extends AppCompatActivity {
             R.id.choose_button_etc
     }) List<Button> chooseButtons;
     @Bind(R.id.chooseLayout) LinearLayout chooseLayout;
-    @Bind({
-            R.id.choose_button_favourite
-    }) ImageButton[] footerButtons;
-    CafeLoader fragmentCafeLoader;
-    CafeLoader.CafeType fragmentCurrentCafeType = CafeLoader.CafeType.ALL;
+    @Bind(R.id.choose_button_favourite) Button chooseFavouriteButton;
+    QuickReturnRecyclerViewOnScrollListener scrollListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         RealmConfiguration config = new RealmConfiguration.Builder(this).build();
         Realm.setDefaultConfiguration(config);
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.clear(Cafe.class);
+        realm.commitTransaction();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        choosedCafeType = CafeLoader.CafeType.ALL;
         ButterKnife.bind(this);
+        choosedCafeType = CafeLoader.CafeType.ALL;
         chooseLayout.setOnClickListener(null);
+        recyclerView = (SuperRecyclerView)findViewById(R.id.list);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            scrollListener = new QuickReturnRecyclerViewOnScrollListener.Builder(QuickReturnViewType.HEADER)
+                    .header(cafeHeader)
+                    .minHeaderTranslation(-60)
+                    .isSnappable(true)
+                    .build();
+            recyclerView.setOnScrollListener(scrollListener);
+        }
         defineRecyclerViewAndLoad(choosedCafeType);
         defineSearchViewLayout();
         defineTypeButtons();
 
     }
 
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 
     private void defineRecyclerViewAndLoad(CafeLoader.CafeType choosedCafeType) {
-        recyclerView = (SuperRecyclerView)findViewById(R.id.list);
+        recyclerView.showProgress();
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+//        List<Cafe> debug = new ArrayList<Cafe>();
+//        for (int i = 0; i < 100; i++) {
+//            Cafe cafe = new Cafe();
+//            cafe.setName("test");
+//            cafe.setId(i);
+//            debug.add(cafe);
+//        }
 
-        QuickReturnRecyclerViewOnScrollListener scrollListener = new QuickReturnRecyclerViewOnScrollListener.Builder(QuickReturnViewType.BOTH)
-                .header(cafeHeader)
-                .minHeaderTranslation(-60)
-                .footer(cafeFooter)
-                .minFooterTranslation(60)
-                .isSnappable(true)
-                .build();
+//        recyclerView.setAdapter(new CafeAdapter(debug, MainActivity.this.getBaseContext()));
+        new CafeLoader(choosedCafeType).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
+            @Override
+            public void onEvent(ArrayList<Cafe> cafes) {
+                Log.d(TAG, "onEvent: working");
+                recyclerView.setAdapter(new CafeAdapter(cafes, MainActivity.this.getBaseContext()));
+            }
 
-        recyclerView.setOnScrollListener(scrollListener);
-        ArrayList<Cafe> debug = new ArrayList<Cafe>();
-        for (int i = 0; i < 100; i++) {
-            Cafe cafe = new Cafe();
-            cafe.setName("test");
-            cafe.setId(i);
-            debug.add(cafe);
-        }
-
-        recyclerView.setAdapter(new CafeAdapter(debug, MainActivity.this.getBaseContext()));
-//        new CafeLoader(choosedCafeType).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
-//            @Override
-//            public void onEvent(ArrayList<Cafe> cafes) {
-//                Log.d(TAG, "onEvent: working");
-//                recyclerView.setAdapter(new CafeAdapter(cafes, MainActivity.this.getBaseContext()));
-//            }
-//
-//        });
+        });
     }
 
     private void defineSearchViewLayout() {
@@ -207,6 +211,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        chooseFavouriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Realm realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                List<Cafe> cafes = realm.where(Cafe.class).findAll();
+                recyclerView.setAdapter(new CafeAdapter(cafes,MainActivity.this));
+                realm.commitTransaction();
+            }
+        });
     }
 
 

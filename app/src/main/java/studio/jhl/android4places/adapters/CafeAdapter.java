@@ -18,23 +18,18 @@ import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
-import org.json.JSONException;
-
-import java.util.ArrayList;
+import java.util.List;
 
 import io.realm.Realm;
 import studio.jhl.android4places.CafeActivity;
 import studio.jhl.android4places.R;
-import studio.jhl.android4places.backend.MenuLoader;
-import studio.jhl.android4places.backend.MenuParser;
 import studio.jhl.android4places.bean.Cafe;
-import studio.jhl.android4places.bean.Meal;
 
 /**
  * Created by dmi3coder on 03.01.2016 16:08.
  */
 public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder> {
-    private ArrayList<Cafe> cafeList;
+    private List<Cafe> cafeList;
     private Context context;
     private static Realm realm;
 
@@ -66,7 +61,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         }
     }
 
-    public  CafeAdapter(ArrayList<Cafe> cafeList, Context context){
+    public  CafeAdapter(List<Cafe> cafeList, Context context){
         this.cafeList = cafeList;
         this.context = context;
         realm = Realm.getInstance(context);
@@ -78,6 +73,9 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
 //        Glide.with(context).load(currentCafe.getImageUrl()).into(currentCafeHolder.cafeImage);
         if(cafeListPosition ==0){
         currentCafeHolder.headerZone.setVisibility(View.VISIBLE);
+        }
+        else {
+            currentCafeHolder.headerZone.setVisibility(View.GONE);
         }
         Glide.with(context).load(
                 currentCafe.getImageUrl())
@@ -97,53 +95,26 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         currentCafeHolder.likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked() {
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
                         Cafe cafe = currentCafe;
-                        final ArrayList<ArrayList<Meal>> mealArrayLists = new ArrayList<ArrayList<Meal>>();
-                        new MenuLoader(cafe.getId()).setOnMenuLoadListener(new MenuLoader.OnMenuLoadListener() {
-                            @Override
-                            public void onEvent(String result) {
-                                for(MenuLoader.MealType mealType :MenuLoader.MealType.values()){
-                                    try {
-                                        mealArrayLists.add(new MenuParser(result).getMeals(mealType));
-                                    } catch (JSONException e) {
-
-                                    }
-                                }
-
-                            }
-
-                        });
-
                         realm.beginTransaction();
-//                        realm.copyToRealm(new Favorite(cafe,cafe.getId(), (ArrayList<Meal>[]) mealArrayLists.toArray()));
+                        realm.copyToRealm(cafe);
                         realm.commitTransaction();
-                    }
-                });
-                thread.start();
+                Log.d(TAG, "liked: commited");
             }
 
             @Override
             public void unLiked() {
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Get a Realm instance for this thread
-                        Realm realm = Realm.getInstance(context);
-                        realm.beginTransaction();
-                        Cafe cafe = realm.where(Cafe.class).equalTo("id", currentCafe.getId()).findFirst();
-                        Log.d(TAG,"removed cafeID equals "+cafe.getId());
-                        cafe.removeFromRealm();
-                        realm.commitTransaction();
-                    }
-                });
-                thread.start();
+                // Get a Realm instance for this thread
+                Realm realm = Realm.getInstance(context);
+                realm.beginTransaction();
+                Cafe cafe = realm.where(Cafe.class).equalTo("id", currentCafe.getId()).findFirst();
+                cafe.removeFromRealm();
+                realm.commitTransaction();
+                Log.d(TAG, "liked: commited");
             }
         });// TODO: 04.01.2016 make like/unlike event
 
-        currentCafeHolder.likeButton.setLiked(realm.where(Cafe.class).equalTo("id", currentCafe.getId()).findFirst()!=null);// TODO: 1/9/16 make like checker from realm
+        currentCafeHolder.likeButton.setLiked(realm.where(Cafe.class).equalTo("id", currentCafe.getId()).findFirst()!=null);
         currentCafeHolder.clickZone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,6 +123,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
                 menuIntent.putExtra("menu_id",currentCafe.getId());
                 menuIntent.putExtra("img_url",currentCafe.getImageUrl());
                 menuIntent.putExtra("cafe_name",currentCafe.getName());
+                menuIntent.putExtra("cafe_phone","");// TODO: 1/26/16 add phone
                 context.startActivity(menuIntent);
             }
         });

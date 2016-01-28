@@ -22,7 +22,7 @@ import studio.jhl.android4places.R;
 import studio.jhl.android4places.bean.Meal;
 
 /**
- * Created by naomi on 1/14/16.
+ * Created by dmi3coder on 1/14/16.
  */
 public class MenuAdapter extends BaseAdapter {
     private ArrayList<Meal> meals;
