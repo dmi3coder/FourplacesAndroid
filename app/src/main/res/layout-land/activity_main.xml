@@ -206,17 +206,18 @@
             android:layout_height="match_parent"
             android:id="@+id/chooseLayout"
             android:orientation="vertical"
-            android:layout_centerHorizontal="true"
             android:layout_above="@+id/cafeFooter"
             android:layout_below="@+id/cafeHeader"
             android:background="#99FFFFFF"
-            android:visibility="gone">
+            android:visibility="visible"
+            android:layout_toLeftOf="@+id/linearLayout"
+            android:layout_toStartOf="@+id/linearLayout">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="right">
                 <Button style="@style/ChooseButton"
                     android:id="@+id/choose_button_all"
                     android:text="@string/cafe_type_all"
@@ -234,7 +235,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="right">
                 <Button style="@style/ChooseButton"
                     android:id="@+id/choose_button_fun"
                     android:text="@string/cafe_type_fun"
@@ -252,7 +253,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="right">
                 <Button style="@style/ChooseButton"
                     android:id="@+id/choose_button_sushi"
                     android:text="@string/cafe_type_sushi"

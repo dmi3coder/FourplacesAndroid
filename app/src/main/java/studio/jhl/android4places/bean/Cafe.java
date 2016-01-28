@@ -1,10 +1,13 @@
 package studio.jhl.android4places.bean;
 
+import org.parceler.Parcel;
+
 import io.realm.RealmObject;
 
 /**
  * Created by dmi3coder on 28.12.2015 20:11.
  */
+@Parcel
 public class Cafe extends RealmObject {
     private String name;    //Name of cafe, in backend - name
     private String type;    //Type of cafe, in backend - type

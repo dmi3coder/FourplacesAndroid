@@ -18,4 +18,5 @@
     <string name="cafe_header_telephone">Телефон</string>
     <string name="cafe_header_map">Расположение</string>
     <string name="noapp">У вас нет подходящего приложения</string>
+    <string name="nointernet">Проверте подключение к интернету</string>
 </resources>

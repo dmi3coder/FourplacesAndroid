@@ -2,6 +2,7 @@ package studio.jhl.android4places.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -67,11 +68,15 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         realm = Realm.getInstance(context);
     }
 
+
+    public List<Cafe> getCafeList(){
+        return cafeList;
+    }
+
     @Override
     public void onBindViewHolder(final CafeViewHolder currentCafeHolder, int cafeListPosition) {
     final Cafe currentCafe = cafeList.get(cafeListPosition);
-//        Glide.with(context).load(currentCafe.getImageUrl()).into(currentCafeHolder.cafeImage);
-        if(cafeListPosition ==0){
+        if(cafeListPosition ==0&&context.getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
         currentCafeHolder.headerZone.setVisibility(View.VISIBLE);
         }
         else {
