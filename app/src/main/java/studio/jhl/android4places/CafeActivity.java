@@ -20,10 +20,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.parceler.Parcels;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import studio.jhl.android4places.backend.MenuLoader;
 import studio.jhl.android4places.backend.MenuParser;
+import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.fragment.SampleListFragment;
 import studio.jhl.android4places.fragment.ScrollTabHolderFragment;
 import studio.jhl.android4places.views.PagerSlidingTabStrip;
@@ -48,6 +51,7 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
     private int menu_id;
     private MenuParser menuParser;
     public static String result;
+    private Cafe cafe;
     @Bind(R.id.progressBar) ProgressBar progressBar;
     @Bind(R.id.cafeImage) ImageView cafeImage;
     @Bind(R.id.cafeName) TextView cafeName;
@@ -58,7 +62,7 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cafe);
-
+        cafe = Parcels.unwrap(getIntent().getParcelableExtra("currentCafe"));
         mMinHeaderHeight = getResources().getDimensionPixelSize(R.dimen.min_header_height);
         mHeaderHeight = getResources().getDimensionPixelSize(R.dimen.header_height);
         mMinHeaderTranslation = -mMinHeaderHeight;
@@ -89,9 +93,9 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
     }
 
     private void defineHeader() {
-        menu_id = getIntent().getIntExtra("menu_id", 0);
-        cafeName.setText(getIntent().getStringExtra("cafe_name"));
-        Glide.with(this).load(getIntent().getStringExtra("img_url")).asBitmap().into(cafeImage);
+        menu_id = cafe.getId();
+        cafeName.setText(cafe.getName());
+        Glide.with(this).load(cafe.getImageUrl()).asBitmap().into(cafeImage);
         defineCallAction();
         defineMapAction();
     }
@@ -101,7 +105,7 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:"+getIntent().getStringExtra("cafe_telephone")));
+                intent.setData(Uri.parse("tel:"+cafe.getPhoneNumber()));
                 startIntent(intent);
             }
         });
@@ -111,7 +115,7 @@ public class CafeActivity extends FragmentActivity implements ScrollTabHolder, V
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("geo:0,0?q=34.99,-106.61("+getIntent().getStringExtra("cafe_name")+")"));// TODO: 1/26/16 add normal data from intent form MainActivity
+                intent.setData(Uri.parse("geo:0,0?q="+cafe.getCoordinates()+"("+cafe.getName()+")"));
                 startIntent(intent);
             }
         });

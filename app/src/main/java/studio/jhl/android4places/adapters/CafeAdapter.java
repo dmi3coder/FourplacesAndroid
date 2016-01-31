@@ -19,6 +19,8 @@ import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import io.realm.Realm;
@@ -74,7 +76,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
     }
 
     @Override
-    public void onBindViewHolder(final CafeViewHolder currentCafeHolder, int cafeListPosition) {
+    public void onBindViewHolder(final CafeViewHolder currentCafeHolder, final int cafeListPosition) {
     final Cafe currentCafe = cafeList.get(cafeListPosition);
         if(cafeListPosition ==0&&context.getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
         currentCafeHolder.headerZone.setVisibility(View.VISIBLE);
@@ -82,10 +84,12 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         else {
             currentCafeHolder.headerZone.setVisibility(View.GONE);
         }
+        Glide.with(context).load(R.drawable.no_image).into(currentCafeHolder.cafeImage);
         Glide.with(context).load(
                 currentCafe.getImageUrl())
                 .asBitmap()
                 .centerCrop()
+                .error(R.drawable.no_image)
                 .into(new SimpleTarget<Bitmap>(250, 250) {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
@@ -100,10 +104,10 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         currentCafeHolder.likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked() {
-                        Cafe cafe = currentCafe;
-                        realm.beginTransaction();
-                        realm.copyToRealm(cafe);
-                        realm.commitTransaction();
+                Cafe cafe = currentCafe;
+                realm.beginTransaction();
+                realm.copyToRealm(cafe);
+                realm.commitTransaction();
                 Log.d(TAG, "liked: commited");
             }
 
@@ -125,10 +129,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
             public void onClick(View v) {
                 Intent menuIntent = new Intent(context, CafeActivity.class);
                 menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                menuIntent.putExtra("menu_id",currentCafe.getId());
-                menuIntent.putExtra("img_url",currentCafe.getImageUrl());
-                menuIntent.putExtra("cafe_name",currentCafe.getName());
-                menuIntent.putExtra("cafe_phone","");// TODO: 1/26/16 add phone
+                menuIntent.putExtra("currentCafe", Parcels.wrap(Cafe.class,currentCafe));
                 context.startActivity(menuIntent);
             }
         });

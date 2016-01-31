@@ -88,6 +88,9 @@ public class CafeLoader {
             cafe.setPosition(restCafeData.getString("adress"));
             cafe.setWorkTime(restCafeData.getString("work_time"));
             cafe.setImageUrl(MainActivity.API_URL+"/img/"+restCafeData.getString("img_path"));
+            cafe.setCoordinates(restCafeData.getString("lat")+","+restCafeData.getString("lng"));
+            cafe.setPhoneNumber(restCafeData.getString("telephone"));
+            Log.d(TAG, "parseJsonArray: "+cafe.getImageUrl());
             restCafesData.add(cafe);
         }
         Log.d(TAG, "parseJsonArray: loaded size"+restCafesData.size());

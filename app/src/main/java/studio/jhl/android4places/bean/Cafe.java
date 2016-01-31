@@ -3,11 +3,13 @@ package studio.jhl.android4places.bean;
 import org.parceler.Parcel;
 
 import io.realm.RealmObject;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by dmi3coder on 28.12.2015 20:11.
  */
-@Parcel
+@RealmClass
+@Parcel(value = Parcel.Serialization.BEAN, analyze = {Cafe.class})
 public class Cafe extends RealmObject {
     private String name;    //Name of cafe, in backend - name
     private String type;    //Type of cafe, in backend - type
@@ -16,6 +18,8 @@ public class Cafe extends RealmObject {
     private String position;    //World position of cafe, in backend - adress
     private String imageUrl;    //URL location of image, in backend - imgpath
     private int id; //id of menu items, in backend - menu_id
+    private String phoneNumber;
+    private String coordinates;
 
     public String getName() {
         return name;
@@ -61,5 +65,21 @@ public class Cafe extends RealmObject {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(String coordinates) {
+        this.coordinates = coordinates;
     }
 }

@@ -30,7 +30,6 @@ public class SearchFragment extends Fragment {
     public SearchFragment(SearchViewLayout searchViewLayout, final Context context) {
         this.context = context;
         this.searchViewLayout = searchViewLayout;
-
     }
 
     @Override
