@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,7 +29,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import studio.jhl.android4places.Animations.ChooserAnimatorListener;
 import studio.jhl.android4places.adapters.CafeAdapter;
 import studio.jhl.android4places.backend.CafeLoader;
@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Realm.setDefaultConfiguration(new RealmConfiguration.Builder(this).build());
         super.onCreate(savedInstanceState);
         realm = Realm.getDefaultInstance();
         setContentView(R.layout.activity_main);
@@ -75,10 +74,8 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState!=null){
             loadSavedInstance(savedInstanceState);
         }
-        else {
-            if(isNetworkAvailable()) {
-                fillRecyclerView(CafeLoader.CafeType.ALL);
-            }
+        else if(isNetworkAvailable()) {
+            fillRecyclerView(CafeLoader.CafeType.ALL);
         }
         defineSearchViewLayout();
         defineTypeButtons();
@@ -112,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    @VisibleForTesting
     private boolean isNetworkAvailable() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
