@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import studio.jhl.android4places.CafeActivity;
 import studio.jhl.android4places.R;
 import studio.jhl.android4places.adapters.MenuAdapter;
-import studio.jhl.android4places.backend.MenuLoader;
 import studio.jhl.android4places.backend.MenuParser;
+import studio.jhl.android4places.backend.type.MealType;
 import studio.jhl.android4places.bean.Meal;
 
 public class SampleListFragment extends ScrollTabHolderFragment {
@@ -71,7 +71,7 @@ public class SampleListFragment extends ScrollTabHolderFragment {
         mListView.setOnScrollListener(new OnScroll());
         menuParser = new MenuParser(CafeActivity.result);
         try {
-            mListItems = menuParser.getMeals(MenuLoader.MealType.values()[mPosition]);
+            mListItems = menuParser.getMeals(MealType.values()[mPosition]);
         } catch (JSONException e) {
             e.printStackTrace();
         }

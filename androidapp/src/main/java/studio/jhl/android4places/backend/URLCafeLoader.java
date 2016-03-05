@@ -13,13 +13,13 @@ import java.util.ArrayList;
 
 import studio.jhl.android4places.MainActivity;
 import studio.jhl.android4places.bean.Cafe;
-import studio.jhl.android4places.bean.CafeType;
+import studio.jhl.android4places.backend.type.CafeType;
 
 
 /**
  * Created by dmi3coder on 29.12.2015 5:17.
  */
-public class URICafeLoader extends CafeLoader {
+public class URLCafeLoader extends CafeLoader {
     private static final String TAG = "dmi3debug";
     ArrayList<Cafe> restCafesData;
 
@@ -28,13 +28,8 @@ public class URICafeLoader extends CafeLoader {
          super.setOnCafesLoadListener(listener);
     }
 
-    public interface OnCafesLoadListener{
-        void onEvent(ArrayList<Cafe> cafes);
-    }
 
-
-
-    public URICafeLoader(CafeType choosedCafeType) {
+    public URLCafeLoader(CafeType choosedCafeType) {
         super(choosedCafeType);
         new CafeLoadAsyncTask().execute(MainActivity.API_URL + choosedCafeType.toString());
     }

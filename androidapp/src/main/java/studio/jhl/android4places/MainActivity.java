@@ -31,10 +31,9 @@ import butterknife.ButterKnife;
 import io.realm.Realm;
 import studio.jhl.android4places.Animations.ChooserAnimatorListener;
 import studio.jhl.android4places.adapters.CafeAdapter;
-import studio.jhl.android4places.backend.CafeLoader;
-import studio.jhl.android4places.backend.URICafeLoader;
+import studio.jhl.android4places.backend.URLCafeLoader;
+import studio.jhl.android4places.backend.type.CafeType;
 import studio.jhl.android4places.bean.Cafe;
-import studio.jhl.android4places.bean.CafeType;
 import studio.jhl.android4places.fragment.SearchFragment;
 import xyz.sahildave.widget.SearchViewLayout;
 
@@ -124,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         this.choosedCafeType = choosedCafeType;
         recyclerView.showProgress();
 
-        new URICafeLoader(choosedCafeType).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
+        new URLCafeLoader(choosedCafeType).setOnCafesLoadListener(new URLCafeLoader.OnCafesLoadListener() {
             @Override
             public void onEvent(ArrayList<Cafe> cafes) {
                 Log.d(TAG, "onEvent: working");

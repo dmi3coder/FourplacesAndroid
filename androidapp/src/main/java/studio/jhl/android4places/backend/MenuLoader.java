@@ -1,89 +1,24 @@
 package studio.jhl.android4places.backend;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
-import java.io.IOException;
-
-import studio.jhl.android4places.MainActivity;
-
 /**
- * Created by dmi3coder on 1/10/16.
+ * Created by dmi3coder on 3/5/16 3:27 PM.
  */
 public class MenuLoader {
-
-    public enum MealType {
-        FIRST, SECOND, DRINK, SNACKS, BAKERY, CANDY, SEA, ETC;
-        private static final String[] backendJsonTypes = {"first", "second", "drink", "snacks", "bread", "confectionery", "seaproduct", "etc"};
-        public static final String[] backendRuTypes = {"Первое", "Второе", "Напитки", "Закуски", "Хлебные изделия", "Кондитерские изделия", "Морские продукты"};
-
-        @Override
-        public String toString() {
-            for (int i = 0; i < MealType.values().length; i++) {
-                if (this == MealType.values()[i]) {
-                    return MealType.backendRuTypes[i];
-                }
-            }
-            return null;
-        }
-
-        public String toJson() {
-            for (int i = 0; i < MealType.values().length; i++) {
-                if (this == MealType.values()[i]) {
-                    return MealType.backendJsonTypes[i];
-                }
-            }
-            return null;
-        }
-    }
-
-    private static final String TAG = "MenuLoader";
     private OnMenuLoadListener onMenuLoadListener;
-    private String result;
-
-
-    public String getResult() {
-        return result;
-    }
 
     public interface OnMenuLoadListener {
         void onEvent(String result);
     }
 
+    public MenuLoader(int menuId){}
+
     public void setOnMenuLoadListener(OnMenuLoadListener onMenuLoadListener) {
         this.onMenuLoadListener = onMenuLoadListener;
     }
 
-
-    public MenuLoader(int menuId) {
-        new MenuLoadAsyncTask().execute(MainActivity.API_URL + "/api/getmenu/" + menuId);
-    }
-
-
-    private class MenuLoadAsyncTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-            try {
-                return new InputStreamProcessor(urls[0]).GET();
-            } catch (IOException e) {
-                Log.e(TAG, "doInBackground: error to GET", e);
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            result = s;
-            getRestMenuData();
-        }
-
-
-    }
-
-    public void getRestMenuData() {
+    public void getRestMenuData(String result) {
         if (onMenuLoadListener != null)
             onMenuLoadListener.onEvent(result);
     }
-}
 
+}

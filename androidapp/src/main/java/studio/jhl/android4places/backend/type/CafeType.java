@@ -1,4 +1,4 @@
-package studio.jhl.android4places.bean;
+package studio.jhl.android4places.backend.type;
 
 /**
  * Created by dmi3coder on 3/5/16 2:49 PM.

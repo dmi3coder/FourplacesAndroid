@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import studio.jhl.android4places.MainActivity;
+import studio.jhl.android4places.backend.type.MealType;
 import studio.jhl.android4places.bean.Meal;
 
 /**
@@ -51,7 +52,7 @@ public class MenuParser {
         }
     }
 
-    public ArrayList<Meal> getMeals(MenuLoader.MealType mealType) throws JSONException{
+    public ArrayList<Meal> getMeals(MealType mealType) throws JSONException{
 
         try {
             return new MealAsyncTask().execute(mealType).get();
@@ -63,11 +64,11 @@ public class MenuParser {
 return null;
     }
 
-    private class MealAsyncTask extends AsyncTask<MenuLoader.MealType,Void,ArrayList<Meal>>{
+    private class MealAsyncTask extends AsyncTask<MealType,Void,ArrayList<Meal>>{
         ArrayList<Meal> result = new ArrayList<>();
 
         @Override
-        protected ArrayList<Meal> doInBackground(MenuLoader.MealType... params) {
+        protected ArrayList<Meal> doInBackground(MealType... params) {
             try {
                 JSONArray mealArray = data_array.getJSONArray(params[0].toJson());
 

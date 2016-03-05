@@ -28,7 +28,7 @@ import studio.jhl.android4places.CafeActivity;
 import studio.jhl.android4places.R;
 import studio.jhl.android4places.ScrollTabHolder;
 import studio.jhl.android4places.adapters.PagerAdapter;
-import studio.jhl.android4places.backend.MenuLoader;
+import studio.jhl.android4places.backend.URLMenuLoader;
 import studio.jhl.android4places.backend.MenuParser;
 import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.views.PagerSlidingTabStrip;
@@ -49,7 +49,7 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
     private int mMinHeaderTranslation;
     private TextView info;
     private int mLastY;
-    public MenuLoader menuLoader;
+    public URLMenuLoader menuLoader;
     private int menu_id;
     private MenuParser menuParser;
     public static String result;
@@ -87,8 +87,8 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
 
         mPagerAdapter = new PagerAdapter(((FragmentActivity)getActivity()).getSupportFragmentManager());
         mPagerAdapter.setTabHolderScrollingContent(this);
-        menuLoader = new MenuLoader(menu_id);
-        menuLoader.setOnMenuLoadListener(new MenuLoader.OnMenuLoadListener() {
+        menuLoader = new URLMenuLoader(menu_id);
+        menuLoader.setOnMenuLoadListener(new URLMenuLoader.OnMenuLoadListener() {
             @Override
             public void onEvent(String result) {
                 progressBar.setVisibility(View.GONE);
