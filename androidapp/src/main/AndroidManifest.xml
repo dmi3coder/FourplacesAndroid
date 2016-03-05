@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name="studio.jhl.android4places.CafeActivity"
-            android:configChanges="locale">
+            android:configChanges="orientation|locale">
         </activity>
     </application>
 

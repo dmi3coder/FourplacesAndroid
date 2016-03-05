@@ -17,12 +17,14 @@ import java.util.ArrayList;
 import studio.jhl.android4places.R;
 import studio.jhl.android4places.adapters.CafeAdapter;
 import studio.jhl.android4places.backend.CafeLoader;
+import studio.jhl.android4places.backend.URICafeLoader;
 import studio.jhl.android4places.bean.Cafe;
+import studio.jhl.android4places.bean.CafeType;
 import xyz.sahildave.widget.SearchViewLayout;
 
 public class SearchFragment extends Fragment {
     SuperRecyclerView searchCafeListView;
-    CafeLoader.CafeType fragmentCurrentCafeType = CafeLoader.CafeType.ALL;
+    CafeType fragmentCurrentCafeType = CafeType.ALL;
     Context context;
     SearchViewLayout searchViewLayout;
 
@@ -50,7 +52,7 @@ public class SearchFragment extends Fragment {
             public void onFinished(final String searchKeyword) {
                 Log.d(getClass().getSimpleName(), "onFinished: "+searchKeyword);
                 searchCafeListView.setAdapter(null);
-                new CafeLoader(CafeLoader.CafeType.ALL).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
+                new URICafeLoader(CafeType.ALL).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
                     @Override
                     public void onEvent(ArrayList<Cafe> cafes) {
                         ArrayList<Cafe> cafesToSearch = new ArrayList<Cafe>();

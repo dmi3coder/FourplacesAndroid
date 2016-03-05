@@ -17,7 +17,9 @@ import java.util.ArrayList;
 import studio.jhl.android4places.R;
 import studio.jhl.android4places.adapters.CafeAdapter;
 import studio.jhl.android4places.backend.CafeLoader;
+import studio.jhl.android4places.backend.URICafeLoader;
 import studio.jhl.android4places.bean.Cafe;
+import studio.jhl.android4places.bean.CafeType;
 
 public class CafeListFragment extends Fragment {
     SuperRecyclerView recyclerView;
@@ -39,15 +41,14 @@ public class CafeListFragment extends Fragment {
         recyclerView = (SuperRecyclerView)v.findViewById(R.id.list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        defineRecyclerViewAndLoad(CafeLoader.CafeType.ALL);
-
+        defineRecyclerViewAndLoad(CafeType.ALL);
         return v;
     }
 
-    public void defineRecyclerViewAndLoad(CafeLoader.CafeType choosedCafeType) {
+    public void defineRecyclerViewAndLoad(CafeType choosedCafeType) {
         recyclerView.showProgress();
 
-        new CafeLoader(choosedCafeType).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
+        new URICafeLoader(choosedCafeType).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
             @Override
             public void onEvent(ArrayList<Cafe> cafes) {
                 recyclerView.setAdapter(new CafeAdapter(cafes, context));

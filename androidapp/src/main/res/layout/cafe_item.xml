@@ -5,7 +5,7 @@
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
     <View
         android:id="@+id/HeaderZone"
         android:layout_width="match_parent"
@@ -17,12 +17,12 @@
     <com.balysv.materialripple.MaterialRippleLayout
         app:mrl_rippleColor="@color/colorAccent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/clickZone"
         android:layout_below="@+id/HeaderZone">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 

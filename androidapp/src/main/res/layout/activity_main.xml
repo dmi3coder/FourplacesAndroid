@@ -50,8 +50,7 @@
                 android:layout_height="wrap_content"
                 app:mrl_rippleColor="@color/colorAccent"
                 app:mrl_rippleBackground="@color/colorPrimary"
-                android:padding="5dp"
-                >
+                android:padding="5dp">
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -63,7 +62,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_restaurant_menu_white_24dp"/>
-
                     <TextView style="@style/HeaderTextView"
                         android:text="Всё"/>
                 </LinearLayout>
@@ -200,11 +198,13 @@
             android:layout_above="@+id/cafeFooter"
             android:layout_below="@+id/cafeHeader"
             android:background="#99FFFFFF"
-            android:visibility="gone">
+            android:visibility="visible"
+            android:onClick="nothingOnClick">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:orientation="horizontal"
                 android:gravity="center">
                 <Button style="@style/ChooseButton"
@@ -222,7 +222,8 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:orientation="horizontal"
                 android:gravity="center">
                 <Button style="@style/ChooseButton"
@@ -240,7 +241,8 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:orientation="horizontal"
                 android:gravity="center">
                 <Button style="@style/ChooseButton"
@@ -253,8 +255,6 @@
                     android:text="@string/cafe_type_etc"/>
 
                 <Button style="@style/ChooseButton"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
                     android:drawableTop="@android:drawable/star_big_off"
                     android:src="@android:drawable/btn_star"
                     android:text="@string/cafe_type_favourite"

@@ -32,14 +32,16 @@ import io.realm.Realm;
 import studio.jhl.android4places.Animations.ChooserAnimatorListener;
 import studio.jhl.android4places.adapters.CafeAdapter;
 import studio.jhl.android4places.backend.CafeLoader;
+import studio.jhl.android4places.backend.URICafeLoader;
 import studio.jhl.android4places.bean.Cafe;
+import studio.jhl.android4places.bean.CafeType;
 import studio.jhl.android4places.fragment.SearchFragment;
 import xyz.sahildave.widget.SearchViewLayout;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "dmi3debug";
     public static final String API_URL = "http://fourplaces.pp.ua";
-    private CafeLoader.CafeType choosedCafeType;
+    private CafeType choosedCafeType;
     @Bind(R.id.list) SuperRecyclerView recyclerView;
     @Bind(R.id.search_view)SearchViewLayout searchViewLayout;
     @Bind(R.id.cafeFooter)LinearLayout cafeFooter;
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.chooseLayout) LinearLayout chooseLayout;
     @Bind(R.id.choose_button_favourite) Button chooseFavouriteButton;
     private SearchFragment searchFragment;
-    private Realm realm ;
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +77,10 @@ public class MainActivity extends AppCompatActivity {
             loadSavedInstance(savedInstanceState);
         }
         else if(isNetworkAvailable()) {
-            fillRecyclerView(CafeLoader.CafeType.ALL);
+            fillRecyclerView(CafeType.ALL);
         }
         defineSearchViewLayout();
         defineTypeButtons();
-
     }
 
 
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             recyclerView.setOnScrollListener(new QuickReturnRecyclerViewOnScrollListener.Builder(QuickReturnViewType.HEADER)
                     .header(cafeHeader)
-                    .minHeaderTranslation(-60)
+                    .minHeaderTranslation(-cafeHeader.getLayoutParams().height)
                     .isSnappable(true)
                     .build());
         }
@@ -116,14 +117,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void fillRecyclerView(CafeLoader.CafeType choosedCafeType) {
+    private void fillRecyclerView(CafeType choosedCafeType) {
         if(choosedCafeType == this.choosedCafeType){
             return;
         }
         this.choosedCafeType = choosedCafeType;
         recyclerView.showProgress();
 
-        new CafeLoader(choosedCafeType).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
+        new URICafeLoader(choosedCafeType).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
             @Override
             public void onEvent(ArrayList<Cafe> cafes) {
                 Log.d(TAG, "onEvent: working");
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             headerButtons.get(currentButton).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    fillRecyclerView(CafeLoader.CafeType.values()[currentButtonFinal]);
+                    fillRecyclerView(CafeType.values()[currentButtonFinal]);
                 }
             });
         }
@@ -192,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
             chooseButtons.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    fillRecyclerView(CafeLoader.CafeType.values()[finalI]);
+                    fillRecyclerView(CafeType.values()[finalI]);
                     defineChooseAnimation();
                 }
             });
@@ -221,4 +222,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void nothingOnClick(View view) {
+    }
 }

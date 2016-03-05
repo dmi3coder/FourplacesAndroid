@@ -53,8 +53,7 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
     private int menu_id;
     private MenuParser menuParser;
     public static String result;
-    private Cafe cafe;
-    private FragmentActivity context;
+    private static Cafe cafe;
 
     @Bind(R.id.progressBar) ProgressBar progressBar;
     @Bind(R.id.cafeImage) ImageView cafeImage;
@@ -62,10 +61,13 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
     @Bind(R.id.header_text_telephone) TextView callView;
     @Bind(R.id.header_text_map)TextView mapView;
 
-    public CafeFragment(FragmentActivity context){
-        this.context = context;
-    }
 
+    public static final CafeFragment newInstance(Bundle savedInstanceState){
+        CafeFragment fragment = new CafeFragment();
+        fragment.setArguments(savedInstanceState);
+        return fragment;
+
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,9 +85,8 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
         mViewPager = (ViewPager) root.findViewById(R.id.pager);
         mViewPager.setOffscreenPageLimit(3);
 
-        mPagerAdapter = new PagerAdapter(context.getSupportFragmentManager());
+        mPagerAdapter = new PagerAdapter(((FragmentActivity)getActivity()).getSupportFragmentManager());
         mPagerAdapter.setTabHolderScrollingContent(this);
-
         menuLoader = new MenuLoader(menu_id);
         menuLoader.setOnMenuLoadListener(new MenuLoader.OnMenuLoadListener() {
             @Override
