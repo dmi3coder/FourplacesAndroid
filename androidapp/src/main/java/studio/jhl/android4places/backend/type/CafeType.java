@@ -5,10 +5,10 @@ package studio.jhl.android4places.backend.type;
  */
 public enum CafeType{
     ALL,CAFE,NIGHT_CLUB,FUN,RESTAURANT,FASTFOOD,SUSHI,ETC;
-    String[] backendRuTypes = {"","Кофейня", "Ночной клуб", "Развлечения", "Ресторан", "Фаст фуд", "Суши бар", "Что то другое"};
+    private static String[] backendRuTypes = {"","Кофейня", "Ночной клуб", "Развлечения", "Ресторан", "Фаст фуд", "Суши бар", "Что то другое"};
 
-    @Override
-    public String toString() {
+
+    public String toUrlString() {
         CafeType[] cafeTypes = CafeType.values();
         for(int i = 0 ;i<cafeTypes.length;i++) {
             if (this == cafeTypes[i]){
@@ -20,4 +20,24 @@ public enum CafeType{
         }
         throw new NullPointerException("Cafe type not found");
     }
-}
+
+    public static CafeType toEnum(String jsonType) {
+        for (int i = 0; i < backendRuTypes.length; i++) {
+            if (backendRuTypes[i].equals(jsonType)) {
+                return CafeType.values()[i];
+            }
+        }
+        return ALL;
+    }
+
+    @Override
+    public String toString() {
+        CafeType[] cafeTypes = CafeType.values();
+        for(int i = 0 ;i<cafeTypes.length;i++) {
+            if (this == cafeTypes[i]){
+                return backendRuTypes[i];
+            }
+        }
+        return "";
+    }
+    }

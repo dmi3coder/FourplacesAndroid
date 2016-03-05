@@ -31,7 +31,7 @@ public class URLCafeLoader extends CafeLoader {
 
     public URLCafeLoader(CafeType choosedCafeType) {
         super(choosedCafeType);
-        new CafeLoadAsyncTask().execute(MainActivity.API_URL + choosedCafeType.toString());
+        new CafeLoadAsyncTask().execute(MainActivity.API_URL + choosedCafeType.toUrlString());
     }
 
     private class CafeLoadAsyncTask extends AsyncTask<String, Void, String> {

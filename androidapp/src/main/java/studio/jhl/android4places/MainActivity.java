@@ -21,26 +21,29 @@ import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnRecyclerViewOnScrollListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 import studio.jhl.android4places.Animations.ChooserAnimatorListener;
 import studio.jhl.android4places.adapters.CafeAdapter;
-import studio.jhl.android4places.backend.URLCafeLoader;
 import studio.jhl.android4places.backend.type.CafeType;
 import studio.jhl.android4places.bean.Cafe;
+import studio.jhl.android4places.cache.CacheEvent;
 import studio.jhl.android4places.fragment.SearchFragment;
 import xyz.sahildave.widget.SearchViewLayout;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "dmi3debug";
     public static final String API_URL = "http://fourplaces.pp.ua";
-    private CafeType choosedCafeType;
+    private CafeType currentCafeType;
     @Bind(R.id.list) SuperRecyclerView recyclerView;
     @Bind(R.id.search_view)SearchViewLayout searchViewLayout;
     @Bind(R.id.cafeFooter)LinearLayout cafeFooter;
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         defineStickyHeader();
     }
+
     private void defineStickyHeader() {
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             recyclerView.setOnScrollListener(new QuickReturnRecyclerViewOnScrollListener.Builder(QuickReturnViewType.HEADER)
@@ -117,20 +121,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fillRecyclerView(CafeType choosedCafeType) {
-        if(choosedCafeType == this.choosedCafeType){
+        if(choosedCafeType == this.currentCafeType){
             return;
         }
-        this.choosedCafeType = choosedCafeType;
+        this.currentCafeType = choosedCafeType;
         recyclerView.showProgress();
+        fillRecyclerViewFromCache();
+    }
 
-        new URLCafeLoader(choosedCafeType).setOnCafesLoadListener(new URLCafeLoader.OnCafesLoadListener() {
-            @Override
-            public void onEvent(ArrayList<Cafe> cafes) {
-                Log.d(TAG, "onEvent: working");
-                recyclerView.setAdapter(new CafeAdapter(cafes, MainActivity.this.getBaseContext()));
-            }
+    private void fillRecyclerViewFromCache(){
+        Realm realm = Realm.getInstance(MainApplication.cacheConfig);
+        RealmQuery<Cafe> query = realm.where(Cafe.class);
+        RealmResults<Cafe> cafes;
+        if(currentCafeType==CafeType.ALL){
+           cafes = query.findAll();
+        }
+        else{
+            cafes = query.contains("type",currentCafeType.toString()).findAll();
+        }
+        recyclerView.setAdapter(new CafeAdapter(cafes, MainActivity.this.getBaseContext()));
+    }
 
-        });
+
+
+    @Subscribe
+    public void onCacheEvent(CacheEvent event) {
+        fillRecyclerViewFromCache();
     }
 
     private void defineSearchViewLayout() {
@@ -205,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setAdapter(new CafeAdapter(cafes,MainActivity.this));
                 realm.commitTransaction();
                 defineChooseAnimation();
-                choosedCafeType=null;
+                currentCafeType =null;
             }
         });
     }
@@ -222,5 +238,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void nothingOnClick(View view) {
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -3,6 +3,7 @@ package studio.jhl.android4places.bean;
 import org.parceler.Parcel;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 
 /**
@@ -17,6 +18,8 @@ public class Cafe extends RealmObject {
     private String workTime;    //Time when the cafe is working, in backend - worktime
     private String position;    //World position of cafe, in backend - adress
     private String imageUrl;    //URL location of image, in backend - imgpath
+
+    @PrimaryKey
     private int id; //id of menu items, in backend - menu_id
     private String phoneNumber;
     private String coordinates;
