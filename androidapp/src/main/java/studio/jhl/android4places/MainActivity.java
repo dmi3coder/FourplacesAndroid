@@ -42,7 +42,7 @@ import xyz.sahildave.widget.SearchViewLayout;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "dmi3debug";
-    public static final String API_URL = "http://fourplaces.pp.ua";
+    public static final String API_URL = "http://ec2-54-191-136-74.us-west-2.compute.amazonaws.com/";
     private CafeType currentCafeType;
     @Bind(R.id.list) SuperRecyclerView recyclerView;
     @Bind(R.id.search_view)SearchViewLayout searchViewLayout;
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void loadSavedInstance(Bundle savedInstanceState) {
         List<Cafe> cafes = Parcels.unwrap(savedInstanceState.getParcelable("cafeList"));
-        recyclerView.setAdapter(new CafeAdapter(cafes,this));
+        setupAdapter(recyclerView,cafes);
         if(savedInstanceState.getInt("chooserView",View.GONE) == View.VISIBLE) {
             chooseLayout.setVisibility(View.VISIBLE);
         }
@@ -126,10 +126,10 @@ public class MainActivity extends AppCompatActivity {
         }
         this.currentCafeType = choosedCafeType;
         recyclerView.showProgress();
-        fillRecyclerViewFromCache();
+        setupAdapter(recyclerView, getCafesFromCache());
     }
 
-    private void fillRecyclerViewFromCache(){
+    protected List<Cafe> getCafesFromCache(){
         Realm realm = Realm.getInstance(MainApplication.cacheConfig);
         RealmQuery<Cafe> query = realm.where(Cafe.class);
         RealmResults<Cafe> cafes;
@@ -139,14 +139,18 @@ public class MainActivity extends AppCompatActivity {
         else{
             cafes = query.contains("type",currentCafeType.toString()).findAll();
         }
-        recyclerView.setAdapter(new CafeAdapter(cafes, MainActivity.this.getBaseContext()));
+        return cafes;
     }
 
+    protected void setupAdapter(SuperRecyclerView recyclerView, List<Cafe> cafes){
+        recyclerView.setAdapter(new CafeAdapter(cafes, MainActivity.this.getBaseContext()));
+
+    }
 
 
     @Subscribe
     public void onCacheEvent(CacheEvent event) {
-        fillRecyclerViewFromCache();
+        setupAdapter(recyclerView,getCafesFromCache());
     }
 
     private void defineSearchViewLayout() {
@@ -233,7 +237,9 @@ public class MainActivity extends AppCompatActivity {
             Parcelable listElements = Parcels.wrap(((CafeAdapter) recyclerView.getAdapter()).getCafeList());
             outState.putParcelable("cafeList", listElements);
             outState.putInt("chooserView",chooseLayout.getVisibility());
-        }catch (Exception e){}
+        }catch (Exception e){
+            Log.e(TAG, "onSaveInstanceState: ",e);
+        }
     }
 
 

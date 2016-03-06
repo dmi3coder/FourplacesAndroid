@@ -10,7 +10,7 @@ import io.realm.annotations.RealmClass;
  * Created by dmi3coder on 28.12.2015 20:11.
  */
 @RealmClass
-@Parcel(value = Parcel.Serialization.BEAN, analyze = {Cafe.class})
+@Parcel(value = Parcel.Serialization.BEAN, analyze = {RealmObject.class})
 public class Cafe extends RealmObject {
     private String name;    //Name of cafe, in backend - name
     private String type;    //Type of cafe, in backend - type
