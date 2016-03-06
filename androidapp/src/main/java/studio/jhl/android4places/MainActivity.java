@@ -25,6 +25,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -36,6 +37,7 @@ import studio.jhl.android4places.Animations.ChooserAnimatorListener;
 import studio.jhl.android4places.adapters.CafeAdapter;
 import studio.jhl.android4places.backend.type.CafeType;
 import studio.jhl.android4places.bean.Cafe;
+import studio.jhl.android4places.bean.ParcelCafe;
 import studio.jhl.android4places.cache.CacheEvent;
 import studio.jhl.android4places.fragment.SearchFragment;
 import xyz.sahildave.widget.SearchViewLayout;
@@ -103,7 +105,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void loadSavedInstance(Bundle savedInstanceState) {
-        List<Cafe> cafes = Parcels.unwrap(savedInstanceState.getParcelable("cafeList"));
+        List<ParcelCafe> parcelCafes = Parcels.unwrap(savedInstanceState.getParcelable("cafeList"));
+        List<Cafe> cafes = new ArrayList<>();
+        for (ParcelCafe parcelCafe:
+                parcelCafes) {
+            cafes.add(parcelCafe.toCafe());
+        }
         setupAdapter(recyclerView,cafes);
         if(savedInstanceState.getInt("chooserView",View.GONE) == View.VISIBLE) {
             chooseLayout.setVisibility(View.VISIBLE);
@@ -222,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 realm.beginTransaction();
                 List<Cafe> cafes = realm.where(Cafe.class).findAll();
-                recyclerView.setAdapter(new CafeAdapter(cafes,MainActivity.this));
+                recyclerView.setAdapter(new CafeAdapter(cafes,MainActivity.this.getApplicationContext()));
                 realm.commitTransaction();
                 defineChooseAnimation();
                 currentCafeType =null;
@@ -234,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         try {
-            Parcelable listElements = Parcels.wrap(((CafeAdapter) recyclerView.getAdapter()).getCafeList());
+            Parcelable listElements = Parcels.wrap(((CafeAdapter) recyclerView.getAdapter()).getParcelCafeList());
             outState.putParcelable("cafeList", listElements);
             outState.putInt("chooserView",chooseLayout.getVisibility());
         }catch (Exception e){

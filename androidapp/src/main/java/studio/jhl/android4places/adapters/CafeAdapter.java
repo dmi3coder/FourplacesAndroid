@@ -21,12 +21,14 @@ import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
 import studio.jhl.android4places.CafeActivity;
 import studio.jhl.android4places.R;
 import studio.jhl.android4places.bean.Cafe;
+import studio.jhl.android4places.bean.ParcelCafe;
 
 /**
  * Created by dmi3coder on 03.01.2016 16:08.
@@ -73,6 +75,17 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
 
     public List<Cafe> getCafeList(){
         return cafeList;
+    }
+
+    public List<ParcelCafe> getParcelCafeList(){
+        List<ParcelCafe> parcelCafes = new ArrayList<>();
+        for (Cafe cafe
+                : cafeList
+             ) {
+            ParcelCafe parcelCafe =new ParcelCafe(cafe.getName(),cafe.getType(),cafe.getDescription(),cafe.getWorkTime(),cafe.getPosition(),cafe.getImageUrl(),cafe.getId(),cafe.getPhoneNumber(),cafe.getCoordinates());
+           parcelCafes.add(parcelCafe);
+        }
+        return parcelCafes;
     }
 
     @Override

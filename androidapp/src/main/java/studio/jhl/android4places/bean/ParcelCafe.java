@@ -1,15 +1,14 @@
 package studio.jhl.android4places.bean;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
+import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
 
 /**
- * Created by dmi3coder on 28.12.2015 20:11.
+ * Created by dmi3coder on 3/6/16 8:04 PM.
  */
-@RealmClass
-@org.parceler.Parcel(value = org.parceler.Parcel.Serialization.BEAN, analyze = { Cafe.class })
-public class Cafe extends RealmObject {
+
+@Parcel
+public class ParcelCafe {
     private String name;    //Name of cafe, in backend - name
     private String type;    //Type of cafe, in backend - type
     private String description;
@@ -17,10 +16,31 @@ public class Cafe extends RealmObject {
     private String position;    //World position of cafe, in backend - adress
     private String imageUrl;    //URL location of image, in backend - imgpath
 
-    @PrimaryKey
     private int id; //id of menu items, in backend - menu_id
     private String phoneNumber;
     private String coordinates;
+
+    @ParcelConstructor
+    public ParcelCafe(String name,
+                      String type,
+                      String description,
+                      String workTime,
+                      String position,
+                      String imageUrl,
+                      int id,
+                      String phoneNumber,
+                      String coordinates){
+
+        this.name = name;
+        this.type = type;
+        this.description = description;
+        this.workTime = workTime;
+        this.position = position;
+        this.imageUrl = imageUrl;
+        this.id = id;
+        this.phoneNumber = phoneNumber;
+        this.coordinates = coordinates;
+    }
 
     public String getName() {
         return name;
@@ -83,4 +103,19 @@ public class Cafe extends RealmObject {
     public void setCoordinates(String coordinates) {
         this.coordinates = coordinates;
     }
+
+    public Cafe toCafe(){
+        Cafe cafe = new Cafe();
+        cafe.setName(name);
+        cafe.setType(type);
+        cafe.setWorkTime(workTime);
+        cafe.setPosition(position);
+        cafe.setImageUrl(imageUrl);
+        cafe.setId(id);
+        cafe.setDescription(description);
+        cafe.setPhoneNumber(phoneNumber);
+        cafe.setCoordinates(coordinates);
+        return cafe;
+    }
+
 }

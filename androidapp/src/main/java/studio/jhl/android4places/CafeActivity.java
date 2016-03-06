@@ -13,6 +13,7 @@ import studio.jhl.android4places.fragment.CafeFragment;
 @SuppressLint("NewApi")
 public class CafeActivity extends FragmentActivity {
 
+
     public static final boolean NEEDS_PROXY = Integer.valueOf(Build.VERSION.SDK_INT).intValue() < 11;
     public static String result;
 
