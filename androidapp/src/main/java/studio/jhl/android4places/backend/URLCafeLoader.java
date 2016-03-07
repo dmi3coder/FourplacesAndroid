@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import studio.jhl.android4places.MainActivity;
-import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.backend.type.CafeType;
+import studio.jhl.android4places.bean.Cafe;
 
 
 /**
@@ -21,18 +21,11 @@ import studio.jhl.android4places.backend.type.CafeType;
  */
 public class URLCafeLoader extends CafeLoader {
     private static final String TAG = "dmi3debug";
-    CafeType currentCafeType;
-    ArrayList<Cafe> restCafesData;
 
-    @Override
-    public void setOnCafesLoadListener(CafeLoader.OnCafesLoadListener listener) {
-         super.setOnCafesLoadListener(listener);
-    }
 
 
     public URLCafeLoader(CafeType choosedCafeType) {
         super(choosedCafeType);
-        currentCafeType = choosedCafeType;
     }
 
     @Override
@@ -54,18 +47,18 @@ public class URLCafeLoader extends CafeLoader {
         @Override
         protected void onPostExecute(String restResponseResult) {
             try {
-                parseJsonArray(restResponseResult);
+                URLCafeLoader.super.getRestCafesData(parseJsonArray(restResponseResult));
             } catch (JSONException e) {
                 Log.d(TAG, "onPostExecute: parseJsonError"+e);
             }
         }
     }
 
-    private void parseJsonArray(String result) throws JSONException {
+    protected ArrayList<Cafe> parseJsonArray(String result) throws JSONException {
         JSONArray data_array = new JSONObject(result).getJSONArray("data");
         Log.d(TAG, "parseJsonArray: json length "+data_array.length());
         JSONObject restCafeData;
-        restCafesData = new ArrayList<>();
+        ArrayList<Cafe> restCafesData = new ArrayList<>();
         Cafe cafe;
         for(int i = 0;i<data_array.length();i++){
             cafe = new Cafe();
@@ -77,11 +70,11 @@ public class URLCafeLoader extends CafeLoader {
             cafe.setPosition(restCafeData.getString("adress"));
             cafe.setWorkTime(restCafeData.getString("work_time"));
             cafe.setImageUrl(MainActivity.API_URL+"/img/"+restCafeData.getString("img_path"));
-            cafe.setCoordinates(restCafeData.getString("lat")+","+restCafeData.getString("lng"));
+            cafe.setLat(restCafeData.getString("lat"));
+            cafe.setLng(restCafeData.getString("lng"));
             cafe.setPhoneNumber(restCafeData.getString("telephone"));
             restCafesData.add(cafe);
         }
-        super.getRestCafesData(restCafesData);
-
+        return restCafesData;
     }
 }

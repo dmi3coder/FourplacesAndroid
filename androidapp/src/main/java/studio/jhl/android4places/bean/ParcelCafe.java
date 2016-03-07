@@ -18,7 +18,7 @@ public class ParcelCafe {
 
     private int id; //id of menu items, in backend - menu_id
     private String phoneNumber;
-    private String coordinates;
+    private String lat,lng;
 
     @ParcelConstructor
     public ParcelCafe(String name,
@@ -29,7 +29,8 @@ public class ParcelCafe {
                       String imageUrl,
                       int id,
                       String phoneNumber,
-                      String coordinates){
+                      String lat,
+                      String lng){
 
         this.name = name;
         this.type = type;
@@ -39,7 +40,8 @@ public class ParcelCafe {
         this.imageUrl = imageUrl;
         this.id = id;
         this.phoneNumber = phoneNumber;
-        this.coordinates = coordinates;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public String getName() {
@@ -61,48 +63,17 @@ public class ParcelCafe {
         return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setType(String type) {
-        this.type = type;
-    }
-    public void setWorkTime(String workTime) {
-        this.workTime = workTime;
-    }
-    public void setPosition(String position) {
-        this.position = position;
-    }
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 
-    public String getCoordinates() {
-        return coordinates;
-    }
 
-    public void setCoordinates(String coordinates) {
-        this.coordinates = coordinates;
-    }
+
 
     public Cafe toCafe(){
         Cafe cafe = new Cafe();
@@ -114,8 +85,18 @@ public class ParcelCafe {
         cafe.setId(id);
         cafe.setDescription(description);
         cafe.setPhoneNumber(phoneNumber);
-        cafe.setCoordinates(coordinates);
+        cafe.setLat(lat);
+        cafe.setLng(lng);
         return cafe;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+
+    public String getLng() {
+        return lng;
     }
 
 }

@@ -10,12 +10,14 @@ import studio.jhl.android4places.backend.type.CafeType;
  */
 public abstract class CafeLoader {
     private OnCafesLoadListener onCafesLoadListener;
+    protected CafeType currentCafeType;
 
         public interface OnCafesLoadListener{
         void onEvent(ArrayList<Cafe> cafes);
     }
 
-    public CafeLoader(CafeType type){
+    public CafeLoader(CafeType choosedCafeType){
+        currentCafeType = choosedCafeType;
     }
 
     public abstract void load();

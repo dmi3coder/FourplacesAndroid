@@ -42,8 +42,7 @@ public class CafeAdapterTest {
                                                     "localhost"+i,
                                                     "null",
                                                     i,
-                                                    "+380969259602",
-                                                    "loh,pidr");
+                                                    "+380969259602", "0", "0");
 
             cafes.add(parcelCafe.toCafe());
         }

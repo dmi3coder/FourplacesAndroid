@@ -125,7 +125,7 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("geo:0,0?q="+cafe.getCoordinates()+"("+cafe.getName()+")"));
+                intent.setData(Uri.parse("geo:0,0?q="+cafe.getLat()+","+cafe.getLng()+"("+cafe.getName()+")"));
                 startIntent(intent);
             }
         });

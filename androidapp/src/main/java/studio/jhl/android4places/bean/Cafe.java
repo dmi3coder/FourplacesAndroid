@@ -1,5 +1,7 @@
 package studio.jhl.android4places.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
@@ -10,17 +12,18 @@ import io.realm.annotations.RealmClass;
 @RealmClass
 @org.parceler.Parcel(value = org.parceler.Parcel.Serialization.BEAN, analyze = { Cafe.class })
 public class Cafe extends RealmObject {
+
     private String name;    //Name of cafe, in backend - name
     private String type;    //Type of cafe, in backend - type
     private String description;
-    private String workTime;    //Time when the cafe is working, in backend - worktime
-    private String position;    //World position of cafe, in backend - adress
-    private String imageUrl;    //URL location of image, in backend - imgpath
+    @SerializedName("work_time") private String workTime;    //Time when the cafe is working, in backend - workTime
+    @SerializedName("adress") private String position;    //World position of cafe, in backend - adress
+    @SerializedName("img_path") private String imageUrl;    //URL location of image, in backend - imgpath
 
     @PrimaryKey
     private int id; //id of menu items, in backend - menu_id
-    private String phoneNumber;
-    private String coordinates;
+    @SerializedName("telephone") private String phoneNumber;
+    private String lat,lng;
 
     public String getName() {
         return name;
@@ -76,11 +79,19 @@ public class Cafe extends RealmObject {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCoordinates() {
-        return coordinates;
+    public String getLat() {
+        return lat;
     }
 
-    public void setCoordinates(String coordinates) {
-        this.coordinates = coordinates;
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
     }
 }

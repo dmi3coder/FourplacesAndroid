@@ -26,6 +26,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import studio.jhl.android4places.CafeActivity;
+import studio.jhl.android4places.MainApplication;
 import studio.jhl.android4places.R;
 import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.bean.ParcelCafe;
@@ -82,7 +83,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         for (Cafe cafe
                 : cafeList
              ) {
-            ParcelCafe parcelCafe =new ParcelCafe(cafe.getName(),cafe.getType(),cafe.getDescription(),cafe.getWorkTime(),cafe.getPosition(),cafe.getImageUrl(),cafe.getId(),cafe.getPhoneNumber(),cafe.getCoordinates());
+            ParcelCafe parcelCafe =new ParcelCafe(cafe.getName(),cafe.getType(),cafe.getDescription(),cafe.getWorkTime(),cafe.getPosition(),cafe.getImageUrl(),cafe.getId(),cafe.getPhoneNumber(), cafe.getLat(), cafe.getLng());
            parcelCafes.add(parcelCafe);
         }
         return parcelCafes;
@@ -118,6 +119,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
             @Override
             public void liked() {
                 Cafe cafe = currentCafe;
+                Realm realm = Realm.getInstance(MainApplication.favoriteConfig);
                 realm.beginTransaction();
                 realm.copyToRealm(cafe);
                 realm.commitTransaction();
@@ -127,7 +129,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
             @Override
             public void unLiked() {
                 // Get a Realm instance for this thread
-                Realm realm = Realm.getInstance(context);
+                Realm realm = Realm.getInstance(MainApplication.favoriteConfig);
                 realm.beginTransaction();
                 Cafe cafe = realm.where(Cafe.class).equalTo("id", currentCafe.getId()).findFirst();
                 cafe.removeFromRealm();
