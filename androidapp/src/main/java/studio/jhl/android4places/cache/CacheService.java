@@ -96,6 +96,7 @@ public class CacheService extends IntentService {
                 EventBus.getDefault().post(new CacheEvent(CacheEvent.RESULT_DONE));
             }
         });
+        loader.load();
     }
 
 }

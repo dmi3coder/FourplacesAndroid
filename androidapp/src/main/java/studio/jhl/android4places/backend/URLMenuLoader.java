@@ -11,6 +11,7 @@ import studio.jhl.android4places.MainActivity;
  * Created by dmi3coder on 1/10/16.
  */
 public class URLMenuLoader extends MenuLoader {
+    private int menuId;
 
     private static final String TAG = "URLMenuLoader";
 
@@ -21,6 +22,11 @@ public class URLMenuLoader extends MenuLoader {
 
     public URLMenuLoader(int menuId) {
         super(menuId);
+        this.menuId = menuId;
+    }
+
+    @Override
+    public void load() {
         new MenuLoadAsyncTask().execute(MainActivity.API_URL + "/api/getmenu/" + menuId);
     }
 

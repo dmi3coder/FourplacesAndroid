@@ -21,6 +21,7 @@ import studio.jhl.android4places.backend.type.CafeType;
  */
 public class URLCafeLoader extends CafeLoader {
     private static final String TAG = "dmi3debug";
+    CafeType currentCafeType;
     ArrayList<Cafe> restCafesData;
 
     @Override
@@ -31,7 +32,12 @@ public class URLCafeLoader extends CafeLoader {
 
     public URLCafeLoader(CafeType choosedCafeType) {
         super(choosedCafeType);
-        new CafeLoadAsyncTask().execute(MainActivity.API_URL + choosedCafeType.toUrlString());
+        currentCafeType = choosedCafeType;
+    }
+
+    @Override
+    public void load() {
+        new CafeLoadAsyncTask().execute(MainActivity.API_URL + currentCafeType.toUrlString());
     }
 
     private class CafeLoadAsyncTask extends AsyncTask<String, Void, String> {

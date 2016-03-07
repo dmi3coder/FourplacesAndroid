@@ -99,6 +99,7 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
                 mLastY=0;
             }
         });
+        menuLoader.load();
         return root;
     }
 

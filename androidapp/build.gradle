@@ -58,5 +58,4 @@ dependencies {
     compile 'org.parceler:parceler-api:1.0.4'
     provided 'org.parceler:parceler:1.0.4'
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'junit:junit:4.12'
 }

@@ -18,6 +18,7 @@ public abstract class CafeLoader {
     public CafeLoader(CafeType type){
     }
 
+    public abstract void load();
 //    public abstract void startLoading();
 
 
