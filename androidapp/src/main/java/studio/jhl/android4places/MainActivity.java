@@ -1,12 +1,12 @@
 package studio.jhl.android4places;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.VisibleForTesting;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -42,7 +42,7 @@ import studio.jhl.android4places.cache.CacheEvent;
 import studio.jhl.android4places.fragment.SearchFragment;
 import xyz.sahildave.widget.SearchViewLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     private static final String TAG = "dmi3debug";
     public static final String API_URL = "http://ec2-54-191-136-74.us-west-2.compute.amazonaws.com";
     private CafeType currentCafeType;

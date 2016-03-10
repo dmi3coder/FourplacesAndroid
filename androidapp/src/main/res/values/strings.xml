@@ -20,4 +20,6 @@
     <string name="noapp">У вас нет подходящего приложения</string>
     <string name="nointernet">Проверте подключение к интернету</string>
     <string name="title_activity_empty">EmptyActivity</string>
+    <string name="cafe_header_menu">Меню</string>
+    <string name="cafe_header_reviews">Отзывы</string>
 </resources>

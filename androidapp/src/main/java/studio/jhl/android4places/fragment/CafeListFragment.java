@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import studio.jhl.android4places.R;
 import studio.jhl.android4places.adapters.CafeAdapter;
 import studio.jhl.android4places.backend.CafeLoader;
-import studio.jhl.android4places.backend.URLCafeLoader;
+import studio.jhl.android4places.backend.url.URLCafeLoader;
 import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.backend.type.CafeType;
 

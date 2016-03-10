@@ -13,7 +13,7 @@ import io.realm.RealmResults;
 import io.realm.Sort;
 import studio.jhl.android4places.MainApplication;
 import studio.jhl.android4places.backend.CafeLoader;
-import studio.jhl.android4places.backend.URLCafeLoader;
+import studio.jhl.android4places.backend.url.URLCafeLoader;
 import studio.jhl.android4places.backend.type.CafeType;
 import studio.jhl.android4places.bean.Cafe;
 

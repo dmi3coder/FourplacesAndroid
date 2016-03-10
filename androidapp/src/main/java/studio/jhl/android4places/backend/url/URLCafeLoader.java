@@ -1,4 +1,4 @@
-package studio.jhl.android4places.backend;
+package studio.jhl.android4places.backend.url;
 
 
 import android.os.AsyncTask;
@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import studio.jhl.android4places.MainActivity;
+import studio.jhl.android4places.backend.CafeLoader;
+import studio.jhl.android4places.backend.InputStreamProcessor;
 import studio.jhl.android4places.backend.type.CafeType;
 import studio.jhl.android4places.bean.Cafe;
 

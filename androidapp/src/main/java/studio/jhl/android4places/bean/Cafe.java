@@ -21,7 +21,7 @@ public class Cafe extends RealmObject {
     @SerializedName("img_path") private String imageUrl;    //URL location of image, in backend - imgpath
 
     @PrimaryKey
-    private int id; //id of menu items, in backend - menu_id
+    private long id; //id of menu items, in backend - menu_id
     @SerializedName("telephone") private String phoneNumber;
     private String lat,lng;
 
@@ -40,7 +40,7 @@ public class Cafe extends RealmObject {
     public String getImageUrl() {
         return imageUrl;
     }
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -59,7 +59,7 @@ public class Cafe extends RealmObject {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

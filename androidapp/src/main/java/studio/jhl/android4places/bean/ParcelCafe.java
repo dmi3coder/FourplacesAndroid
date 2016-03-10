@@ -9,16 +9,16 @@ import org.parceler.ParcelConstructor;
 
 @Parcel
 public class ParcelCafe {
-    private String name;    //Name of cafe, in backend - name
-    private String type;    //Type of cafe, in backend - type
-    private String description;
-    private String workTime;    //Time when the cafe is working, in backend - worktime
-    private String position;    //World position of cafe, in backend - adress
-    private String imageUrl;    //URL location of image, in backend - imgpath
+     String name;    //Name of cafe, in backend - name
+     String type;    //Type of cafe, in backend - type
+     String description;
+     String workTime;    //Time when the cafe is working, in backend - worktime
+     String position;    //World position of cafe, in backend - adress
+     String imageUrl;    //URL location of image, in backend - imgpath
 
-    private int id; //id of menu items, in backend - menu_id
-    private String phoneNumber;
-    private String lat,lng;
+     long id; //id of menu items, in backend - menu_id
+     String phoneNumber;
+     String lat,lng;
 
     @ParcelConstructor
     public ParcelCafe(String name,
@@ -27,7 +27,7 @@ public class ParcelCafe {
                       String workTime,
                       String position,
                       String imageUrl,
-                      int id,
+                      long id,
                       String phoneNumber,
                       String lat,
                       String lng){
@@ -42,6 +42,10 @@ public class ParcelCafe {
         this.phoneNumber = phoneNumber;
         this.lat = lat;
         this.lng = lng;
+    }
+
+    public static ParcelCafe generate(Cafe cafe){
+        return new ParcelCafe(cafe.getName(),cafe.getType(),cafe.getDescription(),cafe.getWorkTime(),cafe.getPosition(),cafe.getImageUrl(),cafe.getId(),cafe.getPhoneNumber(),cafe.getLat(),cafe.getLng());
     }
 
     public String getName() {
@@ -59,7 +63,7 @@ public class ParcelCafe {
     public String getImageUrl() {
         return imageUrl;
     }
-    public int getId() {
+    public long getId() {
         return id;
     }
 

@@ -136,7 +136,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
                 realm.commitTransaction();
                 Log.d(TAG, "liked: commited");
             }
-        });// TODO: 04.01.2016 make like/unlike event
+        });
 
         currentCafeHolder.likeButton.setLiked(realm.where(Cafe.class).equalTo("id", currentCafe.getId()).findFirst()!=null);
         currentCafeHolder.clickZone.setOnClickListener(new View.OnClickListener() {

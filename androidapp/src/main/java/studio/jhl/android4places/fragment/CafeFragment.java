@@ -28,7 +28,7 @@ import studio.jhl.android4places.CafeActivity;
 import studio.jhl.android4places.R;
 import studio.jhl.android4places.ScrollTabHolder;
 import studio.jhl.android4places.adapters.PagerAdapter;
-import studio.jhl.android4places.backend.URLMenuLoader;
+import studio.jhl.android4places.backend.url.URLMenuLoader;
 import studio.jhl.android4places.backend.MenuParser;
 import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.views.PagerSlidingTabStrip;
@@ -50,7 +50,7 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
     private TextView info;
     private int mLastY;
     public URLMenuLoader menuLoader;
-    private int menu_id;
+    private long menu_id;
     private MenuParser menuParser;
     public static String result;
     private static Cafe cafe;
@@ -60,6 +60,7 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
     @Bind(R.id.cafeName) TextView cafeName;
     @Bind(R.id.header_text_telephone) TextView callView;
     @Bind(R.id.header_text_map)TextView mapView;
+    @Bind(R.id.header_text_reviews)TextView reviewView;
 
 
     public static final CafeFragment newInstance(Bundle savedInstanceState){
@@ -109,7 +110,9 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
         Glide.with(this).load(cafe.getImageUrl()).asBitmap().into(cafeImage);
         defineCallAction();
         defineMapAction();
+        defineReviewAction();
     }
+
     private void defineCallAction() {
         callView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +133,16 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
             }
         });
     }
+
+    private void defineReviewAction() {
+        reviewView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getFragmentManager().beginTransaction().add(android.R.id.content,ReviewFragment.newInstance(cafe),ReviewFragment.TAG).commit();
+            }
+        });
+    }
+
     private void startIntent(Intent intent) {
         if(intent.resolveActivity(getActivity().getPackageManager())!=null){
             startActivity(intent);

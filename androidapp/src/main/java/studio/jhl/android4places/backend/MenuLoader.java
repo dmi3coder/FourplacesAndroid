@@ -10,7 +10,6 @@ public abstract class MenuLoader {
         void onEvent(String result);
     }
 
-    public MenuLoader(int menuId){}
 
     public abstract void load();
 

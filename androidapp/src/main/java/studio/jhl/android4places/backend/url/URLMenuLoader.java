@@ -1,4 +1,4 @@
-package studio.jhl.android4places.backend;
+package studio.jhl.android4places.backend.url;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -6,12 +6,14 @@ import android.util.Log;
 import java.io.IOException;
 
 import studio.jhl.android4places.MainActivity;
+import studio.jhl.android4places.backend.InputStreamProcessor;
+import studio.jhl.android4places.backend.MenuLoader;
 
 /**
  * Created by dmi3coder on 1/10/16.
  */
 public class URLMenuLoader extends MenuLoader {
-    private int menuId;
+    private long menuId;
 
     private static final String TAG = "URLMenuLoader";
 
@@ -20,8 +22,7 @@ public class URLMenuLoader extends MenuLoader {
     }
 
 
-    public URLMenuLoader(int menuId) {
-        super(menuId);
+    public URLMenuLoader(long menuId) {
         this.menuId = menuId;
     }
 
