@@ -8,7 +8,7 @@ public enum CafeType{
     private static String[] backendRuTypes = {"","Кофейня", "Ночной клуб", "Развлечения", "Ресторан", "Фаст фуд", "Суши бар", "Что то другое"};
 
 
-    public String toUrlString() {
+    public String toOldBackendString() {
         CafeType[] cafeTypes = CafeType.values();
         for(int i = 0 ;i<cafeTypes.length;i++) {
             if (this == cafeTypes[i]){

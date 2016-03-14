@@ -24,7 +24,7 @@ public class RetrofitCafeLoaderTest {
 
     @Test
     public void testLoading() throws IOException {
-        Call<List<Cafe>> cafes = cafeLoader.defineService().cafeList(CafeType.ALL.toUrlString());
+        Call<List<Cafe>> cafes = cafeLoader.defineService().cafeList(CafeType.ALL.toOldBackendString());
         Cafe cafe = cafes.execute().body().get(1);
 
         assertEquals("test",cafe.getName());

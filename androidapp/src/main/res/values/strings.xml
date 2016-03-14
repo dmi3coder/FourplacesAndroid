@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">GoldenByteProject</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="cafe_type_all">Все</string>
     <string name="cafe_type_cafe">Кофейня</string>
@@ -22,4 +21,8 @@
     <string name="title_activity_empty">EmptyActivity</string>
     <string name="cafe_header_menu">Меню</string>
     <string name="cafe_header_reviews">Отзывы</string>
+    
+    <!-- BACKENDLESS -->
+    <string name="backendless_APP_ID">CBE63DAE-B6DB-B784-FFED-B25E5CDDC300</string>
+    <string name="backendless_SECRET">3188CEBF-44BB-417E-FFF3-E3AEA2D21400</string>
 </resources>

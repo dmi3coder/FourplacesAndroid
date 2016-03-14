@@ -2,6 +2,8 @@ package studio.jhl.android4places;
 
 import android.app.Application;
 
+import com.backendless.Backendless;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import studio.jhl.android4places.cache.CacheService;
@@ -12,6 +14,7 @@ import studio.jhl.android4places.cache.CacheService;
 public class MainApplication extends Application {
     public static RealmConfiguration cacheConfig;
     public static RealmConfiguration favoriteConfig;
+    public static final String backendlessVersion = "";
 
 
     @Override

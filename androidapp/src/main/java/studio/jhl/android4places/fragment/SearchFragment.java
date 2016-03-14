@@ -15,6 +15,7 @@ import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Case;
 import io.realm.Realm;
 import studio.jhl.android4places.MainApplication;
 import studio.jhl.android4places.R;
@@ -58,7 +59,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 List<Cafe> cafes = new ArrayList<Cafe>();
-                cafes = realm.where(Cafe.class).contains("name", s.toString()).findAll();
+                cafes = realm.where(Cafe.class).contains("name", s.toString(), Case.INSENSITIVE).findAll();
                 searchCafeListView.setAdapter(new CafeAdapter(cafes,context));
             }
 

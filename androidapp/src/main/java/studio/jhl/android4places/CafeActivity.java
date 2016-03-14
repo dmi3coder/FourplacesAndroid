@@ -20,11 +20,9 @@ public class CafeActivity extends FragmentActivity {
     public static final boolean NEEDS_PROXY = Integer.valueOf(Build.VERSION.SDK_INT).intValue() < 11;
     public static String result;
     private FrameLayout frame;
-    private Bundle savedInstanceState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        this.savedInstanceState = savedInstanceState;
         super.onCreate(savedInstanceState);
         frame = new FrameLayout(this);
         frame.setTag(android.R.id.content);
@@ -40,9 +38,6 @@ public class CafeActivity extends FragmentActivity {
         replaceFragment(cafeFragment);
     }
 
-    protected void fillWithReviews(Bundle savedInstanceState){
-        ReviewFragment reviewFragment;
-    }
 
     protected void replaceFragment(Fragment fragment){
         FragmentTransaction ft = getFragmentManager().beginTransaction();

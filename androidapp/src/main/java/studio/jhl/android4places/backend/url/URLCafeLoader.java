@@ -32,7 +32,7 @@ public class URLCafeLoader extends CafeLoader {
 
     @Override
     public void load() {
-        new CafeLoadAsyncTask().execute(MainActivity.API_URL + currentCafeType.toUrlString());
+        new CafeLoadAsyncTask().execute(MainActivity.API_URL + currentCafeType.toOldBackendString());
     }
 
     private class CafeLoadAsyncTask extends AsyncTask<String, Void, String> {

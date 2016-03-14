@@ -60,7 +60,6 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
     @Bind(R.id.cafeName) TextView cafeName;
     @Bind(R.id.header_text_telephone) TextView callView;
     @Bind(R.id.header_text_map)TextView mapView;
-    @Bind(R.id.header_text_reviews)TextView reviewView;
 
 
     public static final CafeFragment newInstance(Bundle savedInstanceState){
@@ -110,7 +109,6 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
         Glide.with(this).load(cafe.getImageUrl()).asBitmap().into(cafeImage);
         defineCallAction();
         defineMapAction();
-        defineReviewAction();
     }
 
     private void defineCallAction() {
@@ -134,14 +132,6 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
         });
     }
 
-    private void defineReviewAction() {
-        reviewView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getFragmentManager().beginTransaction().add(android.R.id.content,ReviewFragment.newInstance(cafe),ReviewFragment.TAG).commit();
-            }
-        });
-    }
 
     private void startIntent(Intent intent) {
         if(intent.resolveActivity(getActivity().getPackageManager())!=null){

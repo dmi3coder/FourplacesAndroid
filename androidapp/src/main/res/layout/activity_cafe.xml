@@ -64,12 +64,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/header_text_map"
                 android:text="@string/cafe_header_map"/>
-            <TextView style="@style/HeaderTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/header_text_reviews"
-                android:gravity="right"
-                android:text="@string/cafe_header_reviews" />
 
         </LinearLayout>
 
