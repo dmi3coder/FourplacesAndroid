@@ -1,0 +1,5 @@
+<root>
+  <item name='java.util.ArrayList java.lang.Object[] toArray()'>
+    <annotation name='android.support.annotation.NonNull' />
+  </item>
+</root>
