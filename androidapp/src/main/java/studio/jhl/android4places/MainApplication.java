@@ -2,13 +2,6 @@ package studio.jhl.android4places;
 
 import android.app.Application;
 import android.util.Log;
-
-
-import com.baasbox.android.BaasBox;
-import com.baasbox.android.BaasHandler;
-import com.baasbox.android.BaasResult;
-import com.baasbox.android.BaasUser;
-
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import studio.jhl.android4places.cache.CacheService;

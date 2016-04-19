@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GoldenByteProject.iml" filepath="$PROJECT_DIR$/GoldenByteProject.iml" />
-      <module fileurl="file://$PROJECT_DIR$/androidapp/androidapp.iml" filepath="$PROJECT_DIR$/androidapp/androidapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GoldenByteProject.iml" filepath="$PROJECT_DIR$/.idea/modules/GoldenByteProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/androidapp/androidapp.iml" filepath="$PROJECT_DIR$/.idea/modules/androidapp/androidapp.iml" />
     </modules>
   </component>
 </project>

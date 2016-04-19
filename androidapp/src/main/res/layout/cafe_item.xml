@@ -19,7 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/clickZone"
-        android:layout_below="@+id/HeaderZone">
+        android:layout_below="@+id/HeaderZone"
+        android:layout_toLeftOf="@+id/star_button"
+        android:layout_toStartOf="@+id/star_button">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,8 +45,7 @@
         android:id="@+id/name"
         android:textSize="24dp"
         android:layout_alignTop="@+id/cafeImage"
-        android:layout_toRightOf="@+id/cafeImage"
-        android:layout_toEndOf="@+id/cafeImage" />
+        android:layout_toRightOf="@+id/cafeImage" />
 
     <TextView style="@style/CafeTextView"
         android:layout_width="wrap_content"

@@ -45,7 +45,7 @@ import xyz.sahildave.widget.SearchViewLayout;
 
 public class MainActivity extends Activity {
     private static final String TAG = "dmi3debug";
-    public static final String API_URL = Androids.API_URL;
+    public static final String API_URL = "http://ec2-54-191-136-74.us-west-2.compute.amazonaws.com";
     private CafeType currentCafeType;
     @Bind(R.id.list) SuperRecyclerView recyclerView;
     @Bind(R.id.search_view)SearchViewLayout searchViewLayout;
@@ -162,7 +162,7 @@ public class MainActivity extends Activity {
     }
 
     private void defineSearchViewLayout() {
-        searchFragment = new SearchFragment(searchViewLayout,this);
+        searchFragment = new SearchFragment();
         searchViewLayout.setExpandedContentFragment(this, searchFragment);
     }
 
@@ -263,5 +263,9 @@ public class MainActivity extends Activity {
     protected void onStop(){
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    public SearchViewLayout getSearchViewLayout(){
+        return searchViewLayout;
     }
 }

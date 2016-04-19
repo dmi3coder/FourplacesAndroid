@@ -23,12 +23,8 @@ import studio.jhl.android4places.backend.type.CafeType;
 
 public class CafeListFragment extends Fragment {
     SuperRecyclerView recyclerView;
-    Context context;
 
 
-    public CafeListFragment(Context context) {
-        this.context = context;
-    }
 
     public void setRecyclerView(CafeAdapter cafeAdapter){
         recyclerView.setAdapter(cafeAdapter);
@@ -39,7 +35,7 @@ public class CafeListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_cafe_list, container, false);
         recyclerView = (SuperRecyclerView)v.findViewById(R.id.list);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         defineRecyclerViewAndLoad(CafeType.ALL);
         return v;
@@ -51,7 +47,7 @@ public class CafeListFragment extends Fragment {
         new URLCafeLoader(choosedCafeType).setOnCafesLoadListener(new CafeLoader.OnCafesLoadListener() {
             @Override
             public void onEvent(ArrayList<Cafe> cafes) {
-                recyclerView.setAdapter(new CafeAdapter(cafes, context));
+                recyclerView.setAdapter(new CafeAdapter(cafes, getActivity().getApplicationContext()));
             }
 
         });

@@ -17,6 +17,7 @@ import java.util.List;
 
 import io.realm.Case;
 import io.realm.Realm;
+import studio.jhl.android4places.MainActivity;
 import studio.jhl.android4places.MainApplication;
 import studio.jhl.android4places.R;
 import studio.jhl.android4places.adapters.CafeAdapter;
@@ -27,14 +28,11 @@ import xyz.sahildave.widget.SearchViewLayout;
 public class SearchFragment extends Fragment {
     SuperRecyclerView searchCafeListView;
     CafeType fragmentCurrentCafeType = CafeType.ALL;
-    Context context;
     SearchViewLayout searchViewLayout;
 
-
-    public SearchFragment(SearchViewLayout searchViewLayout, final Context context) {
-        this.context = context;
-        this.searchViewLayout = searchViewLayout;
+    public SearchFragment() {
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,9 +43,10 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.searchViewLayout = ((MainActivity)getActivity()).getSearchViewLayout();
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         searchCafeListView = (SuperRecyclerView)v.findViewById(R.id.searchfragmentlist);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         searchCafeListView.setLayoutManager(layoutManager);
         final Realm realm = Realm.getInstance(MainApplication.cacheConfig);
         searchViewLayout.setSearchBoxListener(new SearchViewLayout.SearchBoxListener() {
@@ -60,7 +59,7 @@ public class SearchFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 List<Cafe> cafes = new ArrayList<Cafe>();
                 cafes = realm.where(Cafe.class).contains("name", s.toString(), Case.INSENSITIVE).findAll();
-                searchCafeListView.setAdapter(new CafeAdapter(cafes,context));
+                searchCafeListView.setAdapter(new CafeAdapter(cafes,getActivity().getApplication()));
             }
 
             @Override
