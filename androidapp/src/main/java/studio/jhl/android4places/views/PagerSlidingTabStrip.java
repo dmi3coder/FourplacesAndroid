@@ -1,8 +1,5 @@
 package studio.jhl.android4places.views;
 
-/**
- * Created by naomi on 1/12/16.
- */
 
 import android.annotation.SuppressLint;
 import android.content.Context;

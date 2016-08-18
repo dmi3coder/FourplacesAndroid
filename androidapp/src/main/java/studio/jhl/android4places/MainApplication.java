@@ -6,9 +6,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import studio.jhl.android4places.cache.CacheService;
 
-/**
- * Created by dmi3coder on 2/4/16.
- */
+
 public class MainApplication extends Application {
     public static RealmConfiguration cacheConfig;
     public static RealmConfiguration favoriteConfig;

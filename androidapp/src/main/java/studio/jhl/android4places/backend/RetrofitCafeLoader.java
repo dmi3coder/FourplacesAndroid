@@ -11,9 +11,7 @@ import studio.jhl.android4places.MainActivity;
 import studio.jhl.android4places.backend.type.CafeType;
 import studio.jhl.android4places.bean.Cafe;
 
-/**
- * Created by dmi3coder on 3/7/16 11:19 AM.
- */
+
 public class RetrofitCafeLoader extends CafeLoader {
     public interface FourplaceService{
         @GET("{api}")

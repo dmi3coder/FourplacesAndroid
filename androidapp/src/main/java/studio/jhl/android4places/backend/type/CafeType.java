@@ -1,8 +1,6 @@
 package studio.jhl.android4places.backend.type;
 
-/**
- * Created by dmi3coder on 3/5/16 2:49 PM.
- */
+
 public enum CafeType{
     ALL,CAFE,NIGHT_CLUB,FUN,RESTAURANT,FASTFOOD,SUSHI,ETC;
     private static String[] backendRuTypes = {"","Кофейня", "Ночной клуб", "Развлечения", "Ресторан", "Фаст фуд", "Суши бар", "Что то другое"};

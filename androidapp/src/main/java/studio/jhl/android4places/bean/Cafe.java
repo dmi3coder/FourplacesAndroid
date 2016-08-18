@@ -6,9 +6,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 
-/**
- * Created by dmi3coder on 28.12.2015 20:11.
- */
+
 @RealmClass
 @org.parceler.Parcel(value = org.parceler.Parcel.Serialization.BEAN, analyze = { Cafe.class })
 public class Cafe extends RealmObject {

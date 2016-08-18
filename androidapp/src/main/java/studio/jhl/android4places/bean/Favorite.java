@@ -2,9 +2,7 @@ package studio.jhl.android4places.bean;
 
 import java.util.ArrayList;
 
-/**
- * Created by dmi3coder on 1/25/16.
- */
+
 public class Favorite   {
 
     private Cafe favoriteCafe;

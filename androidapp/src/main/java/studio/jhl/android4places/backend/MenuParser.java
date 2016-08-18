@@ -14,9 +14,7 @@ import studio.jhl.android4places.MainActivity;
 import studio.jhl.android4places.backend.type.MealType;
 import studio.jhl.android4places.bean.Meal;
 
-/**
- * Created by dmi3coder on 1/14/16.
- */
+
 public class MenuParser {
     private JSONObject data_array;
     private static final String TAG = "MenuParser";

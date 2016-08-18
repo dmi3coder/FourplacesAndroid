@@ -31,9 +31,7 @@ import studio.jhl.android4places.R;
 import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.bean.ParcelCafe;
 
-/**
- * Created by dmi3coder on 03.01.2016 16:08.
- */
+
 public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder> {
     private List<Cafe> cafeList;
     private Context context;

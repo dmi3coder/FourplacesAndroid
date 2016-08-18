@@ -34,9 +34,7 @@ import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.views.PagerSlidingTabStrip;
 
 
-/**
- * Created by dmi3coder on 3/5/16 11:46 AM.
- */
+
 
 public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager.OnPageChangeListener{
     public static final boolean NEEDS_PROXY = Integer.valueOf(Build.VERSION.SDK_INT).intValue() < 11;

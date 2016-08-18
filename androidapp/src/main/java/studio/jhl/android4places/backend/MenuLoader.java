@@ -1,8 +1,6 @@
 package studio.jhl.android4places.backend;
 
-/**
- * Created by dmi3coder on 3/5/16 3:27 PM.
- */
+
 public abstract class MenuLoader {
     private OnMenuLoadListener onMenuLoadListener;
 

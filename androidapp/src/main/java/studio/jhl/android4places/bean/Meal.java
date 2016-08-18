@@ -1,8 +1,6 @@
 package studio.jhl.android4places.bean;
 
-/**
- * Created by dmi3coder on 1/10/16.
- */
+
 public class Meal {
     private String name = "";
     private String description = "";

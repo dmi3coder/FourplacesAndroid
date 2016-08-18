@@ -3,9 +3,6 @@ package studio.jhl.android4places.bean;
 import org.parceler.Parcel;
 import org.parceler.ParcelConstructor;
 
-/**
- * Created by dmi3coder on 3/6/16 8:04 PM.
- */
 
 @Parcel
 public class ParcelCafe {

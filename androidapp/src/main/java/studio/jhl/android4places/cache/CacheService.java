@@ -17,13 +17,7 @@ import studio.jhl.android4places.backend.url.URLCafeLoader;
 import studio.jhl.android4places.backend.type.CafeType;
 import studio.jhl.android4places.bean.Cafe;
 
-/**
- * An {@link IntentService} subclass for handling asynchronous task requests in
- * a service on a separate handler thread.
- * <p/>
- * TODO: Customize class - update intent actions, extra parameters and static
- * helper methods.
- */
+
 public class CacheService extends IntentService {
     private static final String TAG = "CacheService";
 

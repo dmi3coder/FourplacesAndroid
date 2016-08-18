@@ -10,9 +10,7 @@ import studio.jhl.android4places.backend.type.MealType;
 import studio.jhl.android4places.fragment.SampleListFragment;
 import studio.jhl.android4places.fragment.ScrollTabHolderFragment;
 
-/**
- * Created by dmi3coder on 3/5/16 12:03 PM.
- */
+
 public class PagerAdapter extends FragmentPagerAdapter {
 
     private SparseArrayCompat<ScrollTabHolder> mScrollTabHolders;

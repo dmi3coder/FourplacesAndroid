@@ -21,9 +21,7 @@ import butterknife.ButterKnife;
 import studio.jhl.android4places.R;
 import studio.jhl.android4places.bean.Meal;
 
-/**
- * Created by dmi3coder on 1/14/16.
- */
+
 public class MenuAdapter extends BaseAdapter {
     private ArrayList<Meal> meals;
     private LayoutInflater inflater;

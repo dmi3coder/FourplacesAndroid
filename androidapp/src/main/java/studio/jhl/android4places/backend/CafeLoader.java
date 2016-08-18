@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.backend.type.CafeType;
 
-/**
- * Created by dmi3coder on 3/5/16 2:50 PM.
- */
+
 public abstract class CafeLoader {
     private OnCafesLoadListener onCafesLoadListener;
     protected CafeType currentCafeType;

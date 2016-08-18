@@ -45,7 +45,9 @@ import xyz.sahildave.widget.SearchViewLayout;
 
 public class MainActivity extends Activity {
     private static final String TAG = "dmi3debug";
+    @Deprecated
     public static final String API_URL = "http://ec2-54-191-136-74.us-west-2.compute.amazonaws.com";
+
     private CafeType currentCafeType;
     @Bind(R.id.list) SuperRecyclerView recyclerView;
     @Bind(R.id.search_view)SearchViewLayout searchViewLayout;

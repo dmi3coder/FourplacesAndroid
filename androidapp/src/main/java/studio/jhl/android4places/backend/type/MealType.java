@@ -1,8 +1,6 @@
 package studio.jhl.android4places.backend.type;
 
-/**
- * Created by dmi3coder on 3/5/16 3:12 PM.
- */
+
 public enum MealType {
     FIRST, SECOND, DRINK, SNACKS, BAKERY, CANDY, SEA, ETC;
     private static final String[] backendJsonTypes = {"first", "second", "drink", "snacks", "bread", "confectionery", "seaproduct", "etc"};

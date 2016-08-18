@@ -9,9 +9,7 @@ import studio.jhl.android4places.MainActivity;
 import studio.jhl.android4places.backend.InputStreamProcessor;
 import studio.jhl.android4places.backend.MenuLoader;
 
-/**
- * Created by dmi3coder on 1/10/16.
- */
+
 public class URLMenuLoader extends MenuLoader {
     private long menuId;
 

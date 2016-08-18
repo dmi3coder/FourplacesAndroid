@@ -1,8 +1,5 @@
 package studio.jhl.android4places.fragment;
 
-/**
- * Created by naomi on 1/12/16.
- */
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

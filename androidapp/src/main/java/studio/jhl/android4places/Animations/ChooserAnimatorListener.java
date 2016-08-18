@@ -4,9 +4,7 @@ import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
 
-/**
- * Created by dmi3coder on 1/31/16.
- */
+
 public class ChooserAnimatorListener implements Animator.AnimatorListener {
     private int visibility;
     private View chooseLayout;

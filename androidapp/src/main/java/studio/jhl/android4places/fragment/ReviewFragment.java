@@ -13,9 +13,7 @@ import studio.jhl.android4places.R;
 import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.bean.ParcelCafe;
 
-/**
- * Created by dmi3coder on 3/7/16 9:16 PM.
- */
+
 public class ReviewFragment extends Fragment {
     public static final String TAG = "ReviewFragment";
     public static final String ARG_CAFE = "studio.jhl.android4places.fragment.CAFE";

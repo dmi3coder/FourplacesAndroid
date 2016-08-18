@@ -18,9 +18,7 @@ import studio.jhl.android4places.backend.type.CafeType;
 import studio.jhl.android4places.bean.Cafe;
 
 
-/**
- * Created by dmi3coder on 29.12.2015 5:17.
- */
+
 public class URLCafeLoader extends CafeLoader {
     private static final String TAG = "dmi3debug";
 
