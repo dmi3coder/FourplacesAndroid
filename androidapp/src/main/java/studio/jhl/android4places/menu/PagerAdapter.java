@@ -1,11 +1,10 @@
-package studio.jhl.android4places.adapters;
+package studio.jhl.android4places.menu;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.SparseArrayCompat;
 
-import studio.jhl.android4places.ScrollTabHolder;
 import studio.jhl.android4places.backend.type.MealType;
 import studio.jhl.android4places.fragment.SampleListFragment;
 import studio.jhl.android4places.fragment.ScrollTabHolderFragment;

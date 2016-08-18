@@ -1,7 +1,6 @@
-package studio.jhl.android4places.fragment;
+package studio.jhl.android4places.cafe;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,9 +19,7 @@ import io.realm.Realm;
 import studio.jhl.android4places.MainActivity;
 import studio.jhl.android4places.MainApplication;
 import studio.jhl.android4places.R;
-import studio.jhl.android4places.adapters.CafeAdapter;
 import studio.jhl.android4places.backend.type.CafeType;
-import studio.jhl.android4places.bean.Cafe;
 import xyz.sahildave.widget.SearchViewLayout;
 
 public class SearchFragment extends Fragment {

@@ -2,7 +2,7 @@ package studio.jhl.android4places.fragment;
 
 import android.support.v4.app.Fragment;
 
-import studio.jhl.android4places.ScrollTabHolder;
+import studio.jhl.android4places.menu.ScrollTabHolder;
 
 
 public abstract class ScrollTabHolderFragment extends Fragment implements ScrollTabHolder {

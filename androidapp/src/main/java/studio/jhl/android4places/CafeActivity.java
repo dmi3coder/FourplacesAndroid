@@ -9,8 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import studio.jhl.android4places.fragment.CafeFragment;
-import studio.jhl.android4places.fragment.ReviewFragment;
+import studio.jhl.android4places.menu.CafeFragment;
 
 
 @SuppressLint("NewApi")

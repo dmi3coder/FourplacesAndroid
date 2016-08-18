@@ -1,4 +1,4 @@
-package studio.jhl.android4places.adapters;
+package studio.jhl.android4places.cafe;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,8 +28,6 @@ import io.realm.Realm;
 import studio.jhl.android4places.CafeActivity;
 import studio.jhl.android4places.MainApplication;
 import studio.jhl.android4places.R;
-import studio.jhl.android4places.bean.Cafe;
-import studio.jhl.android4places.bean.ParcelCafe;
 
 
 public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder> {

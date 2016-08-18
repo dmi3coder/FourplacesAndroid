@@ -1,4 +1,4 @@
-package studio.jhl.android4places.views;
+package studio.jhl.android4places.menu;
 
 
 import android.annotation.SuppressLint;

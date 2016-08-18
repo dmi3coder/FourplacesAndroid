@@ -1,7 +1,7 @@
 package studio.jhl.android4places;
 
 import android.app.Application;
-import android.util.Log;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import studio.jhl.android4places.cache.CacheService;

@@ -1,8 +1,7 @@
-package studio.jhl.android4places.fragment;
+package studio.jhl.android4places.cafe;
 
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,11 +14,9 @@ import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import java.util.ArrayList;
 
 import studio.jhl.android4places.R;
-import studio.jhl.android4places.adapters.CafeAdapter;
 import studio.jhl.android4places.backend.CafeLoader;
-import studio.jhl.android4places.backend.url.URLCafeLoader;
-import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.backend.type.CafeType;
+import studio.jhl.android4places.backend.url.URLCafeLoader;
 
 public class CafeListFragment extends Fragment {
     SuperRecyclerView recyclerView;

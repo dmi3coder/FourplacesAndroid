@@ -1,6 +1,8 @@
-package studio.jhl.android4places.bean;
+package studio.jhl.android4places.cafe;
 
 import java.util.ArrayList;
+
+import studio.jhl.android4places.menu.Meal;
 
 
 public class Favorite   {

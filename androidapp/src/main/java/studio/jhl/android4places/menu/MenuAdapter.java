@@ -1,4 +1,4 @@
-package studio.jhl.android4places.adapters;
+package studio.jhl.android4places.menu;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import studio.jhl.android4places.R;
-import studio.jhl.android4places.bean.Meal;
 
 
 public class MenuAdapter extends BaseAdapter {

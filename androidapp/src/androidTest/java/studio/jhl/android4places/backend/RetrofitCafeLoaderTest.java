@@ -8,7 +8,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import studio.jhl.android4places.backend.type.CafeType;
-import studio.jhl.android4places.bean.Cafe;
+import studio.jhl.android4places.cafe.Cafe;
 
 import static junit.framework.Assert.assertEquals;
 

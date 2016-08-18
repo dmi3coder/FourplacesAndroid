@@ -1,4 +1,4 @@
-package studio.jhl.android4places.fragment;
+package studio.jhl.android4places.menu;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -26,14 +26,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import studio.jhl.android4places.CafeActivity;
 import studio.jhl.android4places.R;
-import studio.jhl.android4places.ScrollTabHolder;
-import studio.jhl.android4places.adapters.PagerAdapter;
-import studio.jhl.android4places.backend.url.URLMenuLoader;
 import studio.jhl.android4places.backend.MenuParser;
-import studio.jhl.android4places.bean.Cafe;
-import studio.jhl.android4places.views.PagerSlidingTabStrip;
-
-
+import studio.jhl.android4places.backend.url.URLMenuLoader;
+import studio.jhl.android4places.cafe.Cafe;
 
 
 public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager.OnPageChangeListener{

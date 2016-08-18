@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
 
-
+@Deprecated
 public class ChooserAnimatorListener implements Animator.AnimatorListener {
     private int visibility;
     private View chooseLayout;

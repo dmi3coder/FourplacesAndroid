@@ -1,4 +1,4 @@
-package studio.jhl.android4places;
+package studio.jhl.android4places.menu;
 
 import android.widget.AbsListView;
 

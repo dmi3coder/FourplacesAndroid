@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import org.parceler.Parcels;
 
 import studio.jhl.android4places.R;
-import studio.jhl.android4places.bean.Cafe;
-import studio.jhl.android4places.bean.ParcelCafe;
+import studio.jhl.android4places.cafe.Cafe;
+import studio.jhl.android4places.cafe.ParcelCafe;
 
-
+@Deprecated
 public class ReviewFragment extends Fragment {
     public static final String TAG = "ReviewFragment";
     public static final String ARG_CAFE = "studio.jhl.android4places.fragment.CAFE";

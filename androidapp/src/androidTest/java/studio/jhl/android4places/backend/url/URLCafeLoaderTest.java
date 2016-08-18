@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import studio.jhl.android4places.TestConstants;
 import studio.jhl.android4places.backend.CafeLoader;
 import studio.jhl.android4places.backend.type.CafeType;
-import studio.jhl.android4places.bean.Cafe;
+import studio.jhl.android4places.cafe.Cafe;
 
 import static org.junit.Assert.assertEquals;
 

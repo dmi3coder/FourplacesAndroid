@@ -13,11 +13,11 @@ import io.realm.RealmResults;
 import io.realm.Sort;
 import studio.jhl.android4places.MainApplication;
 import studio.jhl.android4places.backend.CafeLoader;
-import studio.jhl.android4places.backend.url.URLCafeLoader;
 import studio.jhl.android4places.backend.type.CafeType;
-import studio.jhl.android4places.bean.Cafe;
+import studio.jhl.android4places.backend.url.URLCafeLoader;
+import studio.jhl.android4places.cafe.Cafe;
 
-
+@Deprecated
 public class CacheService extends IntentService {
     private static final String TAG = "CacheService";
 

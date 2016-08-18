@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 
 import studio.jhl.android4places.MainActivity;
 import studio.jhl.android4places.backend.type.MealType;
-import studio.jhl.android4places.bean.Meal;
+import studio.jhl.android4places.menu.Meal;
 
 @Deprecated
 public class MenuParser {

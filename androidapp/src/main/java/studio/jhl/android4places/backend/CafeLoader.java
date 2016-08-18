@@ -2,8 +2,8 @@ package studio.jhl.android4places.backend;
 
 import java.util.ArrayList;
 
-import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.backend.type.CafeType;
+import studio.jhl.android4places.cafe.Cafe;
 
 @Deprecated
 public abstract class CafeLoader {

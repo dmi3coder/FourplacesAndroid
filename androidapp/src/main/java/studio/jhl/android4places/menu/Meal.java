@@ -1,4 +1,4 @@
-package studio.jhl.android4places.bean;
+package studio.jhl.android4places.menu;
 
 
 public class Meal {

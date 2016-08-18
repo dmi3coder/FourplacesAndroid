@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import studio.jhl.android4places.MainActivity;
 import studio.jhl.android4places.backend.type.CafeType;
-import studio.jhl.android4places.bean.Cafe;
+import studio.jhl.android4places.cafe.Cafe;
 
 @Deprecated
 public class RetrofitCafeLoader extends CafeLoader {

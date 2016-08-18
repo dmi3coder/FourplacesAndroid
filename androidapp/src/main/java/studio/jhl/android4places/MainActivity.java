@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -35,12 +34,12 @@ import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import studio.jhl.android4places.Animations.ChooserAnimatorListener;
-import studio.jhl.android4places.adapters.CafeAdapter;
 import studio.jhl.android4places.backend.type.CafeType;
-import studio.jhl.android4places.bean.Cafe;
-import studio.jhl.android4places.bean.ParcelCafe;
 import studio.jhl.android4places.cache.CacheEvent;
-import studio.jhl.android4places.fragment.SearchFragment;
+import studio.jhl.android4places.cafe.Cafe;
+import studio.jhl.android4places.cafe.CafeAdapter;
+import studio.jhl.android4places.cafe.ParcelCafe;
+import studio.jhl.android4places.cafe.SearchFragment;
 import xyz.sahildave.widget.SearchViewLayout;
 
 public class MainActivity extends Activity {

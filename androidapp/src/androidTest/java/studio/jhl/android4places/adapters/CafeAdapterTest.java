@@ -13,8 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import studio.jhl.android4places.MainActivity;
-import studio.jhl.android4places.bean.Cafe;
-import studio.jhl.android4places.bean.ParcelCafe;
+import studio.jhl.android4places.cafe.Cafe;
+import studio.jhl.android4places.cafe.ParcelCafe;
+import studio.jhl.android4places.cafe.CafeAdapter;
 
 import static junit.framework.Assert.assertEquals;
 
