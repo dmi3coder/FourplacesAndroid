@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import studio.jhl.android4places.bean.Cafe;
 import studio.jhl.android4places.backend.type.CafeType;
 
-
+@Deprecated
 public abstract class CafeLoader {
     private OnCafesLoadListener onCafesLoadListener;
     protected CafeType currentCafeType;

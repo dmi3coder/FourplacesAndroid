@@ -9,7 +9,7 @@ import studio.jhl.android4places.MainActivity;
 import studio.jhl.android4places.backend.InputStreamProcessor;
 import studio.jhl.android4places.backend.MenuLoader;
 
-
+@Deprecated
 public class URLMenuLoader extends MenuLoader {
     private long menuId;
 

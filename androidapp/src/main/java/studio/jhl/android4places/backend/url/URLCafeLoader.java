@@ -18,7 +18,7 @@ import studio.jhl.android4places.backend.type.CafeType;
 import studio.jhl.android4places.bean.Cafe;
 
 
-
+@Deprecated
 public class URLCafeLoader extends CafeLoader {
     private static final String TAG = "dmi3debug";
 

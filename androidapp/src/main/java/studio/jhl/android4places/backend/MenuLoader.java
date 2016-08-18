@@ -1,6 +1,6 @@
 package studio.jhl.android4places.backend;
 
-
+@Deprecated
 public abstract class MenuLoader {
     private OnMenuLoadListener onMenuLoadListener;
 
