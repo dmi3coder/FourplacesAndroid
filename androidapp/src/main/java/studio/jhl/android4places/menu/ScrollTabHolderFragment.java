@@ -1,4 +1,4 @@
-package studio.jhl.android4places.fragment;
+package studio.jhl.android4places.menu;
 
 import android.support.v4.app.Fragment;
 

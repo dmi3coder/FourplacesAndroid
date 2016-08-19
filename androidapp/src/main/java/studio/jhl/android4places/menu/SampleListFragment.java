@@ -1,4 +1,4 @@
-package studio.jhl.android4places.fragment;
+package studio.jhl.android4places.menu;
 
 
 import android.os.Bundle;
@@ -19,8 +19,6 @@ import studio.jhl.android4places.CafeActivity;
 import studio.jhl.android4places.R;
 import studio.jhl.android4places.backend.MenuParser;
 import studio.jhl.android4places.backend.type.MealType;
-import studio.jhl.android4places.menu.Meal;
-import studio.jhl.android4places.menu.MenuAdapter;
 
 public class SampleListFragment extends ScrollTabHolderFragment {
 

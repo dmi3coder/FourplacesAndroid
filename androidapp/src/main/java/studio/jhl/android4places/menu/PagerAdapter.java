@@ -6,8 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.SparseArrayCompat;
 
 import studio.jhl.android4places.backend.type.MealType;
-import studio.jhl.android4places.fragment.SampleListFragment;
-import studio.jhl.android4places.fragment.ScrollTabHolderFragment;
 
 
 public class PagerAdapter extends FragmentPagerAdapter {
