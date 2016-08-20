@@ -15,8 +15,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnRecyclerViewOnScrollListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
@@ -31,7 +29,6 @@ import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
-import studio.jhl.android4places.Animations.ChooserAnimatorListener;
 import studio.jhl.android4places.backend.type.CafeType;
 import studio.jhl.android4places.cafe.Cafe;
 import studio.jhl.android4places.cafe.CafeAdapter;
@@ -193,18 +190,8 @@ public class MainActivity extends Activity {
 
 
     private void defineChooseAnimation() {
-        Log.d(TAG, "defineChooseAnimation: ");
-        switch (chooseLayout.getVisibility()){
-            case View.GONE:
-                setChooseAnimation(View.VISIBLE,Techniques.FadeIn);
-                return;
-            case View.VISIBLE:
-                setChooseAnimation(View.GONE,Techniques.FadeOut);
-        }
+        // TODO: 8/20/16 Make Navigation drawer
 
-    }
-    private void setChooseAnimation(int visibility,Techniques animationTechnique){
-        YoYo.with(animationTechnique).duration(300).withListener(new ChooserAnimatorListener(visibility,chooseLayout)).playOn(chooseLayout);
     }
 
 
