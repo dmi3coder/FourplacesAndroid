@@ -67,7 +67,7 @@
 
         </LinearLayout>
 
-        <studio.jhl.android4places.menu.PagerSlidingTabStrip xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.dmi3coder.fourplaces.menu.PagerSlidingTabStrip xmlns:app="http://schemas.android.com/apk/res-auto"
             app:pstsDividerColor="@color/colorAccent"
             app:pstsIndicatorColor="@color/colorAccent"
             android:id="@+id/tabs"

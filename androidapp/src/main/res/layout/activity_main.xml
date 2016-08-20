@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context="studio.jhl.android4places.MainActivity">
+    tools:context="com.dmi3coder.fourplaces.MainActivity">
 
 
     <include layout="@layout/widget_search_bar"
