@@ -97,7 +97,6 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
     }
 
     private void defineHeader() {
-        menu_id = cafe.getId();
         cafeName.setText(cafe.getName());
         Glide.with(this).load(cafe.getImageUrl()).asBitmap().into(cafeImage);
         defineCallAction();

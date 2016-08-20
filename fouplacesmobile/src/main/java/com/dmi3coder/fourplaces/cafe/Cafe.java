@@ -1,29 +1,27 @@
 package com.dmi3coder.fourplaces.cafe;
 
+import com.google.api.client.util.Key;
 import com.google.gson.annotations.SerializedName;
-
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
+import com.kinvey.java.model.KinveyFile;
 
 
-@RealmClass
-@org.parceler.Parcel(value = org.parceler.Parcel.Serialization.BEAN, analyze = { Cafe.class })
-public class Cafe extends RealmObject {
+public class Cafe extends KinveyFile {
 
+    @Key
     private String name;    //Name of cafe, in backend - name
+    @Key
     private String type;    //Type of cafe, in backend - type
+    @Key
     private String description;
-    @SerializedName("work_time")
+    @Key
     private String workTime;    //Time when the cafe is working, in backend - workTime
-    @SerializedName("adress")
-    private String position;    //World position of cafe, in backend - adress
-    @SerializedName("img_path")
+    @Key
+    private String address;    //World address of cafe, in backend - adress
+    @Key
     private String imageUrl;    //URL location of image, in backend - imgpath
-
-    @PrimaryKey
-    private long id; //id of menu items, in backend - menu_id
-    @SerializedName("telephone") private String phoneNumber;
+    @Key
+    private String phoneNumber;
+    @Key
     private String lat,lng;
 
     public String getName() {
@@ -35,14 +33,11 @@ public class Cafe extends RealmObject {
     public String getWorkTime() {
         return workTime;
     }
-    public String getPosition() {
-        return position;
+    public String getAddress() {
+        return address;
     }
     public String getImageUrl() {
         return imageUrl;
-    }
-    public long getId() {
-        return id;
     }
 
     public void setName(String name) {
@@ -54,14 +49,11 @@ public class Cafe extends RealmObject {
     public void setWorkTime(String workTime) {
         this.workTime = workTime;
     }
-    public void setPosition(String position) {
-        this.position = position;
+    public void setAddress(String address) {
+        this.address = address;
     }
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getDescription() {

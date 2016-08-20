@@ -11,7 +11,7 @@ android {
         versionName "v41"
 
     }
-
+    dataBinding.enabled = true
     buildTypes {
         release {
             minifyEnabled false

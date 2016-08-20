@@ -21,12 +21,10 @@ import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
 import com.dmi3coder.fourplaces.CafeActivity;
-import com.dmi3coder.fourplaces.MainApplication;
 import com.dmi3coder.fourplaces.R;
 
 
@@ -50,12 +48,11 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         protected View headerZone;
         public CafeViewHolder(View v){
             super(v);
-            realm = Realm.getDefaultInstance();
             name = (TextView)v.findViewById(R.id.name);
             type = (TextView)v.findViewById(R.id.type);
             workTime = (TextView)v.findViewById(R.id.time);
             descritption = (ExpandableTextView)v.findViewById(R.id.description);
-            position = (TextView)v.findViewById(R.id.position);
+            position = (TextView)v.findViewById(R.id.address);
             cafeImage = (ImageView)v.findViewById(R.id.cafeImage);
             likeButton = (LikeButton)v.findViewById(R.id.star_button);
             clickZone  = v.findViewById(R.id.clickZone);
@@ -66,7 +63,6 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
     public  CafeAdapter(List<Cafe> cafeList, Context context){
         this.cafeList = cafeList;
         this.context = context;
-        realm = Realm.getInstance(context);
     }
 
 
@@ -74,16 +70,6 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         return cafeList;
     }
 
-    public List<ParcelCafe> getParcelCafeList(){
-        List<ParcelCafe> parcelCafes = new ArrayList<>();
-        for (Cafe cafe
-                : cafeList
-             ) {
-            ParcelCafe parcelCafe =new ParcelCafe(cafe.getName(),cafe.getType(),cafe.getDescription(),cafe.getWorkTime(),cafe.getPosition(),cafe.getImageUrl(),cafe.getId(),cafe.getPhoneNumber(), cafe.getLat(), cafe.getLng());
-           parcelCafes.add(parcelCafe);
-        }
-        return parcelCafes;
-    }
 
     @Override
     public void onBindViewHolder(final CafeViewHolder currentCafeHolder, final int cafeListPosition) {
@@ -108,33 +94,19 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
                 });
         currentCafeHolder.name.setText(currentCafe.getName());
         currentCafeHolder.type.setText(currentCafe.getType());
-        currentCafeHolder.position.setText(currentCafe.getPosition());
+        currentCafeHolder.position.setText(currentCafe.getAddress());
         currentCafeHolder.workTime.setText(currentCafe.getWorkTime());
         currentCafeHolder.descritption.setText(currentCafe.getDescription());
         currentCafeHolder.likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked() {
-                Cafe cafe = currentCafe;
-                Realm realm = Realm.getInstance(MainApplication.favoriteConfig);
-                realm.beginTransaction();
-                realm.copyToRealm(cafe);
-                realm.commitTransaction();
-                Log.d(TAG, "liked: commited");
             }
 
             @Override
             public void unLiked() {
-                // Get a Realm instance for this thread
-                Realm realm = Realm.getInstance(MainApplication.favoriteConfig);
-                realm.beginTransaction();
-                Cafe cafe = realm.where(Cafe.class).equalTo("id", currentCafe.getId()).findFirst();
-                cafe.removeFromRealm();
-                realm.commitTransaction();
-                Log.d(TAG, "liked: commited");
             }
         });
 
-        currentCafeHolder.likeButton.setLiked(realm.where(Cafe.class).equalTo("id", currentCafe.getId()).findFirst()!=null);
         currentCafeHolder.clickZone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

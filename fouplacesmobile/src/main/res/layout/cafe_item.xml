@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"
-        android:id="@+id/position"
+        android:id="@+id/address"
         android:layout_below="@+id/type"
         android:layout_toRightOf="@+id/cafeImage"
         android:layout_toEndOf="@+id/cafeImage" />
@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:text="Time"
         android:id="@+id/time"
-        android:layout_below="@+id/position"
+        android:layout_below="@+id/address"
         android:layout_toRightOf="@+id/cafeImage"
         android:layout_toEndOf="@+id/cafeImage" />
 

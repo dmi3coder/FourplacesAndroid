@@ -41,10 +41,6 @@ public class ParcelCafe {
         this.lng = lng;
     }
 
-    public static ParcelCafe generate(Cafe cafe){
-        return new ParcelCafe(cafe.getName(),cafe.getType(),cafe.getDescription(),cafe.getWorkTime(),cafe.getPosition(),cafe.getImageUrl(),cafe.getId(),cafe.getPhoneNumber(),cafe.getLat(),cafe.getLng());
-    }
-
     public String getName() {
         return name;
     }
@@ -81,9 +77,8 @@ public class ParcelCafe {
         cafe.setName(name);
         cafe.setType(type);
         cafe.setWorkTime(workTime);
-        cafe.setPosition(position);
+        cafe.setAddress(position);
         cafe.setImageUrl(imageUrl);
-        cafe.setId(id);
         cafe.setDescription(description);
         cafe.setPhoneNumber(phoneNumber);
         cafe.setLat(lat);

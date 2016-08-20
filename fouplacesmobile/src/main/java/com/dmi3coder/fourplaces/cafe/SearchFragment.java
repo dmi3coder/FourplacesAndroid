@@ -25,7 +25,7 @@ import xyz.sahildave.widget.SearchViewLayout;
 public class SearchFragment extends Fragment {
     SuperRecyclerView searchCafeListView;
     CafeType fragmentCurrentCafeType = CafeType.ALL;
-    SearchViewLayout searchViewLayout;
+//    SearchViewLayout searchViewLayout;
 
     public SearchFragment() {
     }
@@ -40,38 +40,34 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.searchViewLayout = ((MainActivity)getActivity()).getSearchViewLayout();
+//        this.searchViewLayout = ((MainActivity)getActivity()).getSearchViewLayout();
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         searchCafeListView = (SuperRecyclerView)v.findViewById(R.id.searchfragmentlist);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         searchCafeListView.setLayoutManager(layoutManager);
-        final Realm realm = Realm.getInstance(MainApplication.cacheConfig);
-        searchViewLayout.setSearchBoxListener(new SearchViewLayout.SearchBoxListener() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                List<Cafe> cafes = new ArrayList<Cafe>();
-                cafes = realm.where(Cafe.class).contains("name", s.toString(), Case.INSENSITIVE).findAll();
-                searchCafeListView.setAdapter(new CafeAdapter(cafes,getActivity().getApplication()));
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        searchViewLayout.setSearchListener(new SearchViewLayout.SearchListener() {
-            @Override
-            public void onFinished(final String searchKeyword) {
-
-
-
-            }
-        });
+//        searchViewLayout.setSearchBoxListener(new SearchViewLayout.SearchBoxListener() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
+//        searchViewLayout.setSearchListener(new SearchViewLayout.SearchListener() {
+//            @Override
+//            public void onFinished(final String searchKeyword) {
+//
+//
+//
+//            }
+//        });
 
         return v;
     }
