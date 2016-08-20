@@ -21,8 +21,6 @@ import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnRecyclerViewOnScrollListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -35,7 +33,6 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import studio.jhl.android4places.Animations.ChooserAnimatorListener;
 import studio.jhl.android4places.backend.type.CafeType;
-import studio.jhl.android4places.cache.CacheEvent;
 import studio.jhl.android4places.cafe.Cafe;
 import studio.jhl.android4places.cafe.CafeAdapter;
 import studio.jhl.android4places.cafe.ParcelCafe;
@@ -157,10 +154,6 @@ public class MainActivity extends Activity {
     }
 
 
-    @Subscribe
-    public void onCacheEvent(CacheEvent event) {
-        setupAdapter(recyclerView,getCafesFromCache());
-    }
 
     private void defineSearchViewLayout() {
         searchFragment = new SearchFragment();
@@ -257,13 +250,11 @@ public class MainActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop(){
         super.onStop();
-        EventBus.getDefault().unregister(this);
     }
 
     public SearchViewLayout getSearchViewLayout(){

@@ -4,7 +4,6 @@ import android.app.Application;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import studio.jhl.android4places.cache.CacheService;
 
 
 public class MainApplication extends Application {
@@ -25,8 +24,6 @@ public class MainApplication extends Application {
                 .build();
 
         Realm.setDefaultConfiguration(favoriteConfig);
-        CacheService service = new CacheService();
-        service.startActionLoad(this);
     }
 
 }

@@ -28,10 +28,6 @@
             android:name=".CafeActivity"
             android:configChanges="locale|orientation" />
 
-        <service
-            android:name=".cache.CacheService"
-            android:exported="false" />
-
     </application>
 
 </manifest>
