@@ -6,22 +6,17 @@ public class Meal {
     private String description = "";
     private String price = "";
     private String imageUrl = "";
-    private boolean debugMode = false;
 
     public String getImageUrl() {
-        if(debugMode)return "https://upload.wikimedia.org/wikipedia/commons/1/1b/Square_200x200.png";
         return imageUrl;
     }
     public String getPrice() {
-        if(debugMode)return "300";
         return price;
     }
     public String getDescription() {
-        if(debugMode)return "test description test description test description test description test description test description test description test description test description test description test description test description ";
         return description;
     }
     public String getName() {
-        if(debugMode)return "Зефирыч";
         return name;
     }
 

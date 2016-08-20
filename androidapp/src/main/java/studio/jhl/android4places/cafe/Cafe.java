@@ -14,9 +14,12 @@ public class Cafe extends RealmObject {
     private String name;    //Name of cafe, in backend - name
     private String type;    //Type of cafe, in backend - type
     private String description;
-    @SerializedName("work_time") private String workTime;    //Time when the cafe is working, in backend - workTime
-    @SerializedName("adress") private String position;    //World position of cafe, in backend - adress
-    @SerializedName("img_path") private String imageUrl;    //URL location of image, in backend - imgpath
+    @SerializedName("work_time")
+    private String workTime;    //Time when the cafe is working, in backend - workTime
+    @SerializedName("adress")
+    private String position;    //World position of cafe, in backend - adress
+    @SerializedName("img_path")
+    private String imageUrl;    //URL location of image, in backend - imgpath
 
     @PrimaryKey
     private long id; //id of menu items, in backend - menu_id
