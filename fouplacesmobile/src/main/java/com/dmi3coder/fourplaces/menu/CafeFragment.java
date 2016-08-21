@@ -19,16 +19,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-
-import org.parceler.Parcels;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import com.dmi3coder.fourplaces.CafeActivity;
 import com.dmi3coder.fourplaces.R;
 import com.dmi3coder.fourplaces.backend.MenuParser;
 import com.dmi3coder.fourplaces.backend.url.URLMenuLoader;
 import com.dmi3coder.fourplaces.cafe.Cafe;
+
+import org.parceler.Parcels;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager.OnPageChangeListener{

@@ -1,7 +1,6 @@
 package com.dmi3coder.fourplaces.cafe;
 
 import com.google.api.client.util.Key;
-import com.google.gson.annotations.SerializedName;
 import com.kinvey.java.model.KinveyFile;
 
 

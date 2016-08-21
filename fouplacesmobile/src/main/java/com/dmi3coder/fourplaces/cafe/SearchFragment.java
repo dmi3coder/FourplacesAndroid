@@ -4,23 +4,13 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.malinskiy.superrecyclerview.SuperRecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.realm.Case;
-import io.realm.Realm;
-import com.dmi3coder.fourplaces.MainActivity;
-import com.dmi3coder.fourplaces.MainApplication;
 import com.dmi3coder.fourplaces.R;
 import com.dmi3coder.fourplaces.backend.type.CafeType;
-import xyz.sahildave.widget.SearchViewLayout;
+import com.malinskiy.superrecyclerview.SuperRecyclerView;
 
 public class SearchFragment extends Fragment {
     SuperRecyclerView searchCafeListView;

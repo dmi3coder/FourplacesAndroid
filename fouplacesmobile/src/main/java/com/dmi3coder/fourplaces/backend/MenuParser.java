@@ -3,16 +3,16 @@ package com.dmi3coder.fourplaces.backend;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.dmi3coder.fourplaces.MainActivity;
+import com.dmi3coder.fourplaces.backend.type.MealType;
+import com.dmi3coder.fourplaces.menu.Meal;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
-import com.dmi3coder.fourplaces.MainActivity;
-import com.dmi3coder.fourplaces.backend.type.MealType;
-import com.dmi3coder.fourplaces.menu.Meal;
 
 @Deprecated
 public class MenuParser {

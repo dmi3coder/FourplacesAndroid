@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.dmi3coder.fourplaces.CafeActivity;
+import com.dmi3coder.fourplaces.R;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
@@ -23,15 +25,11 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-import io.realm.Realm;
-import com.dmi3coder.fourplaces.CafeActivity;
-import com.dmi3coder.fourplaces.R;
 
 
 public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder> {
     private List<Cafe> cafeList;
     private Context context;
-    private static Realm realm;
 
     private static final String TAG = "dmi3debug";
 

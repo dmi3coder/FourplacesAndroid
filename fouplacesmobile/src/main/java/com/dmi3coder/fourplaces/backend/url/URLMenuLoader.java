@@ -3,11 +3,11 @@ package com.dmi3coder.fourplaces.backend.url;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.IOException;
-
 import com.dmi3coder.fourplaces.MainActivity;
 import com.dmi3coder.fourplaces.backend.InputStreamProcessor;
 import com.dmi3coder.fourplaces.backend.MenuLoader;
+
+import java.io.IOException;
 
 @Deprecated
 public class URLMenuLoader extends MenuLoader {

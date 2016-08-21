@@ -4,11 +4,7 @@ import android.app.Application;
 
 import com.kinvey.android.Client;
 import com.kinvey.java.User;
-import com.kinvey.java.auth.Credential;
 import com.kinvey.java.core.KinveyCancellableCallback;
-
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 
 public class MainApplication extends Application {

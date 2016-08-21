@@ -13,12 +13,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.dmi3coder.fourplaces.R;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.dmi3coder.fourplaces.R;
 
 
 public class MenuAdapter extends BaseAdapter {
