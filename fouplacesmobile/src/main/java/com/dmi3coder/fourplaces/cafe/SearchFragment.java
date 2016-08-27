@@ -9,12 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dmi3coder.fourplaces.R;
-import com.dmi3coder.fourplaces.backend.type.CafeType;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 
 public class SearchFragment extends Fragment {
     SuperRecyclerView searchCafeListView;
-    CafeType fragmentCurrentCafeType = CafeType.ALL;
 //    SearchViewLayout searchViewLayout;
 
     public SearchFragment() {

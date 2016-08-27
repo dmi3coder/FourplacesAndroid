@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/GoldenByteProject.iml" filepath="$PROJECT_DIR$/.idea/modules/GoldenByteProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/androidapp/androidapp.iml" filepath="$PROJECT_DIR$/.idea/modules/androidapp/androidapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/fouplacesmobile/androidapp.iml" filepath="$PROJECT_DIR$/fouplacesmobile/androidapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fouplacesmobile/fouplacesmobile.iml" filepath="$PROJECT_DIR$/fouplacesmobile/fouplacesmobile.iml" />
       <module fileurl="file://$PROJECT_DIR$/fourplaces.iml" filepath="$PROJECT_DIR$/fourplaces.iml" />
     </modules>
   </component>

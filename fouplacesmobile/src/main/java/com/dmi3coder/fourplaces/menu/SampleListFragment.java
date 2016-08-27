@@ -13,8 +13,6 @@ import android.widget.ListView;
 
 import com.dmi3coder.fourplaces.CafeActivity;
 import com.dmi3coder.fourplaces.R;
-import com.dmi3coder.fourplaces.backend.MenuParser;
-import com.dmi3coder.fourplaces.backend.type.MealType;
 
 import org.json.JSONException;
 
@@ -29,7 +27,6 @@ public class SampleListFragment extends ScrollTabHolderFragment {
     private ArrayList<Meal> mListItems;
     private int mPosition;
     private String menuLoaderResult;
-    private MenuParser menuParser;
 
     public static Fragment newInstance(int position) {
         SampleListFragment f = new SampleListFragment();
