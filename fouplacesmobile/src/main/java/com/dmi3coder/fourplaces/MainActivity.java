@@ -13,8 +13,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "dmi3debug";
-    @Deprecated
-    public static final String API_URL = "http://ec2-54-191-136-74.us-west-2.compute.amazonaws.com";
 
     private SearchFragment searchFragment;
 
@@ -41,29 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//    private void defineHeaderButtons() {
-//        for(int currentButton = 0;currentButton<headerButtons.size()-1;currentButton++){
-//            final int currentButtonFinal = currentButton;
-//            headerButtons.get(currentButton).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    fillRecyclerView(CafeType.values()[currentButtonFinal]);
-//                }
-//            });
-//        }
-//
-//        defineMoreButton();
-//    }
-//
-//    private void defineMoreButton() {
-//        Log.d(TAG, "defineMoreButton: ");
-//        headerButtons.get(headerButtons.size()-1).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                defineChooseAnimation();
-//            }
-//        });
-//    }
+
 
 
     private void defineChooseAnimation() {

@@ -63,11 +63,11 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_restaurant_menu_white_24dp" />
+                                android:src="@drawable/food" />
 
                             <TextView
                                 style="@style/HeaderTextView"
-                                android:text="Всё" />
+                                android:text="Food" />
 
                         </LinearLayout>
                     </com.balysv.materialripple.MaterialRippleLayout>
@@ -91,11 +91,11 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_local_cafe_white_24dp" />
+                                android:src="@drawable/coffee" />
 
                             <TextView
                                 style="@style/HeaderTextView"
-                                android:text="Кофейня" />
+                                android:text="Coffee" />
                         </LinearLayout>
                     </com.balysv.materialripple.MaterialRippleLayout>
 
@@ -118,11 +118,11 @@
                             <ImageView
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
-                                android:src="@drawable/ic_champage" />
+                                android:src="@drawable/night" />
 
                             <TextView
                                 style="@style/HeaderTextView"
-                                android:text="Ночной клуб" />
+                                android:text="NightLife" />
                         </LinearLayout>
                     </com.balysv.materialripple.MaterialRippleLayout>
 
@@ -131,7 +131,8 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         app:mrl_rippleColor="@color/colorAccent"
-                        app:mrl_rippleBackground="@color/colorPrimary">
+                        app:mrl_rippleBackground="@color/colorPrimary"
+                        android:padding="5dp">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -145,11 +146,11 @@
                             <ImageView
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
-                                android:src="@drawable/ic_fun" />
+                                android:src="@drawable/fun" />
 
                             <TextView
                                 style="@style/HeaderTextView"
-                                android:text="Развлечения" />
+                                android:text="Fun" />
                         </LinearLayout>
                     </com.balysv.materialripple.MaterialRippleLayout>
 
@@ -172,7 +173,7 @@
                             <ImageView
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
-                                android:src="@drawable/ic_menu" />
+                                android:src="@drawable/more" />
 
                             <TextView
                                 style="@style/HeaderTextView"
@@ -207,98 +208,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/chooseLayout"
-                android:orientation="vertical"
-                android:layout_centerHorizontal="true"
-                android:layout_above="@+id/cafeFooter"
-                android:layout_below="@+id/cafeHeader"
-                android:background="#99FFFFFF"
-                android:visibility="gone"
-                android:onClick="nothingOnClick">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <Button
-                        style="@style/ChooseButton"
-                        android:id="@+id/choose_button_all"
-                        android:text="@string/cafe_type_all"
-                        android:drawableTop="@drawable/ic_chooser_all" />
-
-                    <Button
-                        style="@style/ChooseButton"
-                        android:drawableTop="@drawable/ic_chooser_cafe"
-                        android:id="@+id/choose_button_cafe"
-                        android:text="@string/cafe_type_cafe" />
-
-                    <Button
-                        style="@style/ChooseButton"
-                        android:drawableTop="@drawable/ic_chooser_night"
-                        android:id="@+id/choose_button_night_club"
-                        android:text="@string/cafe_type_club" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <Button
-                        style="@style/ChooseButton"
-                        android:id="@+id/choose_button_fun"
-                        android:text="@string/cafe_type_fun"
-                        android:drawableTop="@drawable/ic_chooser_fun" />
-
-                    <Button
-                        style="@style/ChooseButton"
-                        android:drawableTop="@drawable/ic_chooser_cafe"
-                        android:id="@+id/choose_button_restaurant"
-                        android:text="@string/cafe_type_restaurant" />
-
-                    <Button
-                        style="@style/ChooseButton"
-                        android:drawableTop="@drawable/ic_chooser_fast"
-                        android:id="@+id/choose_button_fastfood"
-                        android:text="@string/cafe_type_fastfood" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <Button
-                        style="@style/ChooseButton"
-                        android:id="@+id/choose_button_sushi"
-                        android:text="@string/cafe_type_sushi"
-                        android:drawableTop="@drawable/ic_sushi" />
-
-                    <Button
-                        style="@style/ChooseButton"
-                        android:drawableTop="@drawable/ic_chooser_etc"
-                        android:id="@+id/choose_button_etc"
-                        android:text="@string/cafe_type_etc" />
-
-                    <Button
-                        style="@style/ChooseButton"
-                        android:drawableTop="@android:drawable/star_big_off"
-                        android:src="@android:drawable/btn_star"
-                        android:text="@string/cafe_type_favourite"
-                        android:id="@+id/choose_button_favourite" />
-                </LinearLayout>
-
-            </LinearLayout>
         </RelativeLayout>
 
     </LinearLayout>
