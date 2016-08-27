@@ -27,7 +27,7 @@ import java.util.List;
 
 public class CafeFragment extends Fragment {
     FragmentCafeBinding binding;
-    public static final String TAG = "CafeFragment";
+    public static final String TAG = "MenuFragment";
 
     @Nullable
     @Override

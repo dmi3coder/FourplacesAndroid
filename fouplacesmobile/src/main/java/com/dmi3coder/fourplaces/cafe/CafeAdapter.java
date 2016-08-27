@@ -16,22 +16,30 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.dmi3coder.fourplaces.CafeActivity;
+import com.dmi3coder.fourplaces.MainApplication;
 import com.dmi3coder.fourplaces.R;
+import com.dmi3coder.fourplaces.menu.Category;
+import com.google.gson.Gson;
+import com.kinvey.android.AsyncAppData;
+import com.kinvey.android.callback.KinveyListCallback;
+import com.kinvey.java.Query;
+import com.kinvey.java.query.AbstractQuery;
+import com.kinvey.java.query.QueryFilter;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
-
-import org.parceler.Parcels;
-
+import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
 
 
 
 public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder> {
+    private static final String TAG = "dmi3debug";
+    public static final String CURRENT_CAFE_TAG = "currentCafe";
+    public static final String CAFE_CATEGORIES_TAG = "cafeCategories";
     private List<Cafe> cafeList;
     private Context context;
-
-    private static final String TAG = "dmi3debug";
 
 
     public static class CafeViewHolder extends RecyclerView.ViewHolder{
@@ -95,23 +103,30 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         currentCafeHolder.position.setText(currentCafe.getAddress());
         currentCafeHolder.workTime.setText(currentCafe.getWorkTime());
         currentCafeHolder.descritption.setText(currentCafe.getDescription());
-        currentCafeHolder.likeButton.setOnLikeListener(new OnLikeListener() {
-            @Override
-            public void liked() {
-            }
-
-            @Override
-            public void unLiked() {
-            }
-        });
 
         currentCafeHolder.clickZone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent menuIntent = new Intent(context, CafeActivity.class);
-                menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                menuIntent.putExtra("currentCafe", Parcels.wrap(Cafe.class,currentCafe));
-                context.startActivity(menuIntent);
+                AsyncAppData<Category> data = MainApplication.getClient().appData("category", Category.class);
+                Query query = MainApplication.getClient().query();
+                query.equals("cafeId",currentCafe.getId());
+                query.addSort("position", AbstractQuery.SortOrder.ASC);
+                data.get(query, new KinveyListCallback<Category>() {
+                    @Override
+                    public void onSuccess(Category[] categories) {
+                        Intent menuIntent = new Intent(context, CafeActivity.class);
+                        menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Gson gson = new Gson();
+                        menuIntent.putExtra(CafeActivity.CATEGORIES_EXTRA, gson.toJson(categories));
+                        context.startActivity(menuIntent);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+
+                    }
+                });
+
             }
         });
     }

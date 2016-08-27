@@ -64,29 +64,6 @@ public class SampleListFragment extends ScrollTabHolderFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mListView.setOnScrollListener(new OnScroll());
-        menuParser = new MenuParser(CafeActivity.result);
-        try {
-            mListItems = menuParser.getMeals(MealType.values()[mPosition]);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        menuParser.setOnMenuParseListener(new MenuParser.OnMenuParseListener() {
-            @Override
-            public void onEvent() {
-                try {
-                    mListView.setAdapter(new MenuAdapter(mListItems,getContext()));
-//            mListItems = new ArrayList<>();
-//            for (int i = 0; i < 100; i++) {
-//                Meal meal = new Meal();
-//                meal.setName("test"+i);
-//                mListItems.add(meal);
-//            }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
 
         if(CafeActivity.NEEDS_PROXY){//in my moto phone(android 2.1),setOnScrollListener do not work well
             mListView.setOnTouchListener(new View.OnTouchListener() {

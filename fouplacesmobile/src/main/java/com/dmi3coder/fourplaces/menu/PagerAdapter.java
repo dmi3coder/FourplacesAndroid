@@ -10,12 +10,13 @@ import com.dmi3coder.fourplaces.backend.type.MealType;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
+    private final Category[] categories;
     private SparseArrayCompat<ScrollTabHolder> mScrollTabHolders;
-    private final String[] TITLES = MealType.backendRuTypes;
     private ScrollTabHolder mListener;
 
-    public PagerAdapter(FragmentManager fm) {
+    public PagerAdapter(FragmentManager fm,Category[] categories) {
         super(fm);
+        this.categories = categories;
         mScrollTabHolders = new SparseArrayCompat<ScrollTabHolder>();
     }
 
@@ -25,12 +26,12 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return TITLES[position];
+        return categories[position].getName();
     }
 
     @Override
     public int getCount() {
-        return TITLES.length;
+        return categories.length;
     }
 
     @Override

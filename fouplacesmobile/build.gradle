@@ -62,8 +62,6 @@ dependencies {
     compile 'com.github.lawloretienne:quickreturn:0.0.3'
 //    Lifehacks
     compile 'com.jakewharton:butterknife:7.0.1'//View injector
-    compile 'org.parceler:parceler-api:1.0.4'
-    provided 'org.parceler:parceler:1.0.4'
 //
     compile 'com.github.bumptech.glide:glide:3.6.1'//image library
 //    Animation

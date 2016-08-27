@@ -2,13 +2,15 @@ package com.dmi3coder.fourplaces.menu;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,90 +23,97 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.dmi3coder.fourplaces.CafeActivity;
 import com.dmi3coder.fourplaces.R;
-import com.dmi3coder.fourplaces.backend.MenuParser;
-import com.dmi3coder.fourplaces.backend.url.URLMenuLoader;
 import com.dmi3coder.fourplaces.cafe.Cafe;
+import com.dmi3coder.fourplaces.cafe.CafeAdapter;
+import com.dmi3coder.fourplaces.databinding.FragmentMenuBinding;
+import com.google.gson.Gson;
 
-import org.parceler.Parcels;
+
+import java.util.HashMap;
+import java.util.Hashtable;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager.OnPageChangeListener{
+public class MenuFragment extends Fragment implements ScrollTabHolder, ViewPager.OnPageChangeListener{
     public static final boolean NEEDS_PROXY = Integer.valueOf(Build.VERSION.SDK_INT).intValue() < 11;
-    private View mHeader;
-    private PagerSlidingTabStrip mPagerSlidingTabStrip;
-    private ViewPager mViewPager;
+    public static final String CURRENT_CAFE_TAG = "currentCafe";
+    private static final String TAG = "MenuFragment";
+
     private PagerAdapter mPagerAdapter;
     private int mMinHeaderHeight;
     private int mHeaderHeight;
     private int mMinHeaderTranslation;
     private TextView info;
     private int mLastY;
-    public URLMenuLoader menuLoader;
-    private long menu_id;
-    private MenuParser menuParser;
-    public static String result;
     private static Cafe cafe;
-
-    @Bind(R.id.progressBar) ProgressBar progressBar;
-    @Bind(R.id.cafeImage) ImageView cafeImage;
-    @Bind(R.id.cafeName) TextView cafeName;
-    @Bind(R.id.header_text_telephone) TextView callView;
-    @Bind(R.id.header_text_map)TextView mapView;
+    private FragmentMenuBinding binding;
+    private Category[] cafeCategories;
 
 
-    public static final CafeFragment newInstance(Bundle savedInstanceState){
-        CafeFragment fragment = new CafeFragment();
-        fragment.setArguments(savedInstanceState);
+
+
+    public static MenuFragment newInstance(Cafe currentCafe, String categories){
+        Bundle args = new Bundle();
+        MenuFragment fragment = new MenuFragment();
+//        args.putParcelable(CURRENT_CAFE_TAG, currentCafe); // TODO: 8/27/16 implement cafes
+        args.putString(CafeActivity.CATEGORIES_EXTRA, categories);
+        fragment.setArguments(args);
         return fragment;
 
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.activity_cafe,container,false);
-        cafe = Parcels.unwrap(getActivity().getIntent().getParcelableExtra("currentCafe"));
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_menu,container,false);
+        cafe = getArguments().getParcelable(CURRENT_CAFE_TAG);
+        parseArguments(getArguments());
         mMinHeaderHeight = getResources().getDimensionPixelSize(R.dimen.min_header_height);
         mHeaderHeight = getResources().getDimensionPixelSize(R.dimen.header_height);
         mMinHeaderTranslation = -mMinHeaderHeight;
-
-        mHeader = root.findViewById(R.id.header);
-        info = (TextView) root.findViewById(R.id.info);
-        ButterKnife.bind(this,root);
         defineHeader();
-        mPagerSlidingTabStrip = (PagerSlidingTabStrip) root.findViewById(R.id.tabs);
-        mViewPager = (ViewPager) root.findViewById(R.id.pager);
-        mViewPager.setOffscreenPageLimit(3);
 
-        mPagerAdapter = new PagerAdapter(((FragmentActivity)getActivity()).getSupportFragmentManager());
+        binding.pager.setOffscreenPageLimit(3);
+
+
+        mPagerAdapter = new PagerAdapter(((AppCompatActivity) getActivity()).getSupportFragmentManager(),cafeCategories);
         mPagerAdapter.setTabHolderScrollingContent(this);
-        menuLoader = new URLMenuLoader(menu_id);
-        menuLoader.setOnMenuLoadListener(new URLMenuLoader.OnMenuLoadListener() {
-            @Override
-            public void onEvent(String result) {
-                progressBar.setVisibility(View.GONE);
-                CafeActivity.result = result;
-                mViewPager.setAdapter(mPagerAdapter);
-                mPagerSlidingTabStrip.setViewPager(mViewPager);
-                mPagerSlidingTabStrip.setOnPageChangeListener(CafeFragment.this);
-                mLastY=0;
-            }
-        });
-        menuLoader.load();
-        return root;
+        binding.pager.setAdapter(mPagerAdapter);
+        binding.tabs.setViewPager(binding.pager);
+        binding.tabs.setOnPageChangeListener(MenuFragment.this);
+        mLastY=0;
+//        menuLoader = new URLMenuLoader(menu_id);
+//        menuLoader.setOnMenuLoadListener(new URLMenuLoader.OnMenuLoadListener() {
+//            @Override
+//            public void onEvent(String result) {
+//                progressBar.setVisibility(View.GONE);
+//                CafeActivity.result = result;
+//                mViewPager.setAdapter(mPagerAdapter);
+//                mPagerSlidingTabStrip.setViewPager(mViewPager);
+//                mPagerSlidingTabStrip.setOnPageChangeListener(MenuFragment.this);
+//                mLastY=0;
+//            }
+//        });
+//        menuLoader.load();
+        return binding.getRoot();
+    }
+
+    private void parseArguments(Bundle args){
+        Gson gson = new Gson();
+        cafeCategories = gson.fromJson(args.getString(CafeActivity.CATEGORIES_EXTRA),Category[].class);
+        Log.d(TAG, "parseArguments: "+cafeCategories.length);
     }
 
     private void defineHeader() {
-        cafeName.setText(cafe.getName());
-        Glide.with(this).load(cafe.getImageUrl()).asBitmap().into(cafeImage);
-        defineCallAction();
-        defineMapAction();
+//        binding.cafeName.setText(cafe.getName());
+//        Glide.with(this).load(cafe.getImageUrl()).asBitmap().into(binding.cafeImage);
+//        defineCallAction();
+//        defineMapAction();
     }
 
     private void defineCallAction() {
-        callView.setOnClickListener(new View.OnClickListener() {
+        binding.headerTextTelephone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
@@ -114,11 +123,11 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
         });
     }
     private void defineMapAction(){
-        mapView.setOnClickListener(new View.OnClickListener() {
+        binding.headerTextMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("geo:0,0?q="+cafe.getLat()+","+cafe.getLng()+"("+cafe.getName()+")"));
+                intent.setData(Uri.parse("geo:0,0?q="+cafe.getLatitude()+","+cafe.getLongitude()+"("+cafe.getName()+")"));
                 startIntent(intent);
             }
         });
@@ -136,7 +145,7 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
         if (positionOffsetPixels > 0) {
-            int currentItem = mViewPager.getCurrentItem();
+            int currentItem = binding.pager.getCurrentItem();
 
             SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter.getScrollTabHolders();
             ScrollTabHolder currentHolder;
@@ -148,10 +157,10 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
             }
             if (NEEDS_PROXY) {
                 // TODO is not good
-                currentHolder.adjustScroll(mHeader.getHeight() - mLastY);
-                mHeader.postInvalidate();
+                currentHolder.adjustScroll(binding.header.getHeight() - mLastY);
+                binding.header.postInvalidate();
             } else {
-                currentHolder.adjustScroll((int) (mHeader.getHeight() + mHeader.getTranslationY()));
+                currentHolder.adjustScroll((int) (binding.header.getHeight() + binding.header.getTranslationY()));
             }
         }
     }
@@ -162,10 +171,10 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
         ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
         if(NEEDS_PROXY){
             //TODO is not good
-            currentHolder.adjustScroll(mHeader.getHeight()-mLastY);
-            mHeader.postInvalidate();
+            currentHolder.adjustScroll(binding.header.getHeight()-mLastY);
+            binding.header.postInvalidate();
         }else{
-            currentHolder.adjustScroll((int) (mHeader.getHeight() +mHeader.getTranslationY()));
+            currentHolder.adjustScroll((int) (binding.header.getHeight() +binding.header.getTranslationY()));
         }
     }
 
@@ -176,16 +185,16 @@ public class CafeFragment extends Fragment implements ScrollTabHolder, ViewPager
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount, int pagePosition) {
-        if (mViewPager.getCurrentItem() == pagePosition) {
+        if (binding.pager.getCurrentItem() == pagePosition) {
             int scrollY = getScrollY(view);
             if(NEEDS_PROXY){
                 //TODO is not good
                 mLastY=-Math.max(-scrollY, mMinHeaderTranslation);
                 info.setText(String.valueOf(scrollY));
-                mHeader.scrollTo(0, mLastY);
-                mHeader.postInvalidate();
+                binding.header.scrollTo(0, mLastY);
+                binding.header.postInvalidate();
             }else{
-                mHeader.setTranslationY(Math.max(-scrollY, mMinHeaderTranslation));
+                binding.header.setTranslationY(Math.max(-scrollY, mMinHeaderTranslation));
             }
         }
     }

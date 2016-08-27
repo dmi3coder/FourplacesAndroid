@@ -2,10 +2,20 @@ package com.dmi3coder.fourplaces.menu;
 
 
 public class Meal {
-    private String name = "";
-    private String description = "";
-    private String price = "";
-    private String imageUrl = "";
+    private String name;
+    private String description;
+    private String price ;
+    private String imageUrl;
+
+    public Meal() {
+    }
+
+    public Meal(String name, String description, String price, String imageUrl) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
 
     public String getImageUrl() {
         return imageUrl;

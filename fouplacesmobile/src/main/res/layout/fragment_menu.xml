@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:cropToPadding="true"
+                android:src="@drawable/no_image"
+                android:id="@+id/cafeImage"
+                android:layout_gravity="center" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Cafe Name"
+                android:shadowColor="@color/colorAccent"
+                android:shadowRadius="2"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:textColor="@android:color/white"
+                android:id="@+id/cafeName"
+                android:layout_gravity="right|top" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="vertical"
+                android:background="#99000000">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center|left">
+
+                    <TextView
+                        style="@style/HeaderTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/header_text_telephone"
+                        android:text="@string/cafe_header_telephone" />
+
+                    <TextView
+                        style="@style/HeaderTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/header_text_map"
+                        android:text="@string/cafe_header_map" />
+
+                </LinearLayout>
+
+                <com.dmi3coder.fourplaces.menu.PagerSlidingTabStrip xmlns:app="http://schemas.android.com/apk/res-auto"
+                    app:pstsDividerColor="@color/colorAccent"
+                    app:pstsIndicatorColor="@color/colorAccent"
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dip"
+                    android:background="@color/colorPrimary" />
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/info"
+            android:layout_gravity="bottom"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:textColor="#FF0000"
+            android:gravity="center" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:visibility="visible"
+            android:layout_gravity="center_horizontal|bottom" />
+
+    </FrameLayout>
+</layout>
