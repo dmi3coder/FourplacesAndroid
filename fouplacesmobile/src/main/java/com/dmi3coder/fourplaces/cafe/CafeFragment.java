@@ -19,20 +19,28 @@ import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnRecyclerViewOnScrollListener;
 import com.kinvey.android.AsyncAppData;
 import com.kinvey.android.callback.KinveyListCallback;
+import com.kinvey.java.Query;
+import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
-public class CafeFragment extends Fragment {
+public class CafeFragment extends Fragment implements KinveyListCallback<Cafe> {
     FragmentCafeBinding binding;
     public static final String TAG = "MenuFragment";
-
+    private int skip = 0;
+    Query query;
+    List<Cafe> cafes = new ArrayList<>();
+    CafeAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cafe,container,false);
+        query = MainApplication.getClient().query();
+        query.setLimit(50);
         defineRecyclerView();
         return binding.getRoot();
     }
@@ -41,16 +49,15 @@ public class CafeFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.list.setLayoutManager(layoutManager);
         defineStickyHeader();
-        AsyncAppData<Cafe> data = MainApplication.client.appData("cafe",Cafe.class);
-        data.get(new KinveyListCallback<Cafe>() {
+        final AsyncAppData<Cafe> data = MainApplication.client.appData("cafe",Cafe.class);
+        data.get(query,this);
+        binding.list.setOnMoreListener(new OnMoreListener() {
             @Override
-            public void onSuccess(Cafe[] cafes) {
-                setupAdapter(binding.list,Arrays.asList(cafes));
-            }
-
-            @Override
-            public void onFailure(Throwable throwable) {
-                Log.e(TAG, "onFailure: ",throwable);
+            public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
+                skip += 50;
+                query.setSkip(skip);
+                data.get(query,CafeFragment.this);
+                Log.d(TAG, "onMoreAsked: "+overallItemsCount);
             }
         });
     }
@@ -66,7 +73,29 @@ public class CafeFragment extends Fragment {
     }
 
     private void setupAdapter(SuperRecyclerView recyclerView, List<Cafe> cafes){
-        recyclerView.setAdapter(new CafeAdapter(cafes, getContext()));
+        adapter = new CafeAdapter(cafes, getContext());
+        recyclerView.setAdapter(adapter);
 
     }
+
+    @Override
+    public void onSuccess(Cafe[] loadedCafes) {
+        int previousCafesSize = cafes.size();
+        for (Cafe c:
+                loadedCafes) {
+            cafes.add(c);
+        }
+        if(previousCafesSize == 0)
+            setupAdapter(binding.list,cafes);
+        else {
+            adapter.notifyDataSetChanged();
+            binding.list.hideMoreProgress();
+        }
+    }
+
+    @Override
+    public void onFailure(Throwable throwable) {
+        Log.e(TAG, "onFailure: ", throwable);
+    }
+
 }

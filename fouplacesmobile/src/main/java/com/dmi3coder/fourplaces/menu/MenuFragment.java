@@ -38,7 +38,6 @@ import butterknife.ButterKnife;
 
 public class MenuFragment extends Fragment implements ScrollTabHolder, ViewPager.OnPageChangeListener{
     public static final boolean NEEDS_PROXY = Integer.valueOf(Build.VERSION.SDK_INT).intValue() < 11;
-    public static final String CURRENT_CAFE_TAG = "currentCafe";
     private static final String TAG = "MenuFragment";
 
     private PagerAdapter mPagerAdapter;
@@ -54,10 +53,10 @@ public class MenuFragment extends Fragment implements ScrollTabHolder, ViewPager
 
 
 
-    public static MenuFragment newInstance(Cafe currentCafe, String categories){
+    public static MenuFragment newInstance(String currentCafe, String categories){
         Bundle args = new Bundle();
         MenuFragment fragment = new MenuFragment();
-//        args.putParcelable(CURRENT_CAFE_TAG, currentCafe); // TODO: 8/27/16 implement cafes
+        args.putString(CafeActivity.CAFE_EXTRA, currentCafe);
         args.putString(CafeActivity.CATEGORIES_EXTRA, categories);
         fragment.setArguments(args);
         return fragment;
@@ -67,7 +66,6 @@ public class MenuFragment extends Fragment implements ScrollTabHolder, ViewPager
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_menu,container,false);
-        cafe = getArguments().getParcelable(CURRENT_CAFE_TAG);
         parseArguments(getArguments());
         mMinHeaderHeight = getResources().getDimensionPixelSize(R.dimen.min_header_height);
         mHeaderHeight = getResources().getDimensionPixelSize(R.dimen.header_height);
@@ -76,40 +74,27 @@ public class MenuFragment extends Fragment implements ScrollTabHolder, ViewPager
 
         binding.pager.setOffscreenPageLimit(3);
 
-
         mPagerAdapter = new PagerAdapter(((AppCompatActivity) getActivity()).getSupportFragmentManager(),cafeCategories);
         mPagerAdapter.setTabHolderScrollingContent(this);
         binding.pager.setAdapter(mPagerAdapter);
         binding.tabs.setViewPager(binding.pager);
         binding.tabs.setOnPageChangeListener(MenuFragment.this);
         mLastY=0;
-//        menuLoader = new URLMenuLoader(menu_id);
-//        menuLoader.setOnMenuLoadListener(new URLMenuLoader.OnMenuLoadListener() {
-//            @Override
-//            public void onEvent(String result) {
-//                progressBar.setVisibility(View.GONE);
-//                CafeActivity.result = result;
-//                mViewPager.setAdapter(mPagerAdapter);
-//                mPagerSlidingTabStrip.setViewPager(mViewPager);
-//                mPagerSlidingTabStrip.setOnPageChangeListener(MenuFragment.this);
-//                mLastY=0;
-//            }
-//        });
-//        menuLoader.load();
         return binding.getRoot();
     }
 
     private void parseArguments(Bundle args){
         Gson gson = new Gson();
         cafeCategories = gson.fromJson(args.getString(CafeActivity.CATEGORIES_EXTRA),Category[].class);
+        cafe = gson.fromJson(args.getString(CafeActivity.CAFE_EXTRA),Cafe.class);
         Log.d(TAG, "parseArguments: "+cafeCategories.length);
     }
 
     private void defineHeader() {
-//        binding.cafeName.setText(cafe.getName());
-//        Glide.with(this).load(cafe.getImageUrl()).asBitmap().into(binding.cafeImage);
-//        defineCallAction();
-//        defineMapAction();
+        binding.cafeName.setText(cafe.getName());
+        Glide.with(this).load(cafe.getImageUrl()).asBitmap().into(binding.cafeImage);
+        defineCallAction();
+        defineMapAction();
     }
 
     private void defineCallAction() {

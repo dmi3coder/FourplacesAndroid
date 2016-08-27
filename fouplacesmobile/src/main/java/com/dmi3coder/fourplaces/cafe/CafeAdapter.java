@@ -117,6 +117,7 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
                         Intent menuIntent = new Intent(context, CafeActivity.class);
                         menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         Gson gson = new Gson();
+                        menuIntent.putExtra(CafeActivity.CAFE_EXTRA,gson.toJson(currentCafe));
                         menuIntent.putExtra(CafeActivity.CATEGORIES_EXTRA, gson.toJson(categories));
                         context.startActivity(menuIntent);
                     }

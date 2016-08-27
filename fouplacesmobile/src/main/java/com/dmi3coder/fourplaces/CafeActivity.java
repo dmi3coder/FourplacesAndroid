@@ -24,8 +24,8 @@ import java.util.Hashtable;
 public class CafeActivity extends AppCompatActivity {
 
     public static final String CATEGORIES_EXTRA = "categories_extra";
+    public static final String CAFE_EXTRA = "cafe_extra";
     public static final boolean NEEDS_PROXY = Integer.valueOf(Build.VERSION.SDK_INT).intValue() < 11;
-    public static String result;
     private FrameLayout frame;
 
     @Override
@@ -41,9 +41,8 @@ public class CafeActivity extends AppCompatActivity {
 
     protected void fillWithMenu(Bundle savedInstanceState){
         MenuFragment menuFragment;
-        Cafe currentCafe = getIntent().getParcelableExtra(CafeAdapter.CURRENT_CAFE_TAG);
 
-        menuFragment = MenuFragment.newInstance(currentCafe, getIntent().getStringExtra(CATEGORIES_EXTRA));
+        menuFragment = MenuFragment.newInstance(getIntent().getStringExtra(CAFE_EXTRA), getIntent().getStringExtra(CATEGORIES_EXTRA));
         replaceFragment(menuFragment);
     }
 
@@ -53,10 +52,4 @@ public class CafeActivity extends AppCompatActivity {
         ft.replace(android.R.id.content, fragment).commit();
     }
 
-    public void onHeaderMenuClick(View view) {
-
-    }
-
-    public void onHeaderReviewsClick(View view) {
-    }
 }
