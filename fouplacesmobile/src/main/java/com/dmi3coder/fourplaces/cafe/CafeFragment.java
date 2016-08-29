@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dmi3coder.fourplaces.MainActivity;
 import com.dmi3coder.fourplaces.MainApplication;
 import com.dmi3coder.fourplaces.R;
 import com.dmi3coder.fourplaces.databinding.FragmentCafeBinding;
@@ -51,6 +53,12 @@ public class CafeFragment extends Fragment implements KinveyListCallback<Cafe> {
         defineStickyHeader();
         final AsyncAppData<Cafe> data = MainApplication.client.appData("cafe",Cafe.class);
         data.get(query,this);
+        binding.cafeHeaderMoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).openDrawer();
+            }
+        });
         binding.list.setOnMoreListener(new OnMoreListener() {
             @Override
             public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
