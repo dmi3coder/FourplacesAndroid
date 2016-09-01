@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fourplaces</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cafe_type_all">Все</string>
+    <string name="cafe_type_cafe">Кофейня</string>
+    <string name="cafe_type_club">Ночной клуб</string>
+    <string name="cafe_type_fun">Развлечения</string>
+    <string name="cafe_type_restaurant">Ресторан</string>
+    <string name="cafe_type_fastfood">Фастфуд</string>
+    <string name="cafe_type_sushi">Суши</string>
+    <string name="cafe_type_etc">Прочее</string>
+    <string name="cafe_type_favourite">Закладки</string>
+    <string name="opened_header_text">Я ищу...</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="noresult">Заведения не найдены</string>
+    <string name="cafe_header_telephone">Телефон</string>
+    <string name="cafe_header_map">Расположение</string>
+    <string name="noapp">У вас нет подходящего приложения</string>
+    <string name="nointernet">Проверте подключение к интернету</string>
+    <string name="title_activity_empty">EmptyActivity</string>
+    <string name="cafe_header_menu">Меню</string>
+    <string name="cafe_header_reviews">Отзывы</string>
+
+</resources>
