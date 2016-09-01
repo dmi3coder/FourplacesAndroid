@@ -15,7 +15,7 @@
     <string name="noresult">Cafe not found</string>
     <string name="cafe_header_telephone">Phone</string>
     <string name="cafe_header_map">Position</string>
-    <string name="noapp">You don't have an app for this action</string>
+    <string name="noapp">You dont have an app for this action</string>
     <string name="nointernet">Check your internet connection</string>
     <string name="title_activity_empty">EmptyActivity</string>
     <string name="cafe_header_menu">Menu</string>
