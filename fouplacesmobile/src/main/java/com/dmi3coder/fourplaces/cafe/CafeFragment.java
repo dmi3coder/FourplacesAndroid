@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.dmi3coder.fourplaces.MainActivity;
 import com.dmi3coder.fourplaces.MainApplication;
@@ -30,11 +31,12 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class CafeFragment extends Fragment implements KinveyListCallback<Cafe> {
+public class CafeFragment extends Fragment implements KinveyListCallback<Cafe>, View.OnClickListener, AdapterView.OnItemClickListener {
     FragmentCafeBinding binding;
     public static final String TAG = "MenuFragment";
     private int skip = 0;
     Query query;
+    AsyncAppData<Cafe> data;
     List<Cafe> cafes = new ArrayList<>();
     CafeAdapter adapter;
     @Nullable
@@ -51,7 +53,7 @@ public class CafeFragment extends Fragment implements KinveyListCallback<Cafe> {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.list.setLayoutManager(layoutManager);
         defineStickyHeader();
-        final AsyncAppData<Cafe> data = MainApplication.client.appData("cafe",Cafe.class);
+        data = MainApplication.client.appData("cafe",Cafe.class);
         data.get(query,this);
         binding.cafeHeaderMoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +80,10 @@ public class CafeFragment extends Fragment implements KinveyListCallback<Cafe> {
                     .isSnappable(true)
                     .build());
         }
+        binding.cafeHeaderCafeButton.setOnClickListener(this);
+        binding.cafeHeaderAllButton.setOnClickListener(this);
+        binding.cafeHeaderFunButton.setOnClickListener(this);
+        binding.cafeHeaderNightClubButton.setOnClickListener(this);
     }
 
     private void setupAdapter(SuperRecyclerView recyclerView, List<Cafe> cafes){
@@ -106,4 +112,43 @@ public class CafeFragment extends Fragment implements KinveyListCallback<Cafe> {
         Log.e(TAG, "onFailure: ", throwable);
     }
 
+    @Override
+    public void onClick(View view) {
+        query = MainApplication.getClient().query();
+        query.setLimit(50);
+        String queryName = "";
+        switch (view.getId()){
+            default:
+                break;
+            case R.id.cafe_header_cafe_button:
+                queryName = NavigationAdapter.NavigationItem.COFFEE.getName();
+                break;
+            case R.id.cafe_header_fun_button:
+                queryName = NavigationAdapter.NavigationItem.FUN.getName();
+                break;
+            case R.id.cafe_header_night_club_button:
+                queryName = NavigationAdapter.NavigationItem.NIGHTLIFE.getName();
+                break;
+        }
+        skip = 0;
+        cafes.removeAll(cafes);
+        if(!queryName.isEmpty())
+            query.equals("type",queryName);
+        data.get(query,this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Log.d(TAG, "onItemClick: "+i);
+        query = MainApplication.getClient().query();
+        query.setLimit(50);
+        skip = 0;
+        cafes.removeAll(cafes);
+        if(i<8)
+            query.equals("type", NavigationAdapter.NavigationItem.values()[i].getName());
+        else{
+            // TODO: 9/1/16
+        }
+        data.get(query,CafeFragment.this);
+    }
 }

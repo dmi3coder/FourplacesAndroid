@@ -1,4 +1,4 @@
-package com.dmi3coder.fourplaces.menu;
+package com.dmi3coder.fourplaces.cafe;
 
 
 import android.content.Context;
@@ -56,22 +56,30 @@ public class NavigationAdapter extends BaseAdapter {
     }
 
     public enum NavigationItem{
-        FOOD(R.drawable.food_o),COFFEE(R.drawable.coffee_o),NIGHTLIFE(R.drawable.night_o),FUN(R.drawable.fun_o),PUB(R.drawable.pub_o),FASTFOOD(R.drawable.pizza_o),SUSHI(R.drawable.shushi_o),ETC(R.drawable.other_o);
+        FOOD(R.drawable.food_o,"food"),
+        COFFEE(R.drawable.coffee_o,"cafe"),
+        NIGHTLIFE(R.drawable.night_o,"nightclub"),
+        FUN(R.drawable.fun_o,"fun"),
+        PUB(R.drawable.pub_o,"pub"),
+        FASTFOOD(R.drawable.pizza_o,"pizza"),
+        SUSHI(R.drawable.shushi_o,"sushi"),
+        ETC(R.drawable.other_o,"etc");
 
         private int id;
+        private String name;
 
-        NavigationItem(int id){
+        NavigationItem(int id,String name){
             this.id = id;
+
+            this.name = name;
         }
 
         public int getId() {
             return id;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public String getName() {
+            return name;
         }
-
-
     }
 }
