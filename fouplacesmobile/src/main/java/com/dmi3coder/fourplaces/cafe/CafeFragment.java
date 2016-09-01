@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.dmi3coder.fourplaces.MainActivity;
 import com.dmi3coder.fourplaces.MainApplication;
@@ -54,22 +55,26 @@ public class CafeFragment extends Fragment implements KinveyListCallback<Cafe>, 
         binding.list.setLayoutManager(layoutManager);
         defineStickyHeader();
         data = MainApplication.client.appData("cafe",Cafe.class);
-        data.get(query,this);
-        binding.cafeHeaderMoreButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity) getActivity()).openDrawer();
-            }
-        });
-        binding.list.setOnMoreListener(new OnMoreListener() {
-            @Override
-            public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
-                skip += 50;
-                query.setSkip(skip);
-                data.get(query,CafeFragment.this);
-                Log.d(TAG, "onMoreAsked: "+overallItemsCount);
-            }
-        });
+        if(MainApplication.isNetworkAvailable()){
+            data.get(query,this);
+            binding.cafeHeaderMoreButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((MainActivity) getActivity()).openDrawer();
+                }
+            });
+            binding.list.setOnMoreListener(new OnMoreListener() {
+                @Override
+                public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
+                    skip += 50;
+                    query.setSkip(skip);
+                    data.get(query,CafeFragment.this);
+                    Log.d(TAG, "onMoreAsked: "+overallItemsCount);
+                }
+            });
+        }
+        else
+            Toast.makeText(getActivity(), R.string.nointernet, Toast.LENGTH_SHORT).show();
     }
 
     private void defineStickyHeader() {
@@ -114,6 +119,10 @@ public class CafeFragment extends Fragment implements KinveyListCallback<Cafe>, 
 
     @Override
     public void onClick(View view) {
+        if(!MainApplication.isNetworkAvailable()){
+            Toast.makeText(getActivity(), R.string.nointernet, Toast.LENGTH_SHORT).show();
+            return;
+        }
         query = MainApplication.getClient().query();
         query.setLimit(50);
         String queryName = "";
@@ -139,7 +148,10 @@ public class CafeFragment extends Fragment implements KinveyListCallback<Cafe>, 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.d(TAG, "onItemClick: "+i);
+        if(!MainApplication.isNetworkAvailable()){
+            Toast.makeText(getActivity(), R.string.nointernet, Toast.LENGTH_SHORT).show();
+            return;
+        }
         query = MainApplication.getClient().query();
         query.setLimit(50);
         skip = 0;

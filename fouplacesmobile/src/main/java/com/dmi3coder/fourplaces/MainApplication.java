@@ -1,6 +1,9 @@
 package com.dmi3coder.fourplaces;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.support.annotation.VisibleForTesting;
 
 import com.kinvey.android.Client;
 import com.kinvey.java.User;
@@ -9,6 +12,7 @@ import com.kinvey.java.core.KinveyCancellableCallback;
 
 public class MainApplication extends Application {
     public static Client client;
+    public static ConnectivityManager cm;
 
     @Override
     public void onCreate() {
@@ -35,6 +39,7 @@ public class MainApplication extends Application {
 
             }
         });
+        cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
 
@@ -42,4 +47,11 @@ public class MainApplication extends Application {
         return client;
     }
 
+
+
+    @VisibleForTesting
+    public static boolean isNetworkAvailable() {
+        return cm.getActiveNetworkInfo() != null;
+
+    }
 }

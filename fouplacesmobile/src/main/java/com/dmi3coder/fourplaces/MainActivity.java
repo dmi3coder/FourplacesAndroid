@@ -44,12 +44,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @VisibleForTesting
-    private boolean isNetworkAvailable() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null;
-
-    }
 
     public void openDrawer(){
         drawerLayout.openDrawer(GravityCompat.END,true);

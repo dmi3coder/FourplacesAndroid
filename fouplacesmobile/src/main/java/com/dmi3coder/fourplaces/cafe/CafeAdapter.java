@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -107,6 +108,10 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         currentCafeHolder.clickZone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!MainApplication.isNetworkAvailable()){
+                    Toast.makeText(context, R.string.nointernet, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 AsyncAppData<Category> data = MainApplication.getClient().appData("category", Category.class);
                 Query query = MainApplication.getClient().query();
                 query.equals("cafeId",currentCafe.getId());
