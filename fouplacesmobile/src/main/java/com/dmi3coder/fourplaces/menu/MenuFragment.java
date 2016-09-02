@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +41,8 @@ public class MenuFragment extends Fragment implements ScrollTabHolder, ViewPager
     public static final boolean NEEDS_PROXY = Integer.valueOf(Build.VERSION.SDK_INT).intValue() < 11;
     private static final String TAG = "MenuFragment";
 
+    private FragmentMenuBinding binding;
+
     private PagerAdapter mPagerAdapter;
     private int mMinHeaderHeight;
     private int mHeaderHeight;
@@ -47,7 +50,6 @@ public class MenuFragment extends Fragment implements ScrollTabHolder, ViewPager
     private TextView info;
     private int mLastY;
     private static Cafe cafe;
-    private FragmentMenuBinding binding;
     private Category[] cafeCategories;
 
 
@@ -92,9 +94,23 @@ public class MenuFragment extends Fragment implements ScrollTabHolder, ViewPager
 
     private void defineHeader() {
         binding.cafeName.setText(cafe.getName());
-        Glide.with(this).load(cafe.getImageUrl()).asBitmap().into(binding.cafeImage);
+        Glide.with(this).load(cafe.getImageUrl()).placeholder(R.drawable.no_image).into(binding.cafeImage);
+        setupToolbar();
         defineCallAction();
         defineMapAction();
+    }
+
+    private void setupToolbar() {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbar);
+        getActivity().setTitle(cafe.getName());
+        binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        binding.toolbar.setTitleTextColor(ContextCompat.getColor(getActivity(),android.R.color.white));
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
     }
 
     private void defineCallAction() {

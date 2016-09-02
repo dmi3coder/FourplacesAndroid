@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.dmi3coder.fourplaces.CafeActivity;
 import com.dmi3coder.fourplaces.MainApplication;
@@ -87,16 +90,18 @@ public class CafeAdapter extends RecyclerView.Adapter<CafeAdapter.CafeViewHolder
         else {
             currentCafeHolder.headerZone.setVisibility(View.GONE);
         }
-        Glide.with(context).load(R.drawable.no_image).into(currentCafeHolder.cafeImage);
         Glide.with(context).load(
                 currentCafe.getImageUrl())
                 .asBitmap()
                 .centerCrop()
                 .error(R.drawable.no_image)
+                .placeholder(R.drawable.no_image)
                 .into(new SimpleTarget<Bitmap>(250, 250) {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        currentCafeHolder.cafeImage.setImageBitmap(resource);
+                        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(context.getResources(),resource);
+                        drawable.setCircular(true);
+                        currentCafeHolder.cafeImage.setImageDrawable(drawable);
                     }
                 });
         currentCafeHolder.name.setText(currentCafe.getName());

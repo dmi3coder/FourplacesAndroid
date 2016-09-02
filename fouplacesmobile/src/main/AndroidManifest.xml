@@ -26,7 +26,8 @@
         </activity>
         <activity
             android:name="com.dmi3coder.fourplaces.CafeActivity"
-            android:configChanges="locale|orientation" />
+            android:configChanges="locale|orientation"
+            android:theme="@style/AppTheme"/>
 
     </application>
 
