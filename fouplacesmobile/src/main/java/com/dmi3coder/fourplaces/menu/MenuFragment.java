@@ -96,8 +96,6 @@ public class MenuFragment extends Fragment implements ScrollTabHolder, ViewPager
         binding.cafeName.setText(cafe.getName());
         Glide.with(this).load(cafe.getImageUrl()).placeholder(R.drawable.no_image).into(binding.cafeImage);
         setupToolbar();
-        defineCallAction();
-        defineMapAction();
     }
 
     private void setupToolbar() {
@@ -109,27 +107,6 @@ public class MenuFragment extends Fragment implements ScrollTabHolder, ViewPager
             @Override
             public void onClick(View view) {
                 getActivity().finish();
-            }
-        });
-    }
-
-    private void defineCallAction() {
-        binding.headerTextTelephone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:"+cafe.getPhoneNumber()));
-                startIntent(intent);
-            }
-        });
-    }
-    private void defineMapAction(){
-        binding.headerTextMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("geo:0,0?q="+cafe.getLatitude()+","+cafe.getLongitude()+"("+cafe.getName()+")"));
-                startIntent(intent);
             }
         });
     }

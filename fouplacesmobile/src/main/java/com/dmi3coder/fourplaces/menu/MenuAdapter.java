@@ -16,18 +16,19 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.dmi3coder.fourplaces.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
 public class MenuAdapter extends BaseAdapter {
-    private ArrayList<Meal> meals;
+    private List<Meal> meals;
     private LayoutInflater inflater;
     private Context context;
 
-    public MenuAdapter(ArrayList<Meal> meals,Context context){
-        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public MenuAdapter(List<Meal> meals, Context context){
+        inflater = LayoutInflater.from(context);
         this.context = context;
         this.meals = meals;
     }
@@ -50,26 +51,29 @@ public class MenuAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final MenuViewHolder currentMenuViewHolder;
-        Meal currentMeal = meals.get(position);
-        convertView = inflater.inflate(R.layout.menu_item,parent,false);
-        currentMenuViewHolder = new MenuViewHolder(convertView);
-        currentMenuViewHolder.name.setText(currentMeal.getName());
-        currentMenuViewHolder.description.setText(currentMeal.getDescription());
         try {
-            currentMenuViewHolder.price.setText(currentMeal.getPrice());
-        }catch(Resources.NotFoundException e){
-            currentMenuViewHolder.price.setText("");
+            Meal currentMeal = meals.get(position);
+            convertView = inflater.inflate(R.layout.menu_item, parent, false);
+            currentMenuViewHolder = new MenuViewHolder(convertView);
+            currentMenuViewHolder.name.setText(currentMeal.getName());
+            currentMenuViewHolder.description.setText(currentMeal.getDescription());
+            try {
+                currentMenuViewHolder.price.setText(""+currentMeal.getPrice());
+            } catch (Resources.NotFoundException e) {
+                currentMenuViewHolder.price.setText("");
+            }
+            Glide.with(context).load(
+                    currentMeal.getImageUlr())
+                    .asBitmap()
+                    .centerCrop()
+                    .into(new SimpleTarget<Bitmap>(250, 250) {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                            currentMenuViewHolder.mealImage.setImageBitmap(resource);
+                        }
+                    });
         }
-        Glide.with(context).load(
-                currentMeal.getImageUrl())
-                .asBitmap()
-                .centerCrop()
-                .into(new SimpleTarget<Bitmap>(250, 250) {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        currentMenuViewHolder.mealImage.setImageBitmap(resource);
-                    }
-                });
+        catch (Exception e){}
         return convertView;
     }
 

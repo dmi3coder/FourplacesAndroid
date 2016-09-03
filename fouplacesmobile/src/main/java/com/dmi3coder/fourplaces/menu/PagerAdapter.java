@@ -35,7 +35,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        ScrollTabHolderFragment fragment = (ScrollTabHolderFragment) SampleListFragment.newInstance(position);
+        ScrollTabHolderFragment fragment = (ScrollTabHolderFragment) SampleListFragment.newInstance(position,categories[position].getCafeId(),categories[position].getId());
 
         mScrollTabHolders.put(position, fragment);
         if (mListener != null) {
